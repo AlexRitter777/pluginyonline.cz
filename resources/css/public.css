@@ -3,4 +3,4 @@
 @import "public/style.css";
 @import "public/animate.css";
 
-
+@config "../../tailwind.public.config.js";

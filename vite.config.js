@@ -22,7 +22,7 @@ export default defineConfig({
             ],
             refresh: true,
 
-            server: {
+            /*server: {
                 proxy: {
                     // Прокси-сервер, чтобы использовать сервер Laravel
                     '/': {
@@ -32,7 +32,7 @@ export default defineConfig({
                         ws: true,
                     },
                 },
-            },
+            },*/
         }),
 
     ],
