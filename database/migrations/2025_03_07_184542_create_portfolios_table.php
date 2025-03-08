@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('requirements');
             $table->text('description');
             $table->text('content');
+            $table->boolean('is_published')->default(false);
             $table->json('images');
             $table->timestamps();
         });

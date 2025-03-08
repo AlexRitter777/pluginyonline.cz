@@ -2,3 +2,7 @@
 @config "../../tailwind.admin.config.js";
 
 
+*,:after,:before {
+    box-sizing: border-box;
+    border: 0 solid #d5d6d7
+}

@@ -178,6 +178,9 @@ export default {
             fontFamily: {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans],
             },
+            boxShadow: {
+                'xs': '0 0 0 1px rgba(0, 0, 0, .05)',
+            }
         },
     },
     safelist:
@@ -188,7 +191,7 @@ export default {
         'opacity-100',
         ],
     plugins: [
-        require('@tailwindcss/custom-forms'),
+        require('@tailwindcss/forms'),
         plugin(({ addUtilities, e, theme }) => {
             const newUtilities = {}
             Object.entries(theme('colors')).map(([name, value]) => {
