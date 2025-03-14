@@ -31,6 +31,11 @@ export default () => ({
     togglePagesMenu() {
       this.isPagesMenuOpen = !this.isPagesMenuOpen
     },
+    deleteItemConfirmation: false,
+    closeDeleteItemConfirmation() {
+        this.deleteItemConfirmation = false;
+    }
+
     // Modal
     /*isModalOpen: false,
     trapCleanup: null,

@@ -35,6 +35,7 @@
         "npm": "^10.8.0",
         "perfect-scrollbar": "^1.5.3",
         "seamless-scroll-polyfill": "^2.3.4",
+        "summernote": "^0.9.1",
         "vite-plugin-require": "^1.2.14",
         "wowjs": "^1.1.3"
     }

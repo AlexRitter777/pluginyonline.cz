@@ -13,7 +13,8 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        return view('admin.services.index');
+        $services = Service::all();
+        return view('admin.services.index', compact('services'));
     }
 
     /**
@@ -21,7 +22,7 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.services.create');
     }
 
     /**
@@ -59,8 +60,10 @@ class ServiceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Service $service)
+    public function destroy(string $id)
     {
-        //
+        $service = Service::find($id);
+        $service->delete();
+        return redirect()->route('admin.services.index')->with('success', 'Service deleted successfully.');
     }
 }

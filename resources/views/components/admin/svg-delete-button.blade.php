@@ -1,6 +1,9 @@
+@props(['itemId' => '', 'itemIdRef' => ''])
+
 <button
     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-    aria-label="Delete"
+    @click.stop="deleteItemConfirmation ? closeDeleteItemConfirmation() : deleteItemConfirmation = {{ $itemId }}"
+    @keydown.escape="closeDeleteItemConfirmation"
 >
     <svg
         class="w-5 h-5"
@@ -15,3 +18,22 @@
         ></path>
     </svg>
 </button>
+    <div
+        x-show="deleteItemConfirmation === {{$itemId}}"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        @click.outside="closeDeleteItemConfirmation"
+        @keydown.escape="closeDeleteItemConfirmation"
+        class="absolute right-16 bottom-4 w-36 font-semibold p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:text-gray-300 dark:border-gray-700 dark:bg-gray-700 "
+    >
+        <div class="flex justify-around">
+             <form method="POST" action="{{ route('admin.services.destroy', ['service' => $itemId]) }}">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="hover:underline">Delete</button>
+            </form>
+            <button @click="deleteItemConfirmation = false" class="hover:underline">Cancel</button>
+        </div>
+    </div>
+
