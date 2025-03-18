@@ -5,6 +5,8 @@
     'required' => false,
 ])
 
+
+
 <label class="block text-sm relative mt-4" x-data="imageUpload()">
     <span class="text-gray-700 dark:text-gray-400">
         {{ $slot }}
@@ -26,6 +28,7 @@
             x-ref="inputFile"
             {{--onchange="this.nextElementSibling.value = this.files.length > 0 ? this.files[0].name : ''"--}}
             @change="handleInputChange"
+
         >
 
         <input
@@ -42,6 +45,7 @@
             </svg>
         </a>
     </div>
+    <span x-show="errorMessage" x-text="errorMessage" class="text-xs text-red-600 dark:text-red-400"></span>
     <div x-show="tempImageUrl" class="mt-4">
         <img x-bind:src="tempImageUrl" alt="" width="200" class="mx-auto" >
     </div>

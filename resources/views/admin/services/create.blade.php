@@ -11,30 +11,29 @@
                     Create new service
                 </h2>
 
-                <form action="{{route('admin.services.store')}}" method="post">
+                <form x-data="formValidation" id="services" @submit.prevent="validate" action="{{route('admin.services.store')}}" enctype="multipart/form-data" method="post">
                     @csrf
                     <x-admin.input-text
-                        name="service_title"
-                        id="service_title"
-                        required="required"
-                        placeholder="Enter service title"
+                        name="title"
+                        id="title"
+                        validationRules="required|min:3|max:60"
+                        placeholder="Enter service title..."
                     >
                         Title
                     </x-admin.input-text>
 
                     <x-admin.textarea
-                        name="service_description"
-                        id="service_description"
-                        required="required"
-                        placeholder="Enter service description"
+                        name="description"
+                        id="description"
+                        validationRules="required|min:3|max:300"
+                        placeholder="Enter service description..."
                     >
                         Description
                     </x-admin.textarea>
 
                     <x-admin.textarea
-                        name="service_content"
-                        id="service_content"
-                        required="required"
+                        name="content"
+                        id="content"
                         placeholder="Enter some content..."
                         rows="8"
                     >
@@ -42,7 +41,7 @@
                     </x-admin.textarea>
 
                     <x-admin.two-radio
-                        name="service_is_published"
+                        name="is_published"
                         valueFirst="0"
                         valueSecond="1"
                         checkedFirst="checked"
@@ -57,7 +56,7 @@
                     </x-admin.two-radio>
 
                     <x-admin.input-file
-                        name="service_thumbnail"
+                        name="thumbnail"
                         accept=".jpg,.png"
                     >
                     Service thumbnail

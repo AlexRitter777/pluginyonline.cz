@@ -1,6 +1,6 @@
 export default function imageUpload(){
 
-    const maxImageSize = 6 * 1024 * 1024;
+    const maxImageSize = 2 * 1024 * 1024;
 
     return {
         imageName: '',
@@ -13,7 +13,7 @@ export default function imageUpload(){
         handleInputChange(e) {
 
             console.log('Handled!')
-
+            this.errorMessage = '';
             const file = e.target.files[0];
 
             if(!file) return;
@@ -21,14 +21,14 @@ export default function imageUpload(){
             if(!file.type.startsWith("image/")){
                 this.imageValid = false;
                 this.errorMessage = "You can upload only images!";
-                console.log(this.errorMessage);
+                //console.error(this.errorMessage);
                 return;
             }
 
             if(file.size > maxImageSize) {
                 this.imageValid = false;
-                this.errorMessage = `The image size must be less then ${maxImageSize}`;
-                console.log(this.errorMessage);
+                this.errorMessage = `The image size must be less then ${maxImageSize/(1024 * 1024)} Mb`;
+                //console.error(this.errorMessage);
                 return;
             }
 
