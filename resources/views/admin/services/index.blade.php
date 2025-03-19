@@ -29,6 +29,7 @@
                         >
                             <th class="px-4 py-3">Service title</th>
                             <th class="px-4 py-3">Status</th>
+                            <th class="px-4 py-3 text-center">Position</th>
                             <th class="px-4 py-3">Date</th>
                             <th class="px-4 py-3">Actions</th>
                         </tr>
@@ -42,6 +43,7 @@
                                 thumbnailUrl="{{ asset($service->thumbnail) }}"
                                 title="{{$service->title}}"
                                 status="{{ $service->is_published ? 'Published' : 'Draft'}}"
+                                position="{{ $service->position }}"
                                 created_at="{{ \Carbon\Carbon::parse($service->created_at)->format('d.m.Y')  }}"
                                 editHref="{{ route('admin.services.edit', ['service' => $service]) }}"
                                 itemId="{{$service->id}}"

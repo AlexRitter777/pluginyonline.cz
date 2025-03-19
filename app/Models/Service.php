@@ -10,7 +10,7 @@ class Service extends Model
 {
 
     use HasSlug;
-    protected $fillable = ['title', 'description', 'content', 'category_id', 'is_published', 'thumbnail'];
+    protected $fillable = ['title', 'description', 'content', 'category_id', 'is_published', 'thumbnail', 'position'];
 
 
     public function getSlugOptions() : SlugOptions

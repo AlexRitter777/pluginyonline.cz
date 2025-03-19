@@ -1,14 +1,14 @@
-@props(['thumbnailUrl' => '', 'title' => '', 'name' =>'', 'status'=>'', 'created_at'=>'', 'editHref' => '', 'itemId' => ''])
+@props(['thumbnailUrl' => '', 'title' => '', 'name' =>'', 'status'=>'', 'created_at'=>'', 'position' => '', 'editHref' => '', 'itemId' => ''])
 
 <tr class="text-gray-700 dark:text-gray-400">
     <td class="px-4 py-3">
         <div class="flex items-center text-sm">
             <!-- Avatar with inset shadow -->
             <div
-                class="relative hidden w-8 h-8 mr-3 rounded-full md:block"
+                class="relative hidden w-8 h-8 mr-3 md:block"
             >
                 <img
-                    class="object-cover w-full h-full rounded-full"
+                    class="object-cover w-full h-full "
                     src="{{ $thumbnailUrl }}"
                     alt=""
                     loading="lazy"
@@ -29,6 +29,9 @@
                         >
                           {{ $status }}
                         </span>
+    </td>
+    <td class="px-4 py-3 text-sm text-center">
+        {{ $position }}
     </td>
     <td class="px-4 py-3 text-sm">
         {{ $created_at }}

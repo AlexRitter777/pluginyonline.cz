@@ -33,13 +33,13 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
 
-
         $request->validate([
             'title' => 'required|min:3|max:255',
             'description' => 'required|min:3|max:800',
             'content' => new SummernoteContent,
             'is_published' => 'required|boolean',
-            'thumbnail' => 'nullable|image',
+            'thumbnail' => 'nullable|image|max:6144',
+            'position' => 'nullable|integer|min:1',
         ]);
 
         $data = $request->all();
@@ -56,7 +56,7 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
-        //
+
     }
 
     /**
@@ -64,7 +64,8 @@ class ServiceController extends Controller
      */
     public function edit(Service $service)
     {
-        //
+        return view('admin.services.edit', compact('service'));
+
     }
 
     /**

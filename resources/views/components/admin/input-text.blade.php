@@ -1,8 +1,10 @@
-@props(['name' => '',
+@props(['type' => '',
+        'name' => '',
         'id' => '',
         'value' => '',
         'autocomplete' => 'on',
         'required' => '',
+        'disabled' => '',
         'placeholder' => '',
         'validationRules' => ''
         ])
@@ -13,12 +15,13 @@
         {{ $slot }}
     </span>
     <input
-        type="text"
+        type="{{ $type }}"
         name="{{ $name }}"
         id="{{ $id }}"
         value="{{ $value }}"
         autocomplete="{{ $autocomplete }}"
         {{ $required }}
+        {{ $disabled }}
         placeholder="{{ $placeholder }}"
         data-rules="{{  $validationRules }}"
         data-title="{{ $slot }}"

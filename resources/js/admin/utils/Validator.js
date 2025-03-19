@@ -5,7 +5,7 @@ export class Validator {
         required: 'validateValue',
         min: 'validateMin',
         max: 'validateMax',
-        email: 'validateEmail'
+        posInteger: 'validatePositiveInteger'
     }
 
     // Object to store validation errors
@@ -129,6 +129,20 @@ export class Validator {
         }
         return null;
     }
+
+    /**
+     * Validates that the field contains a positive integer.
+     * @param {string|number} fieldValue - The value of the field.
+     * @param {string} title - The field's display name.
+     * @returns {string|null} - Error message if invalid, otherwise null.
+     */
+    validatePositiveInteger(fieldValue, title) {
+        if (isNaN(fieldValue) || !Number.isInteger(Number(fieldValue)) || Number(fieldValue) < 0) {
+            return `${title} must be a positive integer!`;
+        }
+        return null;
+    }
+
 
     /**
      * Splits rule string into an array of rules.

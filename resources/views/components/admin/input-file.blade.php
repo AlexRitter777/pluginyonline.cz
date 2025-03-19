@@ -3,11 +3,14 @@
     'id' => null,
     'accept' => '',
     'required' => false,
+    'imageName' => '',
+    'tempImageUrl' => ''
 ])
 
 
 
-<label class="block text-sm relative mt-4" x-data="imageUpload()">
+<label class="block text-sm relative mt-4" x-data="imageUpload()" x-init="imageName = '{{ $imageName ?? '' }}'; tempImageUrl = '{{ $tempImageUrl ?? '' }}'"
+>
     <span class="text-gray-700 dark:text-gray-400">
         {{ $slot }}
     </span>
@@ -26,7 +29,6 @@
             {{ $required ? 'required' : '' }}
             class="hidden"
             x-ref="inputFile"
-            {{--onchange="this.nextElementSibling.value = this.files.length > 0 ? this.files[0].name : ''"--}}
             @change="handleInputChange"
 
         >

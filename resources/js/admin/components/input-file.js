@@ -1,6 +1,6 @@
 export default function imageUpload(){
 
-    const maxImageSize = 2 * 1024 * 1024;
+    const maxImageSize = 6 * 1024 * 1024;
 
     return {
         imageName: '',
@@ -12,7 +12,7 @@ export default function imageUpload(){
 
         handleInputChange(e) {
 
-            console.log('Handled!')
+            //console.log('Handled!')
             this.errorMessage = '';
             const file = e.target.files[0];
 
