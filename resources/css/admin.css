@@ -6,3 +6,22 @@
     box-sizing: border-box;
     border: 0 solid #d5d6d7
 }
+
+.custom-invalid {
+    border: 2px solid red !important;
+}
+
+.dark .custom-invalid {
+    border-color: #ff6b6b !important;
+}
+
+/* For summernote override unordered and order list */
+.note-editable ul{
+    list-style: disc !important;
+    list-style-position: inside !important;
+}
+
+.note-editable ol {
+    list-style: decimal !important;
+    list-style-position: inside !important;
+}

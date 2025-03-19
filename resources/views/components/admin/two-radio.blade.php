@@ -24,4 +24,10 @@
             <span class="ml-2">{{ $valueTitleSecond }}</span>
         </label>
     </div>
+    @error($name)
+    <span
+        class="text-red-600 dark:text-red-400 text-sm mt-1 block"
+    >{{ $message }}
+    </span>
+    @enderror
 </div>

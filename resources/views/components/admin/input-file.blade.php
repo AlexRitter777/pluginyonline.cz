@@ -49,5 +49,11 @@
     <div x-show="tempImageUrl" class="mt-4">
         <img x-bind:src="tempImageUrl" alt="" width="200" class="mx-auto" >
     </div>
+    @error($name)
+    <span
+        class="text-red-600 dark:text-red-400 text-sm mt-1 block"
+    >{{ $message }}
+    </span>
+    @enderror
 </label>
 

@@ -189,6 +189,7 @@ export default {
         'max-h-96',
         'opacity-25',
         'opacity-100',
+        'custom-invalid'
         ],
     plugins: [
         require('@tailwindcss/forms'),

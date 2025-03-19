@@ -39,7 +39,7 @@
 
                         @foreach($services as $service)
                             <x-admin.table-row
-                                thumbnailUrl="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+                                thumbnailUrl="{{ asset($service->thumbnail) }}"
                                 title="{{$service->title}}"
                                 status="{{ $service->is_published ? 'Published' : 'Draft'}}"
                                 created_at="{{ \Carbon\Carbon::parse($service->created_at)->format('d.m.Y')  }}"

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Service;
+use App\Rules\SummernoteContent;
+use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -30,8 +32,23 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-        dd(request()->all());
 
+
+        $request->validate([
+            'title' => 'required|min:3|max:255',
+            'description' => 'required|min:3|max:800',
+            'content' => new SummernoteContent,
+            'is_published' => 'required|boolean',
+            'thumbnail' => 'nullable|image',
+        ]);
+
+        $data = $request->all();
+
+        $data['thumbnail'] = ImageUploadService::uploadImage($request, 'thumbnail');
+
+        $service = Service::create($data);
+
+        return redirect(route('admin.services.index'))->with('success', 'Service has been created!');
     }
 
     /**

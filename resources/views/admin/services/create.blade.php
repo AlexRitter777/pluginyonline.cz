@@ -11,13 +11,14 @@
                     Create new service
                 </h2>
 
-                <form x-data="formValidation" id="services" @submit.prevent="validate" action="{{route('admin.services.store')}}" enctype="multipart/form-data" method="post">
+                <form x-data="formValidation" id="services" {{--@submit.prevent="validate"--}} action="{{route('admin.services.store')}}" enctype="multipart/form-data" method="post">
                     @csrf
                     <x-admin.input-text
                         name="title"
                         id="title"
-                        validationRules="required|min:3|max:60"
+                        validationRules="required|min:3|max:255"
                         placeholder="Enter service title..."
+                        value="{{ old('title') }}"
                     >
                         Title
                     </x-admin.input-text>
@@ -25,8 +26,9 @@
                     <x-admin.textarea
                         name="description"
                         id="description"
-                        validationRules="required|min:3|max:300"
+                        validationRules="required|min:3|max:800"
                         placeholder="Enter service description..."
+                        value="{{ old('description') }}"
                     >
                         Description
                     </x-admin.textarea>
@@ -36,6 +38,7 @@
                         id="content"
                         placeholder="Enter some content..."
                         rows="8"
+                        value="{!! old('content') !!}"
                     >
                         Content
                     </x-admin.textarea>
