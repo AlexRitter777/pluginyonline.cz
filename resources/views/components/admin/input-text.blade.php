@@ -6,7 +6,7 @@
         'required' => '',
         'disabled' => '',
         'placeholder' => '',
-        'validationRules' => ''
+        'validationRules' => '',
         ])
 
 

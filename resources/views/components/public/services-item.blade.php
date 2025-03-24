@@ -1,15 +1,16 @@
 @props(['href' => '', 'img' =>'', 'alt' =>'', 'title' => ''])
 
-<div class="w-full md:w-1/2 lg:w-1/3 px-4 ">
+<div class="w-full md:w-1/2 lg:w-1/3 px-4">
     <div class="bg-white mb-10">
         <a href="{{ $href }}" class="block w-full">
-            <img src="{{ Vite::asset("$img") }}" alt="{{ $alt }}" class="w-full" />
+            {{--<img src="{{ Vite::asset("$img") }}" alt="{{ $alt }}" class="w-full" />--}}
+            <x-db-image :url="$img"/>
         </a>
-        <div class="p-8 sm:p-11 md:p-8 lg:px-6 xl:p-10 2xl:p-11">
-            <h3>
+        <div class="p-8 sm:p-11 md:p-8 lg:px-6 xl:p-10 2xl:p-11 ">
+            <h3 class="min-h-[65px]">
                 <a href="{{ $href }}" class="font-bold text-dark text-lg sm:text-xl hover:text-primary block mb-4"> {{ $title }}</a>
             </h3>
-            <p class="text-base text-body-color leading-relaxed pb-7 mb-6 border-b border-[#F3F3F3]">
+            <p class="text-base text-body-color leading-relaxed pb-7 mb-6 border-b border-[#F3F3F3] min-h-[150px]">
                 {{ $slot }}
             </p>
 

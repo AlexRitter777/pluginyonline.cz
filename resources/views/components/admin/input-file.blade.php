@@ -4,18 +4,21 @@
     'accept' => '',
     'required' => false,
     'imageName' => '',
-    'tempImageUrl' => ''
+    'tempImageUrl' => '',
+    'oldImage' => ''
 ])
 
 
 
-<label class="block text-sm relative mt-4" x-data="imageUpload()" x-init="imageName = '{{ $imageName ?? '' }}'; tempImageUrl = '{{ $tempImageUrl ?? '' }}'"
+<label class="block text-sm relative mt-4" x-data="imageUpload()" x-init="imageName = '{{ $imageName ?? '' }}'; tempImageUrl = '{{ $tempImageUrl ?? '' }}'; oldImage='{{ $oldImage ?? '' }}'"
 >
     <span class="text-gray-700 dark:text-gray-400">
         {{ $slot }}
     </span>
 
     <div class="relative mt-1 flex items-center" >
+
+        <input type="hidden" x-model="oldImage" name="old_thumbnail" value="{{ $oldImage }}">
 
         <label for="{{ $id ?? $name }}" class="absolute inset-y-0 left-0 flex items-center px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray cursor-pointer">
             Choose file

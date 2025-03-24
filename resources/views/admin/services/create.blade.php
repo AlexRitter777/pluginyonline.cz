@@ -1,4 +1,4 @@
-<x-admin.layouts.admin-layout title="Services">
+<x-admin.layouts.admin-layout title="Create New Service">
 
     <main class="h-full pb-16 overflow-y-auto">
         <div class="container px-6 mx-auto grid">
@@ -17,7 +17,7 @@
                         type="text"
                         name="title"
                         id="title"
-                        validationRules="required|min:3|max:255"
+                        validationRules="required|min:3|max:65"
                         placeholder="Enter service title..."
                         value="{{ old('title') }}"
                     >
@@ -27,7 +27,7 @@
                     <x-admin.textarea
                         name="description"
                         id="description"
-                        validationRules="required|min:3|max:800"
+                        validationRules="required|min:3|max:170"
                         placeholder="Enter service description..."
                         value="{{ old('description') }}"
                     >
@@ -78,9 +78,9 @@
                     </x-admin.input-file>
 
                     <div class="flex mt-10 mb-5 justify-around lg:w-1/2 mx-auto">
-                        <x-admin.button-regular>Preview</x-admin.button-regular>
-                        <x-admin.button-regular>Save</x-admin.button-regular>
-                        <x-admin.button-regular>Cancel</x-admin.button-regular>
+                        <x-admin.button-link>Preview</x-admin.button-link>
+                        <x-admin.button-submit>Save</x-admin.button-submit>
+                        <x-admin.button-link href="{{route('admin.services.index')}}">Cancel</x-admin.button-link>
 
                     </div>
 

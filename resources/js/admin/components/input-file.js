@@ -8,6 +8,7 @@ export default function imageUpload(){
         imageValid: true,
         errorMessage: '',
         tempImageUrl: '',
+        oldImage: '',
 
 
         handleInputChange(e) {
@@ -35,12 +36,15 @@ export default function imageUpload(){
             this.imageName = file.name;
 
             this.tempImageUrl = URL.createObjectURL(file);
+            this.oldImage ='';
+
 
         },
 
         removeImage() {
             this.tempImageUrl = '';
             this.imageName = '';
+            this.oldImage ='';
             this.$refs.inputFile.value = '';
         }
 

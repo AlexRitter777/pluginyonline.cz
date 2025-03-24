@@ -40,7 +40,7 @@
 
                         @foreach($services as $service)
                             <x-admin.table-row
-                                thumbnailUrl="{{ asset($service->thumbnail) }}"
+                                thumbnailUrl="{{ $service->thumbnail }}"
                                 title="{{$service->title}}"
                                 status="{{ $service->is_published ? 'Published' : 'Draft'}}"
                                 position="{{ $service->position }}"

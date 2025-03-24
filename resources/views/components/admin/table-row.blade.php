@@ -7,12 +7,13 @@
             <div
                 class="relative hidden w-8 h-8 mr-3 md:block"
             >
-                <img
+                <x-db-image :url="$thumbnailUrl"/>
+                {{--<img
                     class="object-cover w-full h-full "
                     src="{{ $thumbnailUrl }}"
                     alt=""
                     loading="lazy"
-                />
+                />--}}
                 <div
                     class="absolute inset-0 rounded-full shadow-inner"
                     aria-hidden="true"

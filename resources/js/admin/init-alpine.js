@@ -1,3 +1,6 @@
+import {focusTrap} from "../admin/focus-trap.js";
+
+
 export default () => ({
 
     dark: getThemeFromLocalStorage(),
@@ -36,17 +39,7 @@ export default () => ({
         this.deleteItemConfirmation = false;
     }
 
-    // Modal
-    /*isModalOpen: false,
-    trapCleanup: null,
-    openModal() {
-      this.isModalOpen = true
-      this.trapCleanup = focusTrap(document.querySelector('#modal'))
-    },
-    closeModal() {
-      this.isModalOpen = false
-      this.trapCleanup()
-    },*/
+
   });
 
 function getThemeFromLocalStorage() {

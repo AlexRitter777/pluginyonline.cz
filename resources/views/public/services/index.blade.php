@@ -10,39 +10,18 @@
                     </div>
                 </div>
             </div>
+
             <div class="flex flex-wrap justify-center -mx-4">
-                <x-public.services-item
-                    href="{{ route('services.show', ['id' => 1]) }}"
-                    title="Vývoj pluginů pro WordPress"
-                    img="resources/images/public/services/service-01.jpg"
-                    alt="image-1"
-                >
-                    Rychle a spolehlivě vyvíjíme pluginy pro CMS WordPress na základě požadavků klienta. Přidáváme webům novou unikátní funkcionalitu.
-                </x-public.services-item>
-                <x-public.services-item
-                    href="/services/2"
-                    title="Úpravy šablon WordPress"
-                    img="resources/images/public/services/service-02.jpg"
-                    alt="image-2"
-                >
-                    Upravujeme stávající šablony WordPress cestou vytvoření dceřiné šablony (child theme). Měníme vzhled a rozložení webových stránek.
-                </x-public.services-item>
-                <x-public.services-item
-                    href="/services/3"
-                    title="Správa a údržba WordPress webů"
-                    img="resources/images/public/services/service-03.jpg"
-                    alt="image-3"
-                >
-                    Správa webů s velkým množstvím pluginů, bezpečné zálohování, opravy a aktualizace webových stránek.
-                </x-public.services-item>
-                <x-public.services-item
-                    href="/services/3"
-                    title="Správa a údržba WordPress webů"
-                    img="resources/images/public/services/service-03.jpg"
-                    alt="image-3"
-                >
-                    Správa webů s velkým množstvím pluginů, bezpečné zálohování, opravy a aktualizace webových stránek.
-                </x-public.services-item>
+                @foreach($services as $service)
+                    <x-public.services-item
+                        :href="route('services.show', $service->slug)"
+                        :title="$service->title"
+                        :img="$service->thumbnail"
+                        :alt="$service->slug . '-image'"
+                    >
+                        {{ $service->description }}
+                    </x-public.services-item>
+                @endforeach
             </div>
         </div>
     </section>

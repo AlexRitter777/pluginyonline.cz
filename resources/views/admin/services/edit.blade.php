@@ -1,7 +1,7 @@
-<x-admin.layouts.admin-layout title="Services">
+<x-admin.layouts.admin-layout title="Edit | {{ $service->title }} ">
 
     <main class="h-full pb-16 overflow-y-auto">
-        <div class="container px-6 mx-auto grid">
+        <div x-data="modal" class="container px-6 mx-auto grid">
 
             <div
                 class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 mt-4"
@@ -18,7 +18,7 @@
                         type="text"
                         name="title"
                         id="title"
-                        validationRules="required|min:3|max:255"
+                        validationRules="required|min:3|max:65"
                         placeholder="Enter service title..."
                         value="{{ $service->title }}"
                     >
@@ -28,7 +28,7 @@
                     <x-admin.textarea
                         name="description"
                         id="description"
-                        validationRules="required|min:3|max:800"
+                        validationRules="required|min:3|max:170"
                         placeholder="Enter service description..."
                         value="{{ $service->description }}"
                     >
@@ -37,7 +37,7 @@
 
                     <x-admin.input-text
                         type="text"
-                        name=""
+                        name="slug"
                         id="slug"
                         validationRules=""
                         placeholder=""
@@ -90,6 +90,7 @@
                         accept=".jpg,.png"
                         imageName="{{ basename($service->thumbnail) }}"
                         tempImageUrl="{{ asset($service->thumbnail) }}"
+                        oldImage="{{ $service->thumbnail }}"
                     >
                         Service thumbnail
                     </x-admin.input-file>
@@ -97,15 +98,18 @@
                     <div class="flex mt-10 mb-5 justify-around lg:w-1/2 mx-auto">
                         <x-admin.button-link>Preview</x-admin.button-link>
                         <x-admin.button-submit>Save</x-admin.button-submit>
-                        <x-admin.button-link href="{{route('admin.services.index')}}">Cancel</x-admin.button-link>
-
+                        <x-admin.cancel-btn-link href="{{route('admin.services.index')}}">Cancel</x-admin.cancel-btn-link>
+                        <x-admin.delete-button alpineClick="openModal">Delete</x-admin.delete-button>
                     </div>
-
                 </form>
-
-
             </div>
-
+            <x-admin.modal
+                modalHeader="Delete Confirmation"
+                formAction="{{ route('admin.services.destroy', [$service]) }}"
+            >
+                <h3>Are you sure you want to delete the service <b>"{{ $service->title }}"</b>?</h3>
+            </x-admin.modal>
         </div>
     </main>
+
 </x-admin.layouts.admin-layout>

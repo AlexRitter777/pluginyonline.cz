@@ -7,6 +7,8 @@ use App\Models\Service;
 use App\Rules\SummernoteContent;
 use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
@@ -34,8 +36,8 @@ class ServiceController extends Controller
     {
 
         $request->validate([
-            'title' => 'required|min:3|max:255',
-            'description' => 'required|min:3|max:800',
+            'title' => 'required|min:3|max:65',
+            'description' => 'required|min:3|max:170',
             'content' => new SummernoteContent,
             'is_published' => 'required|boolean',
             'thumbnail' => 'nullable|image|max:6144',
@@ -47,6 +49,8 @@ class ServiceController extends Controller
         $data['thumbnail'] = ImageUploadService::uploadImage($request, 'thumbnail');
 
         $service = Service::create($data);
+
+        Cache::forget('services');
 
         return redirect(route('admin.services.index'))->with('success', 'Service has been created!');
     }
@@ -64,6 +68,7 @@ class ServiceController extends Controller
      */
     public function edit(Service $service)
     {
+
         return view('admin.services.edit', compact('service'));
 
     }
@@ -73,7 +78,37 @@ class ServiceController extends Controller
      */
     public function update(Request $request, Service $service)
     {
-        //
+
+        $request->validate([
+            'title' => 'required|min:3|max:255',
+            'description' => 'required|min:3|max:800',
+            'content' => new SummernoteContent,
+            'is_published' => 'required|boolean',
+            'thumbnail' => 'nullable|image|max:6144',
+            'position' => 'nullable|integer|min:1',
+        ]);
+
+        $data = $request->all();
+        $oldThumbnail = null;
+
+        if(!$data['old_thumbnail'] && $service->thumbnail) {
+            $oldThumbnail = $service->thumbnail;
+        }
+
+        if($data['old_thumbnail']) {
+            $data['thumbnail'] = $data['old_thumbnail'];
+        }else{
+            $data['thumbnail'] = ImageUploadService::uploadImage($request, 'thumbnail', $oldThumbnail);
+        }
+
+
+        $service->update($data);
+
+        Cache::forget('services');
+
+        return redirect(route('admin.services.index'))->with('success', 'Service has been updated!');
+
+
     }
 
     /**
@@ -81,7 +116,12 @@ class ServiceController extends Controller
      */
     public function destroy(string $id)
     {
+
         $service = Service::find($id);
+        //dd($service->thumbnail);
+        if(isset($service->thumbnail)) {
+            Storage::delete($service->thumbnail);
+        }
         $service->delete();
         return redirect()->route('admin.services.index')->with('success', 'Service deleted successfully.');
     }
