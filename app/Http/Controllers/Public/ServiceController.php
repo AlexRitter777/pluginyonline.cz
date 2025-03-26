@@ -14,8 +14,11 @@ class ServiceController extends Controller
         return view('public.services.index', ['services' => $services]);
     }
 
-    public function show(string $id) {
-        return view('public.services.show', ['id' => $id]);
+    public function show(string $slug) {
+
+        $service = Service::findBySlug($slug);
+
+        return view('public.services.show', ['service' => $service]);
     }
 
 }

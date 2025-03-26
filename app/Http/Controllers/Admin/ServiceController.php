@@ -58,10 +58,23 @@ class ServiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Service $service)
+    public function showSingle(string $slug)
     {
+        $service = Service::findBySlug($slug);
+
+        return view('admin.services.preview-single', ['service' => $service]);
 
     }
+
+    public function showGrid(string $slug)
+    {
+        $service = Service::findBySlug($slug);
+
+        return view('admin.services.preview-grid', ['service' => $service]);
+
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.

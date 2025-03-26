@@ -50,6 +50,8 @@ Route::middleware(IsAdmin::class)->group(function () {
 Route::prefix('rw-admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']) ->name('admin.dashboard');
     Route::resource('services', ServiceController::class, ['as' => 'admin']);
+    Route::get('services/single/{slug}', [ServiceController::class, 'showSingle'])->name('admin.services.single');
+    Route::get('services/grid/{slug}', [ServiceController::class, 'showGrid'])->name('admin.services.grid');
     Route::resource('portfolio', PortfolioController::class, ['as' => 'admin']);
 });
 

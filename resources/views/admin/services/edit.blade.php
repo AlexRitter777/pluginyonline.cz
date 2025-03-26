@@ -95,8 +95,36 @@
                         Service thumbnail
                     </x-admin.input-file>
 
-                    <div class="flex mt-10 mb-5 justify-around lg:w-1/2 mx-auto">
-                        <x-admin.button-link>Preview</x-admin.button-link>
+                    <div x-data="{isPreviewOpen: false}" class="relative flex mt-10 mb-5 justify-around lg:w-1/2 mx-auto">
+                        <x-admin.button-link
+                            clickCondition="@click.stop"
+                            clickAction="isPreviewOpen = !isPreviewOpen"
+                        >
+                            Preview
+                        </x-admin.button-link>
+                        <template x-if="isPreviewOpen">
+                            <ul
+                                @click.outside="isPreviewOpen = !isPreviewOpen"
+                                class="absolute [right:204px] [top:-94px] w-40 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:text-gray-300 dark:border-gray-700 dark:bg-gray-700"
+                            >
+                                <li class="flex">
+                                    <a
+                                        class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                        href="{{ route('admin.services.single', $service->slug) }}"
+                                    >
+                                        <span>Single</span>
+                                    </a>
+                                </li>
+                                <li class="flex">
+                                    <a
+                                        class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                        href="{{ route('admin.services.grid', $service->slug) }}"
+                                    >
+                                        <span>Grid</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </template>
                         <x-admin.button-submit>Save</x-admin.button-submit>
                         <x-admin.cancel-btn-link href="{{route('admin.services.index')}}">Cancel</x-admin.cancel-btn-link>
                         <x-admin.delete-button alpineClick="openModal">Delete</x-admin.delete-button>
