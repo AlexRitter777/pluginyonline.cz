@@ -1,5 +1,6 @@
 <div
     x-show="isSideMenuOpen"
+    x-cloak
     x-transition:enter="transition ease-in-out duration-150"
     x-transition:enter-start="opacity-0"
     x-transition:enter-end="opacity-100"

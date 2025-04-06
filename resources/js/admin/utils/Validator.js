@@ -5,7 +5,8 @@ export class Validator {
         required: 'validateValue',
         min: 'validateMin',
         max: 'validateMax',
-        posInteger: 'validatePositiveInteger'
+        posInteger: 'validatePositiveInteger',
+        summernoteContent: 'validateSummernoteContent'
     }
 
     // Object to store validation errors
@@ -28,7 +29,6 @@ export class Validator {
             if (!inputElement) continue;
 
             let rules = inputElement.getAttribute('data-rules');
-
 
             if (!rules) continue;
 
@@ -74,7 +74,7 @@ export class Validator {
                 continue;
             }
 
-            let validationResult = validationMethod.call(this, fieldValue, title, ...args);
+            let validationResult = validationMethod.call(this, fieldValue, title, ...args, fieldName);
 
             if(validationResult) {
                 this.errors[fieldName] = validationResult;
@@ -143,6 +143,29 @@ export class Validator {
         return null;
     }
 
+    /**
+     * Validates Summernote content by stripping HTML tags
+     * and checking that some meaningful text is present.
+     * Also adds or removes a visual invalid class from the Summernote container.
+     *
+     * @param {string} fieldValue - The raw HTML content from Summernote.
+     * @param {string} title - The field's display name for error messages.
+     * @param {string} fieldName - The input name used to locate the Summernote wrapper.
+     * @returns {string|null} - Error message if content is empty, otherwise null.
+     */
+    validateSummernoteContent(fieldValue, title, fieldName) {
+
+        const plainText = this.stripTags(fieldValue);
+
+        if (plainText.trim().length === 0) {
+            this.addSummernoteClass(fieldName);
+            return `${title} is required!`
+        }
+        this.removeSummernoteClass(fieldName);
+        return null;
+
+    }
+
 
     /**
      * Splits rule string into an array of rules.
@@ -152,5 +175,43 @@ export class Validator {
     dispatchRules(rules) {
         return rules.split('|');
     }
+
+    /**
+     * Removes all HTML tags from a string to extract plain text.
+     * Used for validating rich text input (like Summernote).
+     *
+     * @param {string} html - The HTML string to clean.
+     * @returns {string} - Plain text with no HTML tags.
+     */
+    stripTags(html) {
+        const div = document.createElement('div')
+        div.innerHTML = html
+        return div.textContent || div.innerText || ''
+    }
+
+
+    /**
+     * Adds a CSS class to the Summernote wrapper div.
+     *
+     * @param {string} name - The name attribute of the Summernote input.
+     */
+    addSummernoteClass(name){
+        const summernoteInput = document.querySelector(`[name="${name}"]`);
+        const nextDiv = summernoteInput?.nextElementSibling;
+        nextDiv?.classList.add('custom-invalid');
+    }
+
+    /**
+     * Remove a CSS class to the Summernote wrapper div.
+     *
+     * @param {string} name - The name attribute of the Summernote input.
+     */
+    removeSummernoteClass(name) {
+        const summernoteInput = document.querySelector(`[name="${name}"]`);
+        const nextDiv = summernoteInput?.nextElementSibling;
+        nextDiv?.classList.remove('custom-invalid');
+    }
+
+
 
 }

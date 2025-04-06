@@ -37,6 +37,7 @@
                     <x-admin.textarea
                         name="content"
                         id="content"
+                        validationRules="summernoteContent"
                         placeholder="Enter some content..."
                         rows="8"
                         value="{!! old('content') !!}"

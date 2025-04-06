@@ -1,4 +1,4 @@
-import './bootstrap';
+/*import './bootstrap';
 import 'bootstrap';
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'datatables.net-bs4';
@@ -6,8 +6,8 @@ import 'datatables.net-buttons-bs4';
 import 'datatables.net-responsive-bs4';
 import DataTable from 'datatables.net-dt';
 import.meta.glob([
-    '../images/**',
-    '../fonts/**',
+    '../images/!**',
+    '../fonts/!**',
 ]);
 import './template';
 import './off-canvas';
@@ -27,7 +27,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 let table = new DataTable('#recent-purchases-listing', {
     responsive: true
-});
+});*/
+
 
 
 

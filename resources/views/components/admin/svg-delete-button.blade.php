@@ -20,6 +20,7 @@
 </button>
     <div
         x-show="deleteItemConfirmation === {{$itemId}}"
+        x-cloak
         x-transition:leave="transition ease-in duration-150"
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"

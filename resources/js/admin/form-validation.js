@@ -11,11 +11,21 @@ export default () => ({
         const validationResult = validator.validateForm(form);
 
         if(validationResult === null || Object.values(validationResult).every(value => value === null)) {
+
             form.submit();
             return;
         }
 
         this.errors = validationResult;
+
+        form.dispatchEvent(new CustomEvent('failedValidation', {
+            bubbles: true,
+            detail: {
+                errors: validationResult,
+                form
+            }
+        }));
+
     }
 
 });

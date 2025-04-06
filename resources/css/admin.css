@@ -25,3 +25,7 @@
     list-style: decimal !important;
     list-style-position: inside !important;
 }
+
+[x-cloak] {
+    display: none !important;
+}

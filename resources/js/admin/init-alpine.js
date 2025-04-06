@@ -3,7 +3,7 @@ import {focusTrap} from "../admin/focus-trap.js";
 
 export default () => ({
 
-    dark: getThemeFromLocalStorage(),
+    dark: getCurrentTheme(),
     toggleTheme() {
       this.dark = !this.dark
       setThemeToLocalStorage(this.dark)
@@ -58,3 +58,11 @@ function getThemeFromLocalStorage() {
 function setThemeToLocalStorage(value) {
   window.localStorage.setItem('dark', value)
 }
+
+function getCurrentTheme(){
+    return document.documentElement.classList.contains('dark');
+}
+
+
+
+

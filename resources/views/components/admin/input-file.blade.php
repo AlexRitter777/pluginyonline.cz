@@ -14,8 +14,9 @@
     x-init="imageName = '{{ $imageName ?? '' }}';
             tempImageUrl = '{{ $tempImageUrl ?? '' }}';
             oldImage='{{ $oldImage ?? '' }}'"
+    class="mb-4"
 >
-<label class="block text-sm relative mt-4">
+<label class="block text-sm relative">
     <span class="text-gray-700 dark:text-gray-400">
         {{ $slot }}
     </span>
@@ -24,7 +25,7 @@
 
         <input type="hidden" x-model="oldImage" name="old_thumbnail" value="{{ $oldImage }}">
 
-        <label for="{{ $id ?? $name }}" class="absolute inset-y-0 left-0 flex items-center px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray cursor-pointer">
+        <label for="{{ $id ?? $name }}" class="absolute inset-y-0 left-0 flex items-center px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray cursor-pointer dark:bg-gray-600 dark:text-gray-200">
             Choose file
         </label>
 
@@ -49,14 +50,14 @@
 
         >
         <a href="" @click.prevent="removeImage" x-show="imageName">
-            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <svg class="w-6 h-6 text-gray-800 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
             </svg>
         </a>
     </div>
 </label>
 
-<span x-show="errorMessage" x-text="errorMessage" class="text-xs text-red-600 dark:text-red-400"></span>
+<span x-show="errorMessage" x-text="errorMessage" class="text-sm text-red-600 dark:text-red-400"></span>
 
     <div x-show="tempImageUrl" class="mt-4">
     <img x-bind:src="tempImageUrl" alt="" width="200" class="mx-auto" >

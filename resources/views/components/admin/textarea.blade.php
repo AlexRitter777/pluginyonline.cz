@@ -7,7 +7,7 @@
         'validationRules' => ''
        ])
 
-<label class="block mt-4 text-sm">
+<label class="block text-sm mb-4">
     <span class="text-gray-700 dark:text-gray-400">
         {{ $slot }}
     </span>

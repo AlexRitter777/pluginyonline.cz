@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePortfolioRequest;
 use App\Models\Portfolio;
+use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class PortfolioController extends Controller
 {
@@ -13,7 +16,9 @@ class PortfolioController extends Controller
      */
     public function index()
     {
-        //
+        $portfolios = Portfolio::orderBy('created_at', 'desc')->paginate(4);
+
+        return view('admin.portfolio.index', ['portfolios' => $portfolios]);
     }
 
     /**
@@ -21,15 +26,52 @@ class PortfolioController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.portfolio.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePortfolioRequest $request)
     {
-        //
+
+        $validated = $request->validated();
+
+        $validated['thumbnail'] = ImageUploadService::uploadImage($request, 'thumbnail');
+
+        $portfolio = Portfolio::create($validated);
+
+        $images = $request->file('images') ?: [];
+
+
+        $positions = json_decode($request->input('positions'),true);
+
+        //$images['id'] => file
+
+        //'id' => 'position'
+
+        foreach ($positions as $key => $position) {
+
+            if($images[$key]) {
+
+                $uploadedImage = ImageUploadService::uploadOnlyImage($images[$key]);
+                $path = $uploadedImage['path'];
+                $imageName = $uploadedImage['name'];
+
+                $portfolio->images()->create([
+                    'path' => $path,
+                    'filename' => $imageName,
+                    'position' => $position
+                ]);
+            }
+        }
+
+
+        //Cache::forget('portfolios');
+
+
+        return redirect()->route('admin.portfolio.index');
+
     }
 
     /**

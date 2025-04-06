@@ -12,22 +12,22 @@ export function initSummernote(selector = '#summernote', options = {}) {
         const applyTheme = () => {
             const isDark = document.documentElement.classList.contains('dark');
 
-            // Toggle classes on the Summernote editor wrapper
-            $textarea.next('.note-editor')
-                .toggleClass('dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700', isDark)
-                .toggleClass('text-gray-900 bg-white border-gray-300', !isDark);
-
-            // Toggle classes on the Summernote editing area
-            $textarea.next('.note-editor').find('.note-editing-area')
-                .toggleClass('dark:bg-gray-700 dark:text-gray-300', isDark)
-                .toggleClass('bg-white text-gray-900', !isDark);
-
-            // Toggle classes on the editable content area and add textarea's original classes
             $textarea.next('.note-editor').find('.note-editable')
                 .toggleClass('dark:bg-gray-700 dark:text-gray-300', isDark)
-                .toggleClass('bg-white text-gray-900', !isDark)
                 .addClass(textareaClasses);
+
+            $textarea.next('.note-editor').find('.note-toolbar')
+                .toggleClass('dark:bg-gray-700', isDark);
+
+            $textarea.next('.note-editor').find('.note-toolbar .note-btn-group')
+                .toggleClass('dark:bg-gray-700', isDark)
+
+            $textarea.next('.note-editor').find('.note-toolbar .note-btn-group .note-btn')
+                .toggleClass('dark:bg-gray-700 dark:text-gray-300', isDark)
+
         };
+
+
 
         // Initialize Summernote with toolbar and options
         $textarea.summernote({
@@ -40,6 +40,15 @@ export function initSummernote(selector = '#summernote', options = {}) {
                 ['para', ['ul', 'ol', 'paragraph']],
                 ['height', ['height']]
             ],
+            callbacks: {
+                onDrop: function(e) {
+                    e.preventDefault();
+                },
+                onImageUpload: function(files) {
+
+                },
+
+            },
             placeholder: 'Enter content here...'
         });
 

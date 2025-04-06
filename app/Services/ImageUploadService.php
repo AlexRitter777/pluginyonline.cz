@@ -9,6 +9,21 @@ use Illuminate\Support\Facades\Storage;
 class ImageUploadService
 {
 
+    public static function uploadOnlyImage(UploadedFile $image)
+    {
+        $uploadedImage = [];
+
+        $newImageName = self::generateUniqueFileName($image);
+
+        $uploadedImage['name'] = $newImageName;
+
+        $folder = date('Y-m-d');
+
+        $uploadedImage['path'] = $image->storeAs("images/{$folder}", $newImageName);
+
+        return $uploadedImage;
+
+    }
 
     public static function uploadImage(Request $request, string $key, $image = null) {
 
