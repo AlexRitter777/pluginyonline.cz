@@ -5,6 +5,6 @@
         {{ $title }}
         <span class="text-body-color">:</span>
     </span>
-    <span class="w-full font-medium text-body-color text-base pl-5 lg:pl-0 xl:pl-5"> {{ $desc }} </span>
+    <span class="w-full font-medium text-body-color text-base pl-5 lg:pl-0 xl:pl-5"> {{ $slot }} </span>
 </li>
 

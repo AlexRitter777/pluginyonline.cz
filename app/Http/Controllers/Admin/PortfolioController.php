@@ -101,12 +101,14 @@ class PortfolioController extends Controller
         $images = $request->file('images') ?: [];
         $positions = json_decode($request->input('positions'),true);
         $oldImagesIds = json_decode($request->input('oldImagesIds'),true);
-        $existingImages = $portfolio->images()->get();
+        $existingImages = $portfolio->images()->get()->keyBy('unique_id');
+
+        //dd($positions, $existingImages, $oldImagesIds);
 
         $portfolio->updateImages($positions, $images, $oldImagesIds, $existingImages);
         $portfolio->deleteImages($existingImages, $oldImagesIds);
 
-        Cache::forget('portfolio');
+        Cache::forget('portfolios');
 
         return redirect(route('admin.portfolio.index'))
             ->with('success', 'Project has been updated!');

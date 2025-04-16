@@ -15,13 +15,13 @@ class PortfolioController extends Controller
 
     public function show(string $id) {
 
-       $portfolio = Portfolio::find($id);
+       $portfolio = Portfolio::with('images')->find($id);
 
        if(!$portfolio){
            return redirect()->route('portfolio.index');
        }
 
-       return view('public.portfolio.show', ['id' => $id]);
+       return view('public.portfolio.show', ['portfolio' => $portfolio]);
 
     }
 

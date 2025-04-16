@@ -9,7 +9,6 @@
                 <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                     Edit project - {{ $portfolio->name }}
                 </h2>
-                @dump($errors->getMessages())
                 <form x-data="formValidation" id="portfolio" @submit.prevent="validate" action="{{route('admin.portfolio.update', $portfolio)}}" enctype="multipart/form-data" method="post">
                     @csrf
                     @method('PUT')
@@ -144,8 +143,6 @@
                     >
                         Project thumbnail
                     </x-admin.input-file>
-                    @dump($images)
-                    @dump($paths)
                     <x-admin.input-gallery
                         :paths="$paths"
                         :images="$images"
@@ -162,10 +159,7 @@
                     </div>
 
                 </form>
-
-
             </div>
-
         </div>
     </main>
 </x-admin.layouts.admin-layout>

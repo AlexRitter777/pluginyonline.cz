@@ -1,4 +1,4 @@
-<x-public.layouts.base-layout title="!!!!">
+<x-public.layouts.base-layout title="{{ $portfolio->title }}">
 
     <!-- ====== Page Title Section Start -->
     <section class="relative z-10 pt-[150px] pb-[90px] mb-20 overflow-hidden">
@@ -6,9 +6,9 @@
             <div class="flex flex-wrap items-center mx-[-16px]">
                 <div class="w-full md:w-8/12 lg:w-7/12 px-4">
                     <div class="max-w-[570px] mb-12 md:mb-0">
-                        <h1 class="font-bold text-black text-2xl sm:text-3xl mb-5">Portfolio Details Page. Id: {{ $id }}</h1>
+                        <h1 class="font-bold text-black text-2xl sm:text-3xl mb-5">{{ $portfolio->title }}</h1>
                         <p class="font-medium text-base text-body-color leading-relaxed">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius eros eget sapien consectetur ultrices. Ut quis dapibus libero.
+                            {{ $portfolio->description }}
                         </p>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
                                 <a href="{{ route('portfolio.index') }}" class="font-medium text-base text-body-color pr-1 hover:text-primary"> Všechny projekty </a>
                                 <span class="block w-2 h-2 border-t-2 border-r-2 border-body-color rotate-45 mr-3"></span>
                             </li>
-                            <li class="font-medium text-base text-primary">Portfolio Details</li>
+                            <li class="font-medium text-base text-primary">{{ $portfolio->title }}</li>
                         </ul>
                     </div>
                 </div>
@@ -67,23 +67,24 @@
             <div class="flex flex-wrap -mx-5">
                 <div class="w-full lg:w-8/12 px-5">
                     <div>
+
+                        {{--Project Images Carousel Start--}}
+                        @if(count($portfolio->images) != 0)
                         <div class="project-images-carousel flex lg:h-[520px] h-auto relative mb-6">
                             <div class="flex-1 overflow-hidden flex items-center justify-center lg:justify-start">
                                 <img
-                                    src="/img/cars/Lexus-RX200t-2016/1.jpeg"
+                                    src="{{asset($portfolio->images[0]->path)}}"
                                     alt=""
                                     class="max-w-full max-h-full rounded-xl object-cover"
                                     id="activeImage"
                                 />
                             </div>
                             <div class="project-image-thumbnails hidden lg:block w-[110px] p-[5px] overflow-x-hidden overflow-y-auto">
-                                <img src="/img/cars/Lexus-RX200t-2016/1.jpeg" class="w-full h-[80px] rounded object-contain cursor-pointer" alt="" />
-                                <img src="/img/cars/Lexus-RX200t-2016/2.jpeg" class="w-full h-[80px] rounded object-contain cursor-pointer" alt="" />
-                                <img src="/img/cars/Lexus-RX200t-2016/3.jpeg" class="w-full h-[80px] rounded object-contain cursor-pointer" alt="" />
-                                <img src="/img/cars/Lexus-RX200t-2016/4.jpeg" class="w-full h-[80px] rounded object-contain cursor-pointer" alt="" />
-                                <img src="/img/cars/Lexus-RX200t-2016/5.jpeg" class="w-full h-[80px] rounded object-contain cursor-pointer" alt="" />
-                                <img src="/img/cars/Lexus-RX200t-2016/6.jpeg" class="w-full h-[80px] rounded object-contain cursor-pointer" alt="" />
-                                <img src="/img/cars/Lexus-RX200t-2016/7.jpeg" class="w-full h-[80px] rounded object-contain cursor-pointer" alt="" />
+
+                                    @foreach($portfolio->images as $image)
+                                        <img src="{{asset($image->path)}}" class="w-full h-[80px] rounded object-contain cursor-pointer" alt=""/>
+                                    @endforeach
+
                             </div>
                             <button class="carousel-button prev-button" id="prevButton">
                                 <svg
@@ -118,48 +119,35 @@
                                 </svg>
                             </button>
                         </div>
-                        <h3 class="font-bold text-black text-2xl sm:text-4xl lg:text-3xl mb-7">Professional graphics design</h3>
-                        <p class="text-base sm:text-lg lg:text-base xl:text-lg text-body-color mb-8">
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat.
-                        </p>
-                        <p class="text-base sm:text-lg lg:text-base xl:text-lg text-body-color mb-10">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis enim lobortis scelerisque fermentum. Neque sodales ut
-                            etiam sit amet. Ligula ullamcorper proin libero nunc consequat interdum varius. Quam pellentesque nec nam.
-                        </p>
-                        <h4 class="font-bold text-xl sm:text-2xl lg:text-xl xl:text-2xl text-black mb-8"><span class="text-primary">01.</span> Marketing solutions</h4>
-                        <ul class="list list-inside list-disc mb-7">
-                            <li class="text-base sm:text-lg lg:text-base xl:text-lg text-primary mb-3">
-                                <span class="text-body-color"> Consectetur adipiscing elit in voluptate velit. </span>
-                            </li>
-                            <li class="text-base sm:text-lg lg:text-base xl:text-lg text-primary mb-3">
-                                <span class="text-body-color"> Mattis vulputate cupidatat. </span>
-                            </li>
-                            <li class="text-base sm:text-lg lg:text-base xl:text-lg text-primary mb-3">
-                                <span class="text-body-color"> Vulputate enim nulla aliquet porttitor odio pellentesque </span>
-                            </li>
-                            <li class="text-base sm:text-lg lg:text-base xl:text-lg text-primary mb-3">
-                                <span class="text-body-color"> Ligula ullamcorper malesuada proin </span>
-                            </li>
-                        </ul>
-                        <p class="text-base sm:text-lg lg:text-base xl:text-lg text-body-color mb-10">
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat.
-                        </p>
-                        <h4 class="font-bold text-xl sm:text-2xl lg:text-xl xl:text-2xl text-black mb-8"><span class="text-primary">02.</span> Branding solutions</h4>
-                        <p class="text-base sm:text-lg lg:text-base xl:text-lg text-body-color mb-8">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis enim lobortis scelerisque fermentum. Neque sodales ut
-                            etiam sit door telium sieat amet.
-                        </p>
+                        @endif
+                        {{--Project Images Carousel End--}}
+
+                        <div>
+                            {!! $portfolio->content !!}
+                        </div>
                     </div>
                 </div>
+
+                {{--Project info card--}}
                 <div class="w-full lg:w-4/12 px-5">
                     <div class="bg-[#F8F9FF] border border-[#D7DFFF] py-9 px-6 sm:p-9 lg:px-6 xl:px-5 rounded-sm mb-10">
                         <h3 class="font-bold text-primary text-[22px] mb-7">Informace o projektu</h3>
                         <ul>
-                            <x-public.project-prop-item title="Název" desc="Woocommerce RW Order Data Export"/>
-                            <x-public.project-prop-item title="Druh" desc="Plugin na míru"/>
-                            <x-public.project-prop-item title="Určení" desc="E-shopy zdravotníckých potřeb"/>
-                            <x-public.project-prop-item title="Hlavní funkce" desc="Vytvořrní PDF dokumentů, exporty objednávek v PDF, XML, CSV"/>
-                            <x-public.project-prop-item title="Potřebuje" desc="WooCommerce"/>
+                            <x-public.project-prop-item title="Název">
+                                {{ $portfolio->name }}
+                            </x-public.project-prop-item>
+                            <x-public.project-prop-item title="Druh">
+                                {{ $portfolio->type }}
+                            </x-public.project-prop-item>
+                            <x-public.project-prop-item title="Určení">
+                                {{ $portfolio->purpose }}
+                            </x-public.project-prop-item>
+                            <x-public.project-prop-item title="Hlavní funkce">
+                                {{ $portfolio->features }}
+                            </x-public.project-prop-item>
+                            <x-public.project-prop-item title="Potřebuje">
+                                {{ $portfolio->requirements }}
+                            </x-public.project-prop-item>
                         </ul>
                     </div>
                 </div>
@@ -167,6 +155,5 @@
         </div>
     </section>
     <!-- ====== Blog Section End -->
-
 
 </x-public.layouts.base-layout>

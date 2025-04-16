@@ -101,6 +101,8 @@ export default function InputGallery(){
                 this.positions[key] = index + 1;
             });
 
+           //console.log(this.positions)
+
         },
 
         getImageUrl(image) {
@@ -152,9 +154,9 @@ export default function InputGallery(){
             this.createInputText(this.positions, 'positions');
             this.createInputText(this.strings, 'oldImagesIds');
 
-            // console.log(this.positions);
-            // console.log(this.filesToSend);
-            // console.log( this.strings);
+             // console.log(this.positions);
+             // console.log(this.filesToSend);
+             // console.log(this.strings);
 
             return true;
         },
