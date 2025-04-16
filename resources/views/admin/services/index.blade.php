@@ -45,7 +45,7 @@
                                 :status="$service->is_published ? 'Published' : 'Draft'"
                                 :position="$service->position"
                                 :created_at="\Carbon\Carbon::parse($service->created_at)->format('d.m.Y')"
-                                :editHref="route('admin.services.edit', ['service' => $service])"
+                                :editRoute="route('admin.services.edit', ['service' => $service])"
                                 :itemId="$service->id"
                             />
                         @endforeach

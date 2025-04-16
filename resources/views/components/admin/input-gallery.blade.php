@@ -1,6 +1,17 @@
+@props([
+    'images' => [],
+    'paths' => []
+    ])
 
 
-<div x-data="inputGallery" class="mb-4">
+<div
+    x-data="inputGallery"
+    x-init="positions = {{ json_encode((object) $images) }};
+            files = {{ json_encode((object) $paths) }};
+            console.log(positions, files)"
+
+    class="mb-4"
+>
     <label class="block text-sm text-gray-700 dark:text-gray-400">
         {{ $slot }}
     </label>
@@ -20,7 +31,7 @@
                             alt=""
                             loading="lazy"
                         />
-                        <span x-text="fileName" class="text-sm leading-[1rem] inline-block"></span>
+                        <span x-text="getFileName(file)" class="text-sm leading-[1rem] inline-block"></span>
                     </div>
                 </div>
             </li>
@@ -56,7 +67,7 @@
     </div>
     <span x-show="errorMessage" x-text="errorMessage" class="text-sm text-red-600 dark:text-red-400"></span>
     @foreach ($errors->getMessages() as $key => $messages)
-        @if (Str::startsWith($key, 'images.'))
+        @if (Str::startsWith($key, 'images'))
                 <div class="text-sm text-red-600 dark:text-red-400 mt-2">{{ $messages[0] }}</div>
         @break
         @endif

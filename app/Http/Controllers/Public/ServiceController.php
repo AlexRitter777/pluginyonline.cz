@@ -9,7 +9,9 @@ class ServiceController extends Controller
 {
     public function index() {
 
-        $services = Service::where('is_published', 1)->orderBy('position')->get();
+        $services = Service::where('is_published', 1)
+                        ->orderByRaw('position IS NULL')
+                        ->orderBy('position')->get();
 
         return view('public.services.index', ['services' => $services]);
     }

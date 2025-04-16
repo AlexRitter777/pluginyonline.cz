@@ -181,10 +181,10 @@
             <div class="flex flex-wrap justify-center -mx-4">
                 @foreach($services as $service)
                     <x-public.services-item
-                        :href="route('services.show', $service->slug)"
+                        :showRoute="route('services.show', $service->slug)"
                         :title="$service->title"
-                        :img="$service->thumbnail"
-                        :alt="$service->slug . '-image'"
+                        :imageUrl="$service->thumbnail"
+                        :imageAlt="$service->slug . '-image'"
                     >
                         {{ $service->description }}
                     </x-public.services-item>
@@ -205,115 +205,37 @@
                         <p class="font-medium text-lg text-body-color">Zde najdete ukázky a podrobný popis některých našich prací – vývoj WordPress pluginů na míru, úpravy webových stránek a integrace WooCommerce.</p>
                     </div>
                 </div>
-                <!--<div class="w-full px-4">
-                  <div class="portfolio-buttons flex flex-wrap items-center justify-center mb-12">
-                    <button class="sm:font-semibold text-sm sm:text-base block py-2 px-5 md:mx-2 mb-2 rounded-full text-body-color active" data-filter="*">All</button>
-                    <button class="sm:font-semibold text-sm sm:text-base block py-2 px-5 md:mx-2 mb-2 rounded-full text-body-color hover:bg-primary hover:text-white" data-filter=".web">Web Design</button>
-                    <button class="sm:font-semibold text-sm sm:text-base block py-2 px-5 md:mx-2 mb-2 rounded-full text-body-color hover:bg-primary hover:text-white" data-filter=".graphics">
-                      Graphics
-                    </button>
-                    <button class="sm:font-semibold text-sm sm:text-base block py-2 px-5 md:mx-2 mb-2 rounded-full text-body-color hover:bg-primary hover:text-white" data-filter=".app">App</button>
-                  </div>
-                </div>-->
             </div>
-
             <div class="portfolio-container flex justify-center -mx-4">
+                @if($portfolios)
                 <div class="w-full xl:w-10/12 px-4">
                     <div class="items-wrapper flex flex-wrap justify-center mx-[-16px]">
-                        <div class="w-full md:w-1/2 px-4 item ">
-                            <div class="mb-12">
-                                <div class="relative group mb-8 overflow-hidden shadow-service rounded-md">
-                                    <img src="{{ Vite::asset('resources/images/public/portfolio/portfolio-01.jpg') }}" alt="image" class="w-full" />
-                                    <div
-                                        class="absolute w-full h-full top-0 left-0 bg-primary bg-opacity-[17%] flex items-center justify-center opacity-0 invisible group-hover:opacity-100 group-hover:visible transition"
-                                    >
-                                        <a href="{{ Vite::asset('resources/images/public/portfolio/portfolio-01.jpg') }}" class="glightbox w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full">
-                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M14 8H8V14H6V8H0V6H6V0H8V6H14V8Z" fill="white" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </div>
-                                <h3 class="mt-6">
-                                    <a href="portfolio-details.html" class="font-semibold text-black hover:text-primary text-xl inline-block mb-3"> Startup landing page </a>
-                                </h3>
-                                <p class="font-medium text-base text-body-color">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae dolor ultrices libero.</p>
-                            </div>
-                        </div>
-                        <div class="w-full md:w-1/2 px-4 item ">
-                            <div class="mb-12">
-                                <div class="relative group mb-8 overflow-hidden shadow-service rounded-md">
-                                    <img src="{{ Vite::asset('resources/images/public/portfolio/portfolio-01.jpg') }}" alt="image" class="w-full" />
-                                    <div
-                                        class="absolute w-full h-full top-0 left-0 bg-primary bg-opacity-[17%] flex items-center justify-center opacity-0 invisible group-hover:opacity-100 group-hover:visible transition"
-                                    >
-                                        <a href="{{ Vite::asset('resources/images/public/portfolio/portfolio-01.jpg') }}" class="glightbox w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full">
-                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M14 8H8V14H6V8H0V6H6V0H8V6H14V8Z" fill="white" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </div>
-                                <h3 class="mt-6">
-                                    <a href="portfolio-details.html" class="font-semibold text-black hover:text-primary text-xl inline-block mb-3"> Startup landing page </a>
-                                </h3>
-                                <p class="font-medium text-base text-body-color">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae dolor ultrices libero.</p>
-                            </div>
-                        </div>
-                        <div class="w-full md:w-1/2 px-4 item ">
-                            <div class="mb-12">
-                                <div class="relative group mb-8 overflow-hidden shadow-service rounded-md">
-                                    <img src="{{ Vite::asset('resources/images/public/portfolio/portfolio-01.jpg') }}" alt="image" class="w-full" />
-                                    <div
-                                        class="absolute w-full h-full top-0 left-0 bg-primary bg-opacity-[17%] flex items-center justify-center opacity-0 invisible group-hover:opacity-100 group-hover:visible transition"
-                                    >
-                                        <a href="{{ Vite::asset('resources/images/public/portfolio/portfolio-01.jpg') }}" class="glightbox w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full">
-                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M14 8H8V14H6V8H0V6H6V0H8V6H14V8Z" fill="white" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </div>
-                                <h3 class="mt-6">
-                                    <a href="portfolio-details.html" class="font-semibold text-black hover:text-primary text-xl inline-block mb-3"> Startup landing page </a>
-                                </h3>
-                                <p class="font-medium text-base text-body-color">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae dolor ultrices libero.</p>
-                            </div>
-                        </div>
-                        <div class="w-full md:w-1/2 px-4 item ">
-                            <div class="mb-12">
-                                <div class="relative group mb-8 overflow-hidden shadow-service rounded-md">
-                                    <img src="{{ Vite::asset('resources/images/public/portfolio/portfolio-01.jpg') }}" alt="image" class="w-full" />
-                                    <div
-                                        class="absolute w-full h-full top-0 left-0 bg-primary bg-opacity-[17%] flex items-center justify-center opacity-0 invisible group-hover:opacity-100 group-hover:visible transition"
-                                    >
-                                        <a href="{{ Vite::asset('resources/images/public/portfolio/portfolio-01.jpg') }}" class="glightbox w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full">
-                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M14 8H8V14H6V8H0V6H6V0H8V6H14V8Z" fill="white" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </div>
-                                <h3 class="mt-6">
-                                    <a href="portfolio-details.html" class="font-semibold text-black hover:text-primary text-xl inline-block mb-3"> Startup landing page </a>
-                                </h3>
-                                <p class="font-medium text-base text-body-color">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae dolor ultrices libero.</p>
-                            </div>
-                        </div>
+                        @foreach($portfolios as $portfolio)
+                        <x-public.portfolio-item
+                            :imageUrl="$portfolio->thumbnail"
+                            :showRoute="route('portfolio.show', ['id' => $portfolio->id])"
+                        >
+                            <x-slot:title>{{ $portfolio->title }}</x-slot>
+                            {{ $portfolio->description }}
+                        </x-public.portfolio-item>
+                        @endforeach
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="flex flex-wrap mx-[-16px]">
-            <div class="w-full px-4">
-                <div class="max-w-[600px] mx-auto text-center mb-[50px]">
-                    <a href="{{ route('portfolio.index') }}" class="text-lg font-medium uppercase underline hover:text-primary"> Všechny projekty </a>
+            <div class="flex flex-wrap mx-[-16px]">
+                <div class="w-full px-4">
+                    <div class="max-w-[600px] mx-auto text-center mb-[50px]">
+                        <a href="{{ route('portfolio.index') }}" class="text-lg font-medium uppercase underline hover:text-primary"> Všechny projekty </a>
+                    </div>
                 </div>
             </div>
+            @else
+                <p class="font-semibold text-black text-xl inline-block mb-3">
+                    My first project is on its way — coming soon!
+                </p>
+            @endif
         </div>
-
-
     </section>
     <!-- ====== Portfolio Section End  -->
 

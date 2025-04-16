@@ -2,14 +2,13 @@
 
 namespace App\Services;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 class ImageUploadService
 {
 
-    public static function uploadOnlyImage(UploadedFile $image)
+    public static function storeGalleryImage(UploadedFile $image)
     {
         $uploadedImage = [];
 
@@ -25,24 +24,25 @@ class ImageUploadService
 
     }
 
-    public static function uploadImage(Request $request, string $key, $image = null) {
+    // rename later
+    public static function storeImage(?UploadedFile $file, ?string $oldPath = null) :?string {
 
-        if($image) {
-            Storage::delete($image);
+        if($oldPath) {
+            Storage::delete($oldPath);
         }
 
-        if($request->hasFile($key)){
-
-            $file = $request->file($key);
-            $newFileName = self::generateUniqueFileName($file);
-            $folder = date('Y-m-d');
-
-            return $file->storeAs("images/{$folder}", $newFileName);
+        if (!$file) {
+            return null;
         }
-        return null;
+
+        $newFileName = self::generateUniqueFileName($file);
+        $folder = date('Y-m-d');
+
+        return $file->storeAs("images/{$folder}", $newFileName);
+
     }
 
-    public static function generateUniqueFileName(UploadedFile $file)
+    public static function generateUniqueFileName(UploadedFile $file): string
     {
         $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $extension = $file->getClientOriginalExtension();

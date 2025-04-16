@@ -14,10 +14,10 @@
             <div class="flex flex-wrap justify-center -mx-4">
                 @foreach($services as $service)
                     <x-public.services-item
-                        :href="route('services.show', $service->slug)"
+                        :showRoute="route('services.show', $service->slug)"
                         :title="$service->title"
-                        :img="$service->thumbnail"
-                        :alt="$service->slug . '-image'"
+                        :imageUrl="$service->thumbnail"
+                        :imageAlt="$service->slug . '-image'"
                     >
                         {{ $service->description }}
                     </x-public.services-item>

@@ -5,13 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Service;
 use App\Rules\SummernoteContent;
-use App\Services\ImageUploadService;
+use App\Traits\HasThumbnail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
+    use HasThumbnail;
+
     /**
      * Display a listing of the resource.
      */
@@ -46,7 +48,7 @@ class ServiceController extends Controller
 
         $data = $request->all();
 
-        $data['thumbnail'] = ImageUploadService::uploadImage($request, 'thumbnail');
+        $data['thumbnail'] = $this->updateThumbnail(request()->file('thumbnail'));
 
         $service = Service::create($data);
 
@@ -102,24 +104,15 @@ class ServiceController extends Controller
         ]);
 
         $data = $request->all();
-        $oldThumbnail = null;
 
-        if(!$data['old_thumbnail'] && $service->thumbnail) {
-            $oldThumbnail = $service->thumbnail;
-        }
-
-        if($data['old_thumbnail']) {
-            $data['thumbnail'] = $data['old_thumbnail'];
-        }else{
-            $data['thumbnail'] = ImageUploadService::uploadImage($request, 'thumbnail', $oldThumbnail);
-        }
-
+        $data['thumbnail'] = $this->updateThumbnail(request()->file('thumbnail'), $data['old_thumbnail'], $service->thumbnail);
 
         $service->update($data);
 
         Cache::forget('services');
 
-        return redirect(route('admin.services.index'))->with('success', 'Service has been updated!');
+        return redirect(route('admin.services.index'))
+            ->with('success', 'Service has been updated!');
 
 
     }
@@ -130,12 +123,15 @@ class ServiceController extends Controller
     public function destroy(string $id)
     {
 
-        $service = Service::find($id);
-        //dd($service->thumbnail);
-        if(isset($service->thumbnail)) {
-            Storage::delete($service->thumbnail);
-        }
+        $service = Service::findOrFail($id);
+
+        Storage::delete($service->thumbnail);
+
         $service->delete();
-        return redirect()->route('admin.services.index')->with('success', 'Service deleted successfully.');
+
+        return redirect()
+            ->route('admin.services.index')
+            ->with('success', 'Service deleted successfully.');
+
     }
 }

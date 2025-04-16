@@ -1,19 +1,24 @@
-@props(['thumbnailUrl' => '', 'title' => '', 'name' =>'', 'status'=>'', 'created_at'=>'', 'position' => '', 'editHref' => '', 'itemId' => ''])
+@props([
+    'thumbnailUrl' => '',
+    'title' => '',
+    'name' =>'',
+    'status'=>'',
+    'created_at'=>'',
+    'position' => '',
+    'editRoute' => '',
+    'itemId' => '',
+    'item' => '',
+    'deleteRoute' => ''
+    ])
 
 <tr class="text-gray-700 dark:text-gray-400">
     <td class="px-4 py-3">
         <div class="flex items-center text-sm">
-            <!-- Avatar with inset shadow -->
+            <!--Thumbnail-->
             <div
                 class="relative hidden w-8 h-8 mr-3 md:block"
             >
-                <x-db-image :url="$thumbnailUrl"/>
-                {{--<img
-                    class="object-cover w-full h-full "
-                    src="{{ $thumbnailUrl }}"
-                    alt=""
-                    loading="lazy"
-                />--}}
+                <x-db-image url="{{  $thumbnailUrl }}"/>
                 <div
                     class="absolute inset-0 rounded-full shadow-inner"
                     aria-hidden="true"
@@ -39,8 +44,11 @@
     </td>
     <td class="px-4 py-3">
         <div class="relative flex items-center space-x-4 text-sm">
-            <x-admin.svg-edit-button href="{{ $editHref }}"/>
-            <x-admin.svg-delete-button itemId="{{ $itemId }}"/>
+            <x-admin.svg-edit-button :href="$editRoute"/>
+            <x-admin.svg-delete-button
+                :itemId="$itemId"
+                :deleteRoute="$deleteRoute"
+            />
         </div>
     </td>
 </tr>

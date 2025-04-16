@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Rules\SummernoteContent;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StorePortfolioRequest extends FormRequest
 {
@@ -28,8 +29,15 @@ class StorePortfolioRequest extends FormRequest
             'content' => new SummernoteContent,
             'is_published' => 'required|boolean',
             'thumbnail' => 'nullable|image|max:6144',
+            'old_thumbnail' => 'nullable|string',
             'position' => 'nullable|integer|min:1',
-            'images' => 'required|array',
+            'images' => [
+                'array',
+                Rule::requiredIf(function () {
+                    $paths = $this->input('paths');
+                    return $paths === '[]';
+                })
+            ],
             'images.*' => 'nullable|image|max:6144',
 
         ];

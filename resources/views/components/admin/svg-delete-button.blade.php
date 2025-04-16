@@ -1,7 +1,12 @@
-@props(['itemId' => '', 'itemIdRef' => ''])
+@props([
+    'itemId' => '',
+    'item' => '',
+    'deleteRoute' => ''
+    ])
 
 <button
-    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg
+           dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
     @click.stop="deleteItemConfirmation ? closeDeleteItemConfirmation() : deleteItemConfirmation = {{ $itemId }}"
     @keydown.escape="closeDeleteItemConfirmation"
 >
@@ -29,7 +34,7 @@
         class="absolute right-16 bottom-4 w-36 font-semibold p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:text-gray-300 dark:border-gray-700 dark:bg-gray-700 "
     >
         <div class="flex justify-around">
-             <form method="POST" action="{{ route('admin.services.destroy', ['service' => $itemId]) }}">
+             <form method="POST" action="{{ $deleteRoute }}">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="hover:underline">Delete</button>

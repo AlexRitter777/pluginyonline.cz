@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePortfolioRequest;
 use App\Models\Portfolio;
-use App\Services\ImageUploadService;
-use Illuminate\Http\Request;
+use App\Traits\HasThumbnail;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
+
 
 class PortfolioController extends Controller
 {
+    use HasThumbnail;
+
     /**
      * Display a listing of the resource.
      */
@@ -37,38 +40,17 @@ class PortfolioController extends Controller
 
         $validated = $request->validated();
 
-        $validated['thumbnail'] = ImageUploadService::uploadImage($request, 'thumbnail');
+        $validated['thumbnail'] = $this->updateThumbnail($request->file('thumbnail'));
 
         $portfolio = Portfolio::create($validated);
 
         $images = $request->file('images') ?: [];
 
+        $positions = (array) json_decode($request->input('positions'), true);
 
-        $positions = json_decode($request->input('positions'),true);
+        $portfolio->saveImages($positions, $images);
 
-        //$images['id'] => file
-
-        //'id' => 'position'
-
-        foreach ($positions as $key => $position) {
-
-            if($images[$key]) {
-
-                $uploadedImage = ImageUploadService::uploadOnlyImage($images[$key]);
-                $path = $uploadedImage['path'];
-                $imageName = $uploadedImage['name'];
-
-                $portfolio->images()->create([
-                    'path' => $path,
-                    'filename' => $imageName,
-                    'position' => $position
-                ]);
-            }
-        }
-
-
-        //Cache::forget('portfolios');
-
+        Cache::forget('portfolios');
 
         return redirect()->route('admin.portfolio.index');
 
@@ -87,22 +69,71 @@ class PortfolioController extends Controller
      */
     public function edit(Portfolio $portfolio)
     {
-        //
+
+        $images = [];
+        $paths = [];
+
+        $imagesCollection = $portfolio->images;
+
+        if(count($imagesCollection) != 0) {
+
+            $images = $portfolio->makePositionsArray($imagesCollection);
+            $paths = $portfolio->makePathsArray($imagesCollection);
+
+        }
+
+        return view('admin.portfolio.edit', ['portfolio' => $portfolio, 'images' => $images, 'paths' => $paths]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Portfolio $portfolio)
+    public function update(StorePortfolioRequest $request, Portfolio $portfolio)
     {
-        //
+
+        $validated = $request->validated();
+
+        // Update thumbnail
+        $validated['thumbnail'] = $this->updateThumbnail($request->file('thumbnail'), $validated['old_thumbnail'], $portfolio->thumnail);
+
+
+        //Images gallery update
+        $images = $request->file('images') ?: [];
+        $positions = json_decode($request->input('positions'),true);
+        $oldImagesIds = json_decode($request->input('oldImagesIds'),true);
+        $existingImages = $portfolio->images()->get();
+
+        $portfolio->updateImages($positions, $images, $oldImagesIds, $existingImages);
+        $portfolio->deleteImages($existingImages, $oldImagesIds);
+
+        Cache::forget('portfolio');
+
+        return redirect(route('admin.portfolio.index'))
+            ->with('success', 'Project has been updated!');
+
+
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Portfolio $portfolio)
+    public function destroy(string $id)
     {
-        //
+
+        $portfolio = Portfolio::findOrFail($id);
+
+        Storage::delete($portfolio->thumbnail);
+
+        $existingImages = $portfolio->images()->get();
+
+        $portfolio->deleteImages($existingImages, []);
+
+        $portfolio->delete();
+
+        return redirect()
+            ->route('admin.portfolio.index')
+            ->with('success', 'Portfolio has been deleted successfully.');
+
     }
 }

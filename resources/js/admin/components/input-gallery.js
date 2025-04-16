@@ -5,12 +5,11 @@ export default function InputGallery(){
     const isFormValidationOn = true;
 
     return {
-
         files: {},
+        filesToSend:{},
+        strings: [],
         positions: {},
-        isFilesEmpty: false,
         fileName: '',
-        imageValid: true,
         errorMessage: '',
         formOnceSubmitted: false,
 
@@ -37,16 +36,18 @@ export default function InputGallery(){
             if(!isFormValidationOn){
                 form.addEventListener('submit', async (e) => {
                     e.preventDefault();
+                    const beforeSubmitResult = await this.beforeSubmit();
+                    if (!beforeSubmitResult) return;
                     form.submit();
                 });
-            }
+            } else {
+                form.submit = async () => {
+                    const beforeSubmitResult = await this.beforeSubmit();
+                    if (!beforeSubmitResult) return;
+                    originalSubmit.call(form);
+                };
 
-            // Custom form submit logic
-            form.submit = async () => {
-                const beforeSubmitResult = await this.beforeSubmit();
-                if (!beforeSubmitResult) return;
-                originalSubmit.call(form);
-            };
+            }
 
 
         },
@@ -61,18 +62,20 @@ export default function InputGallery(){
             if(!file.type.startsWith("image/")){
                 this.errorMessage = "You can upload only images!";
                 console.error(this.errorMessage);
+                this.$refs.file.value = ''
                 return;
             }
 
             if(file.size > maxImageSize) {
                 this.errorMessage = `The image size must be less then ${maxImageSize/(1024 * 1024)} Mb!`;
                 console.error(this.errorMessage);
+                this.$refs.file.value = ''
                 return;
             }
 
             this.files[fileId] = file;
 
-            this.fileName = limitString(file.name, 30);
+            // console.log(this.files);
 
             this.$refs.file.value = '';
 
@@ -101,8 +104,24 @@ export default function InputGallery(){
         },
 
         getImageUrl(image) {
-            return URL.createObjectURL(image);
-            // if not file return string URL - on edit
+
+            if (image instanceof File){
+                return URL.createObjectURL(image);
+            }else if (typeof image === 'string'){
+                return image;
+            }
+            return null;
+        },
+
+        getFileName(file){
+
+            if (file instanceof File){
+                return limitString(file.name, 30);
+            } else if(typeof file === "string"){
+                return limitString(file.split('/').pop(), 30);
+            }
+            return null;
+
         },
 
         async galleryValidation(){
@@ -115,8 +134,13 @@ export default function InputGallery(){
         },
 
         async beforeSubmit(){
-            // console.log(this.positions);
-            // console.log(this.files);
+
+
+            const {files, strings} = this.splitFilesAndStrings(this.files);
+
+            this.filesToSend = files;
+            this.strings = strings;
+
 
             const galleryValidationResult = await this.galleryValidation();
 
@@ -124,8 +148,13 @@ export default function InputGallery(){
                 return false;
             }
 
-            this.createFileInputs(this.files);
-            this.createInputText(this.positions);
+            this.createFileInputs(this.filesToSend);
+            this.createInputText(this.positions, 'positions');
+            this.createInputText(this.strings, 'oldImagesIds');
+
+            // console.log(this.positions);
+            // console.log(this.filesToSend);
+            // console.log( this.strings);
 
             return true;
         },
@@ -149,15 +178,33 @@ export default function InputGallery(){
         },
 
 
-        createInputText(value) {
+        createInputText(value, name) {
             const form = this.$el.closest('form');
             const input = document.createElement('input')
             input.type = 'hidden'
-            input.name = 'positions'
+            input.name = name
             input.value = JSON.stringify(value)
             form.appendChild(input)
 
         },
+
+        splitFilesAndStrings(files) {
+
+            const strings = [];
+            const newFiles = {};
+
+            for (const [key, value] of Object.entries(files)) {
+                if (typeof value === 'string') {
+                    strings.push(key);
+                } else {
+                    newFiles[key] = value;
+                }
+            }
+
+            return { files: newFiles, strings };
+        },
+
+
 
     }
 
