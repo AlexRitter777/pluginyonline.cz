@@ -20,7 +20,7 @@ class ServiceController extends Controller
     public function index()
     {
         $services = Service::all();
-        return view('admin.services.index', compact('services'));
+        return view('admin.services.index', ['services' => $services]);
     }
 
     /**
@@ -64,6 +64,10 @@ class ServiceController extends Controller
     {
         $service = Service::findBySlug($slug);
 
+        if(!$service){
+            abort(404);
+        }
+
         return view('admin.services.preview-single', ['service' => $service]);
 
     }
@@ -71,6 +75,10 @@ class ServiceController extends Controller
     public function showGrid(string $slug)
     {
         $service = Service::findBySlug($slug);
+
+        if(!$service){
+            abort(404);
+        }
 
         return view('admin.services.preview-grid', ['service' => $service]);
 
@@ -84,7 +92,7 @@ class ServiceController extends Controller
     public function edit(Service $service)
     {
 
-        return view('admin.services.edit', compact('service'));
+        return view('admin.services.edit', ['service' => $service]);
 
     }
 

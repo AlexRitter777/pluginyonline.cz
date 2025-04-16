@@ -20,6 +20,10 @@ class ServiceController extends Controller
 
         $service = Service::findBySlug($slug);
 
+        if(!$service) {
+            return redirect()->route('services.index');
+        }
+
         return view('public.services.show', ['service' => $service]);
     }
 

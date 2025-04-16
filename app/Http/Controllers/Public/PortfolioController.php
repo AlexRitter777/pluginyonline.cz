@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
+use App\Models\Portfolio;
 use Illuminate\Http\Request;
 
 class PortfolioController extends Controller
@@ -14,7 +15,13 @@ class PortfolioController extends Controller
 
     public function show(string $id) {
 
-       return view('public.portfolio.show', ['id'=>$id]);
+       $portfolio = Portfolio::find($id);
+
+       if(!$portfolio){
+           return redirect()->route('portfolio.index');
+       }
+
+       return view('public.portfolio.show', ['id' => $id]);
 
     }
 
