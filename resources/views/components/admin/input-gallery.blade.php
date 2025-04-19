@@ -46,10 +46,15 @@
     >
         <div x-ref="dnd" class="relative text-gray-400 border-2 border-gray-200 border-dashed rounded cursor-pointer dark:border-gray-600">
             <input accept="*" type="file" title="" x-ref="file" @change="handleFile"
-                   class="absolute inset-0 z-50 w-full h-full p-0 m-0 outline-none opacity-0 cursor-pointer"
-                   @dragover="
+                   class="absolute inset-0 w-full h-full p-0 m-0 outline-none opacity-0 cursor-pointer"
+                   {{--@dragover="
                         $refs.dnd.classList.add(document.documentElement.classList.contains('dark') ? 'bg-gray-500' : 'bg-indigo-50')
-                    "
+                    "--}}
+                   @dragover.prevent="(e) => {
+                        e.dataTransfer.dropEffect = 'move';
+                        $refs.dnd.classList.add(document.documentElement.classList.contains('dark') ? 'bg-gray-500' : 'bg-indigo-50')
+                    }
+                   "
                    @dragleave="
                         $refs.dnd.classList.remove('bg-gray-500', 'bg-indigo-50')
                     "

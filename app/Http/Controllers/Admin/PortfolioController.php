@@ -59,9 +59,22 @@ class PortfolioController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Portfolio $portfolio)
+    public function showSingle(Portfolio $portfolio)
     {
-        //
+        return view('admin.portfolio.preview-single', ['portfolio' => $portfolio]);
+
+    }
+
+    public function showGrid(Portfolio $portfolio){
+
+        $portfolios = [];
+
+        for($i = 0; $i < 4; $i++){
+            $portfolios[] = $portfolio;
+        }
+
+        return view('admin.portfolio.preview-grid', ['portfolios' => $portfolios]);
+
     }
 
     /**
@@ -108,6 +121,9 @@ class PortfolioController extends Controller
         $portfolio->updateImages($positions, $images, $oldImagesIds, $existingImages);
         $portfolio->deleteImages($existingImages, $oldImagesIds);
 
+        //Project update
+        $portfolio->update($validated);
+
         Cache::forget('portfolios');
 
         return redirect(route('admin.portfolio.index'))
@@ -125,7 +141,10 @@ class PortfolioController extends Controller
 
         $portfolio = Portfolio::findOrFail($id);
 
-        Storage::delete($portfolio->thumbnail);
+        if($portfolio->thumbnail) {
+            Storage::delete($portfolio->thumbnail);
+        }
+
 
         $existingImages = $portfolio->images()->get();
 

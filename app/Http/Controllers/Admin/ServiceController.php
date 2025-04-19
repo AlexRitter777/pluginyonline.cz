@@ -74,13 +74,19 @@ class ServiceController extends Controller
 
     public function showGrid(string $slug)
     {
+        $services = [];
+
         $service = Service::findBySlug($slug);
 
         if(!$service){
             abort(404);
         }
 
-        return view('admin.services.preview-grid', ['service' => $service]);
+        for($i = 0; $i < 3; $i++){
+            $services[] = $service;
+        }
+
+        return view('admin.services.preview-grid', ['services' => $services]);
 
     }
 
@@ -133,7 +139,10 @@ class ServiceController extends Controller
 
         $service = Service::findOrFail($id);
 
-        Storage::delete($service->thumbnail);
+        if($service->thumbnail){
+            Storage::delete($service->thumbnail);
+        }
+
 
         $service->delete();
 

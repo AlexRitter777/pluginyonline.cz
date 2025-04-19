@@ -162,82 +162,21 @@
     </section>
     <!-- ====== About Section End  -->
 
-    <!-- ====== Services Section Start -->
-    <section id="services" class="bg-black pt-20 lg:pt-[120px] pb-12 lg:pb-[90px]">
-        <div class="container">
-            <div class="flex flex-wrap items-end -mx-4 mb-10 lg:mb-[60px]">
-                <div class="w-full lg:w-8/12 px-4">
-                    <div class="max-w-[625px] mb-5">
-                        <span class="font-semibold text-lg text-primary mb-2 block"> NAŠE SLUŽBY </span>
-                        <h2 class="font-bold text-3xl sm:text-4xl md:text-[40px] text-white">Přidáváme vašim webům unikátní vzhled a funkcionalitu</h2>
-                    </div>
-                </div>
-                <div class="w-full lg:w-4/12 px-4">
-                    <div class="flex lg:justify-end mb-5">
-                        <a href="{{ route('services.index') }}" class="text-lg font-medium text-white underline hover:text-primary"> VŠECHNY SLUŽBY </a>
-                    </div>
-                </div>
-            </div>
-            <div class="flex flex-wrap justify-center -mx-4">
-                @foreach($services as $service)
-                    <x-public.services-item
-                        :showRoute="route('services.show', $service->slug)"
-                        :title="$service->title"
-                        :imageUrl="$service->thumbnail"
-                        :imageAlt="$service->slug . '-image'"
-                    >
-                        {{ $service->description }}
-                    </x-public.services-item>
-                @endforeach
-            </div>
-        </div>
-    </section>
-    <!-- ====== Services Section End -->
+    {{--Services Section Start--}}
+    <x-public.sections.services-section
+        :backUrl="route('services.index')"
+        :services="$services"
+        backgroundColor="black"
+        titleColor="white"
+    />
+    {{--Services Section End--}}
 
-    <!-- ====== Portfolio Section Start  -->
-    <section id="portfolio" class="pt-[120px] pb-[70px] bg-[#f8f9ff]">
-        <div class="container">
-            <div class="flex flex-wrap mx-[-16px]">
-                <div class="w-full px-4">
-                    <div class="max-w-[600px] mx-auto text-center mb-[50px]">
-                        <span class="font-semibold text-lg text-primary block mb-2"> Naše práce </span>
-                        <h2 class="font-bold text-black text-3xl sm:text-4xl md:text-[45px] mb-5">Ukázky našich WordPress projektů</h2>
-                        <p class="font-medium text-lg text-body-color">Zde najdete ukázky a podrobný popis některých našich prací – vývoj WordPress pluginů na míru, úpravy webových stránek a integrace WooCommerce.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="portfolio-container flex justify-center -mx-4">
-                @if($portfolios)
-                <div class="w-full xl:w-10/12 px-4">
-                    <div class="items-wrapper flex flex-wrap justify-center mx-[-16px]">
-                        @foreach($portfolios as $portfolio)
-                        <x-public.portfolio-item
-                            :imageUrl="$portfolio->thumbnail"
-                            :showRoute="route('portfolio.show', ['id' => $portfolio->id])"
-                        >
-                            <x-slot:title>{{ $portfolio->title }}</x-slot>
-                            {{ $portfolio->description }}
-                        </x-public.portfolio-item>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex flex-wrap mx-[-16px]">
-                <div class="w-full px-4">
-                    <div class="max-w-[600px] mx-auto text-center mb-[50px]">
-                        <a href="{{ route('portfolio.index') }}" class="text-lg font-medium uppercase underline hover:text-primary"> Všechny projekty </a>
-                    </div>
-                </div>
-            </div>
-            @else
-                <p class="font-semibold text-black text-xl inline-block mb-3">
-                    My first project is on its way — coming soon!
-                </p>
-            @endif
-        </div>
-    </section>
-    <!-- ====== Portfolio Section End  -->
+    {{--Portfolio Section Start--}}
+    <x-public.sections.portfolios-section
+        :portfolios="$portfolios"
+        :allProjectsUrl="route('portfolio.index')"
+    />
+    {{--Portfolio Section End--}}
 
     <!-- ====== Team Section Start -->
     <section id="team" class="pt-20 lg:pt-[120px]">

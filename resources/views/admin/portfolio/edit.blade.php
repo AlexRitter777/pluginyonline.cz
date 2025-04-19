@@ -1,6 +1,7 @@
 <x-admin.layouts.admin-layout title="Edit Project | {{ $portfolio->title }}">
     <main class="h-full pb-16 overflow-y-auto">
-        <div class="container px-6 mx-auto grid">
+
+        <div x-data="modal" class="container px-6 mx-auto grid">
 
             <div
                 class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 mt-4"
@@ -17,7 +18,7 @@
                         type="text"
                         name="title"
                         id="title"
-                        validationRules="required|min:3|max:65"
+                        validationRules="required|min:3|max:100"
                         placeholder="Enter project title..."
                         value="{{ old('title') ?? $portfolio->title }}"
                     >
@@ -53,7 +54,7 @@
                         type="text"
                         name="purpose"
                         id="purpose"
-                        validationRules="required|min:3|max:65"
+                        validationRules="required|min:3|max:170"
                         placeholder="Enter project purpose..."
                         value="{{ old('purpose') ?? $portfolio->purpose }}"
                     >
@@ -64,7 +65,7 @@
                     <x-admin.textarea
                         name="features"
                         id="features"
-                        validationRules="required|min:3|max:170"
+                        validationRules="required|min:3|max:250"
                         placeholder="Enter project main features..."
                         value="{{ old('features') ?? $portfolio->features }}"
                     >
@@ -86,7 +87,7 @@
                     <x-admin.textarea
                         name="description"
                         id="description"
-                        validationRules="required|min:3|max:170"
+                        validationRules="required|min:3|max:250"
                         placeholder="Enter project description..."
                         value="{{ old('description') ?? $portfolio->description }}"
                     >
@@ -151,14 +152,49 @@
                     </x-admin.input-gallery>
 
 
-                    <div class="flex mt-10 mb-5 justify-around lg:w-1/2 mx-auto">
-                        <x-admin.button-link>Preview</x-admin.button-link>
+                    <div x-data="{isPreviewOpen: false}" class="relative flex mt-10 mb-5 justify-around lg:w-1/2 mx-auto">
+                        <div class="relative flex">
+                            <x-admin.button-link
+                                clickCondition="@click.stop="
+                                clickAction="isPreviewOpen = !isPreviewOpen"
+                            >
+                                Preview
+                            </x-admin.button-link>
+                            <template x-if="isPreviewOpen">
+                                <ul
+                                    @click.outside="isPreviewOpen = !isPreviewOpen"
+                                    class="absolute [top:-94px] w-40 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:text-gray-300 dark:border-gray-700 dark:bg-gray-700"
+                                >
+                                    <li class="flex">
+                                        <a
+                                            class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                            href="{{ route('admin.portfolio.single', $portfolio->id) }}"
+                                        >
+                                            <span>Single</span>
+                                        </a>
+                                    </li>
+                                    <li class="flex">
+                                        <a
+                                            class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                            href="{{ route('admin.portfolio.grid', $portfolio->id) }}"
+                                        >
+                                            <span>Grid</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </template>
+                        </div>
                         <x-admin.button-submit>Save</x-admin.button-submit>
-                        <x-admin.button-link href="{{route('admin.portfolio.index')}}">Cancel</x-admin.button-link>
-
+                        <x-admin.cancel-btn-link href="{{route('admin.portfolio.index')}}">Cancel</x-admin.cancel-btn-link>
+                        <x-admin.delete-button alpineClick="openModal">Delete</x-admin.delete-button>
                     </div>
-
                 </form>
+                <x-admin.modal
+                    modalHeader="Delete Confirmation"
+                    formAction="{{ route('admin.portfolio.destroy', [$portfolio]) }}"
+                >
+                    <span>Are you sure you want to delete the project <b>"{{ $portfolio->title }}"</b>?</span>
+                </x-admin.modal>
             </div>
         </div>
     </main>

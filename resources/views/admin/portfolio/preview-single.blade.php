@@ -1,9 +1,9 @@
-<x-public.layouts.base-layout title="{{ $portfolio->title }}">
+<x-public.layouts.preview-layout :title="$portfolio->title">
 
     <x-public.partitials.project-single
         :title="$portfolio->title"
         :description="$portfolio->description"
-        :backUrl="route('portfolio.index')"
+        :backUrl="route('admin.portfolio.edit', $portfolio->id)"
         :images="$portfolio->images"
         :name="$portfolio->name"
         :type="$portfolio->type"
@@ -14,5 +14,4 @@
         {!! $portfolio->content !!}
     </x-public.partitials.project-single>
 
-
-</x-public.layouts.base-layout>
+</x-public.layouts.preview-layout>

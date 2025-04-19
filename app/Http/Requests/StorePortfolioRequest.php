@@ -19,13 +19,13 @@ class StorePortfolioRequest extends FormRequest
     {
 
         return [
-            'title' => 'required|min:3|max:65',
+            'title' => 'required|min:3|max:100',
             'name' => 'required|min:3|max:65',
             'type' => 'required|min:3|max:65',
-            'purpose' => 'required|min:3|max:65',
-            'features' => 'required|min:3|max:170',
+            'purpose' => 'required|min:3|max:170',
+            'features' => 'required|min:3|max:250',
             'requirements' => 'required|min:3|max:170',
-            'description' => 'required|min:3|max:170',
+            'description' => 'required|min:3|max:250',
             'content' => new SummernoteContent,
             'is_published' => 'required|boolean',
             'thumbnail' => 'nullable|image|max:6144',

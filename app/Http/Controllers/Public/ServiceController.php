@@ -20,7 +20,7 @@ class ServiceController extends Controller
 
         $service = Service::findBySlug($slug);
 
-        if(!$service) {
+        if(!$service || !$service->is_published) {
             return redirect()->route('services.index');
         }
 

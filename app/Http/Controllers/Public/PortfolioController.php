@@ -9,7 +9,13 @@ use Illuminate\Http\Request;
 class PortfolioController extends Controller
 {
     public function index(){
-        return view('public.portfolio.index');
+
+        $portfolios = Portfolio::where('is_published', 1)
+            ->orderByRaw('position IS NULL')
+            ->orderBy('position')
+            ->paginate(6);
+
+        return view('public.portfolio.index', ['portfolios' => $portfolios]);
     }
 
 
@@ -17,7 +23,7 @@ class PortfolioController extends Controller
 
        $portfolio = Portfolio::with('images')->find($id);
 
-       if(!$portfolio){
+       if(!$portfolio || !$portfolio->is_published){
            return redirect()->route('portfolio.index');
        }
 
