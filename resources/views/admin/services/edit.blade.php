@@ -20,7 +20,7 @@
                         id="title"
                         validationRules="required|min:3|max:65"
                         placeholder="Enter service title..."
-                        value="{{ $service->title }}"
+                        value="{{ old('title', $service->title) }}"
                     >
                         Title
                     </x-admin.input-text>
@@ -30,7 +30,7 @@
                         id="description"
                         validationRules="required|min:3|max:170"
                         placeholder="Enter service description..."
-                        value="{{ $service->description }}"
+                        value="{{ old('description', $service->description) }}"
                     >
                         Description
                     </x-admin.textarea>
@@ -52,7 +52,7 @@
                         id="content"
                         placeholder="Enter some content..."
                         rows="8"
-                        value="{!! $service->content !!}"
+                        value="{!! old('content', $service->content) !!}"
                     >
                         Content
                     </x-admin.textarea>
@@ -80,7 +80,7 @@
                         id="title"
                         validationRules="posInteger"
                         placeholder="Enter position..."
-                        value="{{  $service->position }}"
+                        value="{{  old('position', $service->position) }}"
                     >
                         Position
                     </x-admin.input-text>

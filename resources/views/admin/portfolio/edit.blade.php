@@ -20,7 +20,7 @@
                         id="title"
                         validationRules="required|min:3|max:100"
                         placeholder="Enter project title..."
-                        value="{{ old('title') ?? $portfolio->title }}"
+                        value="{{ old('title', $portfolio->title) }}"
                     >
                         Title
                     </x-admin.input-text>
@@ -32,7 +32,7 @@
                         id="name"
                         validationRules="required|min:3|max:65"
                         placeholder="Enter project name..."
-                        value="{{ old('name') ?? $portfolio->name }}"
+                        value="{{ old('name', $portfolio->name) }}"
                     >
                         Name
                     </x-admin.input-text>
@@ -44,7 +44,7 @@
                         id="type"
                         validationRules="required|min:3|max:65"
                         placeholder="Enter project type..."
-                        value="{{ old('type') ?? $portfolio->type }}"
+                        value="{{ old('type', $portfolio->type) }}"
                     >
                         Type
                     </x-admin.input-text>
@@ -56,7 +56,7 @@
                         id="purpose"
                         validationRules="required|min:3|max:170"
                         placeholder="Enter project purpose..."
-                        value="{{ old('purpose') ?? $portfolio->purpose }}"
+                        value="{{ old('purpose', $portfolio->purpose) }}"
                     >
                         Project Purpose
                     </x-admin.input-text>
@@ -67,7 +67,7 @@
                         id="features"
                         validationRules="required|min:3|max:250"
                         placeholder="Enter project main features..."
-                        value="{{ old('features') ?? $portfolio->features }}"
+                        value="{{ old('features', $portfolio->features) }}"
                     >
                         Project Main Features
                     </x-admin.textarea>
@@ -78,7 +78,7 @@
                         id="requirements"
                         validationRules="required|min:3|max:170"
                         placeholder="Enter project requirements..."
-                        value="{{ old('requirements') ?? $portfolio->requirements }}"
+                        value="{{ old('requirements', $portfolio->requirements) }}"
                     >
                         Project Requirements
                     </x-admin.textarea>
@@ -89,7 +89,7 @@
                         id="description"
                         validationRules="required|min:3|max:250"
                         placeholder="Enter project description..."
-                        value="{{ old('description') ?? $portfolio->description }}"
+                        value="{{ old('description', $portfolio->description) }}"
                     >
                         Project Description
                     </x-admin.textarea>
@@ -101,7 +101,8 @@
                         id="content"
                         validationRules="summernoteContent"
                         placeholder="Enter project content..."
-                        value="{!! !empty(old('content')) ? old('content') : $portfolio->content !!}"
+                        {{--value="{!! !empty(old('content')) ? old('content') : $portfolio->content !!}"--}}
+                        value="{!! old('content', $portfolio->content) !!}"
                     >
                         Project Content
                     </x-admin.textarea>
@@ -130,7 +131,7 @@
                         id="title"
                         validationRules="posInteger"
                         placeholder="Enter position..."
-                        value="{{ old('position') ?? $portfolio->position}}"
+                        value="{{ old('position', $portfolio->position) }}"
                     >
                         Position
                     </x-admin.input-text>
