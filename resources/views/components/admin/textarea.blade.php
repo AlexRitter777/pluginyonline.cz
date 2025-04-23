@@ -30,6 +30,9 @@
         x-show="errors.{{ $name }}"
         x-text="errors.{{ $name }}"
         class="text-red-600 dark:text-red-400 text-sm mt-1 block"
+        :class="{
+            'scroll-message': errors.{{ $name }}
+        }"
     ></span>
     @error($name)
     <span
