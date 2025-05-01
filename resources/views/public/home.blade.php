@@ -526,107 +526,55 @@
     </section>
     <!-- ====== Pricing Section End -->
 
-    <!-- ====== Contact Section Start  -->
-    <section id="contact" class="py-[120px]">
-        <div class="container">
-            <div class="flex flex-wrap mx-[-16px]">
-                <div class="w-full px-4">
-                    <div class="max-w-[600px] mx-auto text-center mb-[50px]">
-                        <span class="font-semibold text-lg text-primary block mb-2"> KONTAKT </span>
-                        <h2 class="font-bold text-black text-3xl sm:text-4xl md:text-[45px] mb-5 ">Potřebujete probrat nápad na nový WordPress plugin?</h2>
-                        <p class="font-medium text-lg text-body-color">Neváhejte nám svůj nápad podrobně popsat. Čím více informací nám poskytnete, tím lépe se v něm dokážeme zorientovat a nabídnout lepší a racionálnější řešení.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="flex justify-center -mx-4">
-                <div class="w-full lg:w-9/12 px-4">
-                    <form>
-                        <div class="flex flex-wrap -mx-4">
-                            <div class="w-full md:w-1/2 px-4">
-                                <div class="mb-6">
-                                    <input type="text" placeholder="Vaše jméno" class="input-field" />
-                                </div>
-                            </div>
-                            <div class="w-full md:w-1/2 px-4">
-                                <div class="mb-6">
-                                    <input type="text" placeholder="Společnost (volitelné)" class="input-field" />
-                                </div>
-                            </div>
-                            <div class="w-full md:w-1/2 px-4">
-                                <div class="mb-6">
-                                    <input type="email" placeholder="Váš e-mail" class="input-field" />
-                                </div>
-                            </div>
-                            <div class="w-full md:w-1/2 px-4">
-                                <div class="mb-6">
-                                    <input type="text" placeholder="Telefonní číslo" class="input-field" />
-                                </div>
-                            </div>
-                            <div class="w-full px-4">
-                                <div class="mb-6">
-                                    <textarea rows="4" placeholder="Popište nám svůj projekt" class="input-field resize-none"></textarea>
-                                </div>
-                            </div>
-                            <div class="w-full px-4">
-                                <div class="pt-4 text-center">
-                                    <button
-                                        class="inline-flex justify-center items-center py-4 px-9 rounded-full font-semibold text-white bg-primary mx-auto transition duration-300 ease-in-out hover:shadow-signUp hover:bg-opacity-90"
-                                    >
-                                        Odeslat
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ====== Contact Section End  -->
+    {{-- Contact Section Start --}}
+    <x-public.sections.contact-form
 
-    @push('scripts')
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    @endpush
-    @push('scripts')
-        <script>
-            // Document Loaded
-            document.addEventListener('DOMContentLoaded', () => {
-                const pageLink = document.querySelectorAll(".menu-scroll");
-                //console.log(pageLink);
-                pageLink.forEach((elem) => {
-                    elem.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        let href = elem.getAttribute("href");
-                        window.history.pushState({}, '', href);
-                        document.querySelector(href).scrollIntoView({
-                            behavior: "smooth",
-                            offsetTop: 1 - 60,
-                        });
+    />
+    {{-- Contact Section End --}}
+
+@push('scripts')
+    <script src="https://www.google.com/recaptcha/api.js?render=6LeuuSIrAAAAAI9UFNZRdYTK2oZ8iqSKlvcS9xoQ" async defer></script>
+@endpush
+@push('scripts')
+    <script>
+        // Document Loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const pageLink = document.querySelectorAll(".menu-scroll");
+            //console.log(pageLink);
+            pageLink.forEach((elem) => {
+                elem.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    let href = elem.getAttribute("href");
+                    window.history.pushState({}, '', href);
+                    document.querySelector(href).scrollIntoView({
+                        behavior: "smooth",
+                        offsetTop: 1 - 60,
                     });
                 });
-                // section menu active
-                function onScroll(event) {
-                    const sections = document.querySelectorAll(".menu-scroll");
-                    const scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+            });
+            // section menu active
+            function onScroll(event) {
+                const sections = document.querySelectorAll(".menu-scroll");
+                const scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
 
-                    for (let i = 0; i < sections.length; i++) {
-                        const currLink = sections[i];
-                        const val = currLink.getAttribute("href");
-                        const refElement = document.querySelector(val);
-                        const scrollTopMinus = scrollPos + 73;
-                        if (refElement.offsetTop <= scrollTopMinus && refElement.offsetTop + refElement.offsetHeight > scrollTopMinus) {
-                            document.querySelector(".menu-scroll").classList.remove("active");
-                            currLink.classList.add("active");
-                        } else {
-                            currLink.classList.remove("active");
-                        }
+                for (let i = 0; i < sections.length; i++) {
+                    const currLink = sections[i];
+                    const val = currLink.getAttribute("href");
+                    const refElement = document.querySelector(val);
+                    const scrollTopMinus = scrollPos + 73;
+                    if (refElement.offsetTop <= scrollTopMinus && refElement.offsetTop + refElement.offsetHeight > scrollTopMinus) {
+                        document.querySelector(".menu-scroll").classList.remove("active");
+                        currLink.classList.add("active");
+                    } else {
+                        currLink.classList.remove("active");
                     }
                 }
+            }
 
-                window.document.addEventListener("scroll", onScroll);
-            });
-        </script>
-    @endpush
+            window.document.addEventListener("scroll", onScroll);
+        });
+    </script>
+@endpush
 </x-public.layouts.base-layout>
 
 

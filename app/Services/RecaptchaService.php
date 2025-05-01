@@ -8,28 +8,21 @@ use Illuminate\Validation\ValidationException;
 class RecaptchaService
 {
 
-    protected $secretKey;
-
-    public function __construct()
-    {
-        $this->secretKey =  config('services.recaptcha.secret');
-
-    }
-
-    public function validate(string $recaptchaResponse) : void {
+    public static function validate(string $token)  {
 
         $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret' => $this->secretKey,
-            'response' => $recaptchaResponse,
+            'secret' => config('services.recaptcha.secret'),
+            'response' => $token,
         ]);
 
         $responseBody = $response->json();
 
+
         if (!$responseBody['success'] || $responseBody['score'] < 0.5) {
-            throw ValidationException::withMessages([
-                'g-recaptcha-response' => 'ReCAPTCHA validation failed. Please try again.'
-            ]);
+            return false;
         }
+
+        return true;
 
     }
 

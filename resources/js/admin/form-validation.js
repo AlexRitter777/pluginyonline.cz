@@ -1,4 +1,4 @@
-import {Validator} from "../admin/utils/Validator.js";
+import {Validator} from "../utils/Validator.js";
 import scrollIntoError from "../admin/init-scroll.js";
 
 export default () => ({
@@ -23,7 +23,7 @@ export default () => ({
 
         const validationResult = validator.validateForm(form);
 
-        if(validationResult === null || Object.values(validationResult).every(value => value === null)) {
+        if(validationResult === null) {
 
             form.submit();
             return false;

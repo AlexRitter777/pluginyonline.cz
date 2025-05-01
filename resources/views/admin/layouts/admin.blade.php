@@ -19,7 +19,7 @@
         }
     </script>
     @vite(['resources/css/admin.css', 'resources/js/admin.js'])
-    @stack('head')
+    {{--@stack('head')--}}
 </head>
 
 <body>
@@ -38,7 +38,7 @@
         {{ $slot }}
     </div>
 </div>
-@stack('scripts')
+{{--@stack('scripts')--}}
 </body>
 
 

@@ -22,6 +22,30 @@ export default {
             dark: '#1D2144',
             primary: '#4A6CF7',
             yellow: '#FBB040',
+            red: {
+                '50': '#fdf2f2',
+                '100': '#fde8e8',
+                '200': '#fbd5d5',
+                '300': '#f8b4b4',
+                '400': '#f98080',
+                '500': '#f05252',
+                '600': '#e02424',
+                '700': '#c81e1e',
+                '800': '#9b1c1c',
+                '900': '#771d1d',
+            },
+            purple: {
+                '50': '#f6f5ff',
+                '100': '#edebfe',
+                '200': '#dcd7fe',
+                '300': '#cabffd',
+                '400': '#ac94fa',
+                '500': '#9061f9',
+                '600': '#7e3af2',
+                '700': '#6c2bd9',
+                '800': '#5521b5',
+                '900': '#4a1d96',
+            },
             'body-color': '#959CB1',
         },
         screens: {
@@ -51,6 +75,8 @@ export default {
             },
         },
     },
-    safelist: ["sticky", "navbarTogglerActive", "hidden", "active-thumbnail"],
-    plugins: [],
+    safelist: ["sticky", "navbarTogglerActive", "hidden", "active-thumbnail", "notyf__toast"],
+    plugins: [
+
+    ],
 };

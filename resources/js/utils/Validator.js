@@ -1,3 +1,6 @@
+
+import Errors from './errors.js';
+
 export class Validator {
 
     // Mapping validation rule names to corresponding methods
@@ -6,7 +9,9 @@ export class Validator {
         min: 'validateMin',
         max: 'validateMax',
         posInteger: 'validatePositiveInteger',
-        summernoteContent: 'validateSummernoteContent'
+        summernoteContent: 'validateSummernoteContent',
+        email: 'validateEmail',
+        checkbox: 'validateCheckbox'
     }
 
     // Object to store validation errors
@@ -22,6 +27,18 @@ export class Validator {
 
         const formData = new FormData(form);
 
+        const lang = form.getAttribute('data-lang');
+
+        const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+
+        if (checkboxes.length > 0){
+            checkboxes.forEach((value) => {
+                let name = value.getAttribute('name');
+                let checked = value.checked;
+                formData.set(name, checked ? '1' : '');
+            });
+        }
+
         for (const [key, value] of formData.entries()) {
 
             let inputElement = document.querySelector(`[name="${key}"]`);
@@ -36,7 +53,7 @@ export class Validator {
 
             let dispatchedRules = this.dispatchRules(rules);
 
-            this.validateField(key, value, dispatchedRules, title);
+            this.validateField(key, value, dispatchedRules, title, lang);
 
         }
 
@@ -53,10 +70,10 @@ export class Validator {
      * @param {string} fieldValue - The value of the field.
      * @param {array} rules - An array of validation rules.
      * @param {string} title - Field label or default title.
+     * @param {string} lang - Error messages language.
      */
-    validateField(fieldName, fieldValue, rules, title){
+    validateField(fieldName, fieldValue, rules, title, lang){
 
-         title = title || 'This field';
 
          for (let rule of rules){
             let ruleParts = rule.split(':');
@@ -74,7 +91,7 @@ export class Validator {
                 continue;
             }
 
-            let validationResult = validationMethod.call(this, fieldValue, title, ...args, fieldName);
+            let validationResult = validationMethod.call(this, fieldValue, title, lang, ...args, fieldName);
 
             if(validationResult) {
                 this.errors[fieldName] = validationResult;
@@ -95,13 +112,15 @@ export class Validator {
      * @param {string} fieldValue - The value of the field.
      * @param {string} title - The field's display name.
      * @param {number} minCount - Minimum character count.
+     * @param {string} lang - Error messages language.
      * @returns {string|null} - Error message or null if valid.
      */
-    validateMin(fieldValue, title, minCount ) {
+    validateMin(fieldValue, title, lang, minCount ) {
 
         if(fieldValue && fieldValue.length < minCount){
-            return `${title} must contain at least ${minCount} characters.`
+            return Errors.getErrorMessage(lang, 'validateMin', title, minCount)
         }
+        return null;
     }
 
     /**
@@ -109,23 +128,27 @@ export class Validator {
      * @param {string} fieldValue - The value of the field.
      * @param {string} title - The field's display name.
      * @param {number} maxCount - Maximum character count.
+     * @param {string} lang - Error messages language.
      * @returns {string|null} - Error message or null if valid.
      */
-    validateMax(fieldValue, title, maxCount ) {
+    validateMax(fieldValue, title, lang, maxCount ) {
         if(fieldValue && fieldValue.length > maxCount){
-            return `${title} must not exceed ${maxCount} characters.`
+            return Errors.getErrorMessage(lang, 'validateMax', title, minCount)
         }
+        return null;
     }
 
     /**
      * Checks if a field is required.
      * @param {string} fieldValue - The value of the field.
      * @param {string} title - The field's display name.
+     * @param {string} lang - Error messages language.
      * @returns {string|null} - Error message if empty, otherwise null.
      */
-    validateValue(fieldValue, title){
+    validateValue(fieldValue, title, lang){
         if(!fieldValue) {
-            return `${title} is required!`
+            return Errors.getErrorMessage(lang, 'validateValue', title)
+
         }
         return null;
     }
@@ -134,11 +157,12 @@ export class Validator {
      * Validates that the field contains a positive integer.
      * @param {string|number} fieldValue - The value of the field.
      * @param {string} title - The field's display name.
+     * @param {string} lang - Error messages language.
      * @returns {string|null} - Error message if invalid, otherwise null.
      */
-    validatePositiveInteger(fieldValue, title) {
+    validatePositiveInteger(fieldValue, title, lang) {
         if (isNaN(fieldValue) || !Number.isInteger(Number(fieldValue)) || Number(fieldValue) < 0) {
-            return `${title} must be a positive integer!`;
+            return Errors.getErrorMessage(lang, 'validatePositiveInteger', title)
         }
         return null;
     }
@@ -151,21 +175,44 @@ export class Validator {
      * @param {string} fieldValue - The raw HTML content from Summernote.
      * @param {string} title - The field's display name for error messages.
      * @param {string} fieldName - The input name used to locate the Summernote wrapper.
+     * @param {string} lang - Error messages language.
      * @returns {string|null} - Error message if content is empty, otherwise null.
      */
-    validateSummernoteContent(fieldValue, title, fieldName) {
+    validateSummernoteContent(fieldValue, title, lang, fieldName) {
 
         const plainText = this.stripTags(fieldValue);
 
         if (plainText.trim().length === 0) {
             this.addSummernoteClass(fieldName);
-            return `${title} is required!`
+            return Errors.getErrorMessage(lang, 'validateValue', title)
         }
         this.removeSummernoteClass(fieldName);
         return null;
-
     }
 
+    /**
+     *
+     * @param fieldValue
+     * @param title
+     * @param lang
+     * @returns {string|null}
+     */
+    validateEmail(fieldValue, title, lang) {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (fieldValue && !emailRegex.test(fieldValue)) {
+            return Errors.getErrorMessage(lang, 'validateEmail', title);
+        }
+
+        return null;
+    }
+
+    validateCheckbox(fieldValue, title, lang) {
+        if (!fieldValue) {
+            return Errors.getErrorMessage(lang, 'validateCheckbox', title);
+        }
+        return null;
+    }
 
     /**
      * Splits rule string into an array of rules.
@@ -211,7 +258,6 @@ export class Validator {
         const nextDiv = summernoteInput?.nextElementSibling;
         nextDiv?.classList.remove('custom-invalid');
     }
-
 
 
 }

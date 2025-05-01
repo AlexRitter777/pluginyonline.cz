@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\PortfolioController;
@@ -49,18 +50,37 @@ Route::middleware(IsAdmin::class)->group(function () {
 //Routes will be moved to admin middleware later
 Route::prefix('rw-admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']) ->name('admin.dashboard');
+
     Route::resource('services', ServiceController::class, ['as' => 'admin']);
     Route::get('services/single/{slug}', [ServiceController::class, 'showSingle'])->name('admin.services.single');
     Route::get('services/grid/{slug}', [ServiceController::class, 'showGrid'])->name('admin.services.grid');
+
     Route::resource('portfolio', PortfolioController::class, ['as' => 'admin']);
     Route::get('portfolio/single/{portfolio}', [PortfolioController::class, 'showSingle'])->name('admin.portfolio.single');
     Route::get('portfolio/grid/{portfolio}', [PortfolioController::class, 'showGrid'])->name('admin.portfolio.grid');
+
+    Route::get('messages', [MessageController::class, 'index']) ->name('admin.messages.index');
+    Route::get('messages/{message}', [MessageController::class, 'show']) ->name('admin.messages.show');
+    Route::delete('messages/{message}', [MessageController::class, 'destroy']) ->name('admin.messages.destroy');
 });
 
 
+Route::post('/verify', [MainController::class, 'verify'])->name('recaptcha.verify');
+Route::post('/send-message', [MainController::class, 'processMessage'])->name('send-message');
 
+Route::get('/send-message-email', function (){
+   $message = [
+       'data' => [
+               'name' => 'Alex Ritter',
+               'email' => 'alex@gmail.com',
+               'company' => 'LION RITTER s.r.o.',
+               'phone' => '777 121 310',
+               'message' => 'This is a test message.This is a test message. This is a test message. This is a test message. This is a test message.'
+            ]
+       ];
 
-
+   return new App\Mail\MessageSent($message);
+});
 
 require __DIR__.'/auth.php';
 
