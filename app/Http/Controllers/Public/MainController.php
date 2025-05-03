@@ -11,11 +11,10 @@ use App\Models\Portfolio;
 use App\Models\Service;
 use App\Models\User;
 use App\Services\RecaptchaService;
+use App\Services\SimpleMailer;
 use App\Services\TelgramNotifier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class MainController extends Controller
@@ -56,44 +55,34 @@ class MainController extends Controller
 
     }
 
-    public function processMessage(ContactFormRequest $request, TelgramNotifier $telgramNotifier)
+    public function processMessage(ContactFormRequest $request, TelgramNotifier $telegramNotifier, SimpleMailer $mailer)
     {
-
         $validated = $request->validated();
 
         $savedMessage = Message::create($validated['data']);
 
+        $email = $validated['data']['email'];
+        $message = $validated['data']['message'];
+
+        $adminEmails = User::where('is_admin', 1)->pluck('email');
+
+
         $url = 'www.pronajemonline.cz';// retrieve Admin show message url instead
-
-        $text = Str::limit($validated['data']['message'], 70);
-
-        $message = <<<TEXT
+        $text = Str::limit($message, 70);
+        $telegramMessage = <<<TEXT
                 <b>Nová zpráva z webu.</b>
                 <b>Od:</b> {$validated['data']['name']}
                 <b>Zpráva:</b> {$text}
                 TEXT;
 
-        $telgramNotifier->send($message, $url);
-
-        $email = $validated['data']['email'];
+        $telegramNotifier->send($message, $url);
 
         //send mail to customer
-        try {
-            Mail::to($email)->send(new MessageSent($validated));
-        }catch (\Throwable $e){
-            Log::error('Client mail send failed: ' . $e->getMessage());
-        }
+        $mailer->send($email, new MessageSent($validated));
 
         //send mail to admins
-        $emails = User::where('is_admin', 1)->pluck('email');
-
-        foreach ($emails as $email) {
-            try {
-                Mail::to($email)->send(new AdminMessageSent($validated));
-            }catch (\Throwable $e){
-                Log::error('Admin mail send failed: ' . $e->getMessage());
-            }
-
+        foreach ($adminEmails as $email) {
+              $mailer->send($email, new AdminMessageSent($validated));
         }
 
         return response()->json('Message sent!', 200);
