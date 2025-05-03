@@ -75,7 +75,7 @@ class MainController extends Controller
                 <b>Zpráva:</b> {$text}
                 TEXT;
 
-        $telegramNotifier->send($message, $url);
+        $telegramNotifier->send($telegramMessage, $url);
 
         //send mail to customer
         $mailer->send($email, new MessageSent($validated));
