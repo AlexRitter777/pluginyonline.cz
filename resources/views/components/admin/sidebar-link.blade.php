@@ -18,6 +18,7 @@
         >
             {{ $slot }}
         </svg>
+
         <span class="ml-4">{{ $title }}</span>
     </a>
 </li>

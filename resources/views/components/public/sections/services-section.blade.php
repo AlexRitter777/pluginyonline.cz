@@ -7,8 +7,6 @@
    'preview' => false
 ])
 
-@dump($preview)
-
 <section id="services" class=" bg-{{ $backgroundColor }} pt-20 lg:pt-[120px] pb-12 lg:pb-[90px]">
     <div class="container">
         <div class="flex flex-wrap items-end -mx-4 mb-10 lg:mb-[60px]">

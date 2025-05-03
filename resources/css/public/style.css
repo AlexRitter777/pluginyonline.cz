@@ -73,6 +73,9 @@
         margin-top: 60px;
     }
 
+    .grecaptcha-badge {
+        bottom: 85px!important;
+    }
 
 }
 

@@ -75,7 +75,7 @@ export default {
             },
         },
     },
-    safelist: ["sticky", "navbarTogglerActive", "hidden", "active-thumbnail", "notyf__toast"],
+    safelist: ["sticky", "navbarTogglerActive", "hidden", "active-thumbnail", "notyf__toast", ".grecaptcha-badge"],
     plugins: [
 
     ],
