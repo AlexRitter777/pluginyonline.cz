@@ -19,8 +19,9 @@ use Illuminate\Support\Str;
 
 class MainController extends Controller
 {
-    public function index(){
 
+
+    public function index(){
       $services = Cache::rememberForever('services', function () {
           return Service::where('is_published', 1)
               ->orderByRaw('position IS NULL')

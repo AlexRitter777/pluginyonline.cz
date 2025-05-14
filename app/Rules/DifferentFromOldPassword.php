@@ -22,13 +22,10 @@ class DifferentFromOldPassword implements ValidationRule
         if($user){
             if ($value == Hash::check($value, $user->password)) {
 
-                $fail('passwords.old')->translate();
+                $fail('New password must not be the same as the current password.');
             }
 
         }
-
-
-
 
     }
 }

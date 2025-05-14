@@ -1,81 +1,48 @@
-@extends('layouts.guest')
+<x-layouts.guest-layout title="Forgot password">
 
-@section('auth-content')
+    <div class="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
+        <div class="flex flex-col overflow-y-auto md:flex-row">
+            <div class="h-32 md:h-auto md:w-1/2">
+                <img aria-hidden="true" class="object-cover w-full h-full dark:hidden" src="{{ Vite::asset('resources/images/public/office.jpeg') }}" alt="Office">
+            </div>
+            <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+                <div class="w-full">
+                    <x-admin.success :message="session('status')" />
+                    <h1 class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
+                        Forgot password
+                    </h1>
+                    <form x-data="formValidation" id="login" @submit.prevent="validate" action="{{route('password.email')}}" method="post">
+                        @csrf
+                        <x-admin.input-text
+                            type="email"
+                            name="email"
+                            id="email"
+                            validationRules="required|email|min:3|max:65"
+                            placeholder="Enter your email..."
+                            value="{{ old('email') }}"
+                        >
+                            Email
+                        </x-admin.input-text>
 
-            <div class="row see-content-on-background w-100 mx-0">
-                <div class="auth-content-panel mx-auto">
-                    <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-                        <div class="brand-logo d-flex align-items-center">
-                            <img class="logo-image" src="{{ Vite::asset('resources/images/keys.png') }}" alt="logo">
-                            <h2 class="ps-3 logo-title">{{ config('app.name') }}</h2>
-                        </div>
-                        <h4 class="text-uppercase text-center">{{ __('Forgot password') }}</h4>
+                        <button
+                            type="submit"
+                            class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white
+                                   transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg
+                                   active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                        >
+                            Recover password
+                        </button>
+                    </form>
+                    <p class="mt-4">
+                        <a class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline" href="{{ route('login') }}">
+                            Go to login
+                        </a>
+                    </p>
 
-                        <form method="POST" action="{{ route('password.email') }}" class="pt-3 needs-validation" novalidate>
-                            @csrf
-
-                            <div class="form-group input-group has-validation">
-                                <input type="email" class="form-control form-control-sm initialColorValidation @if($errors->first('email')) is-invalid-custom @endif" id="validationCustomEmail" name="email" value="{{ old('email') }}" required placeholder="E-mail" aria-describedby="inputGroupPrepend">
-                                <div class="invalid-feedback">
-                                    {{ __('Enter your email address.') }}
-                                </div>
-                            </div>
-
-                            @include('components.error_list')
-
-                            @include('components.success-status')
-
-                            <div class="mt-3">
-                                <button type="submit" class="btn btn-primary btn-sm font-weight-medium text-uppercase" >
-                                    {{ __('Send to email') }}
-                                </button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </div>
-
-
-@endsection
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{{--<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+        </div>
     </div>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('password.email') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>--}}
-
-
+</x-layouts.guest-layout>

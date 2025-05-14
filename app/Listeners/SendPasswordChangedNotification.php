@@ -5,6 +5,7 @@ namespace App\Listeners;
 
 use App\Notifications\PasswordHasBeenResetNotification;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Facades\Log;
 
 class SendPasswordChangedNotification
 {
@@ -24,8 +25,12 @@ class SendPasswordChangedNotification
 
         $user = $event->user;
 
+        try {
+            $user->notify(new PasswordHasBeenResetNotification());
+        }catch (\Throwable $e){
+            Log::error("Password changed email notification has been failed: " . $e->getMessage());
 
-        $user->notify(new PasswordHasBeenResetNotification());
+        }
 
 
     }

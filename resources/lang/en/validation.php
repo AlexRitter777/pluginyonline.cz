@@ -175,13 +175,6 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
-        'g-recaptcha-response' => [
-            'required' => 'Missing reCAPTCHA token. Please try again!',
-        ],
-
-        'email' => [
-            'unique' => 'The email has already been taken.',
-        ],
     ],
 
     /*

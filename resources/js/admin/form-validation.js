@@ -23,7 +23,7 @@ export default () => ({
 
         const validationResult = validator.validateForm(form);
 
-        if(validationResult === null) {
+        if(validationResult === null || Object.values(validationResult).every(value => value === null)) {
 
             form.submit();
             return false;

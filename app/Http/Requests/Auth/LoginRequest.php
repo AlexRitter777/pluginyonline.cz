@@ -40,7 +40,7 @@ class LoginRequest extends FormRequest
         return [
             'email' => ['required', 'exists:users', 'string', 'email', 'max:60'],
             'password' => ['required', 'string', 'max:60'],
-            'g-recaptcha-response' => ['required', 'string']
+//            'g-recaptcha-response' => ['required', 'string']
         ];
     }
 

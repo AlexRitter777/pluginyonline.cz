@@ -1,59 +1,74 @@
-@extends('layouts.guest')
+<x-layouts.guest-layout title="Login">
 
-@section('auth-content')
+    <div class="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
+        <div class="flex flex-col overflow-y-auto md:flex-row">
+            <div class="h-32 md:h-auto md:w-1/2">
+                <img aria-hidden="true" class="object-cover w-full h-full dark:hidden" src="{{ Vite::asset('resources/images/public/office.jpeg') }}" alt="Office">
+            </div>
+            <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
 
-        <div class="row see-content-on-background w-100 mx-0">
-            <div class="auth-content-panel mx-auto">
-                <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-                    <div class="brand-logo d-flex align-items-center">
-                        <img class="logo-image" src="{{ Vite::asset('resources/images/keys.png') }}" alt="logo">
-                        <h2 class="ps-3 logo-title">{{ config('app.name') }}</h2>
-                    </div>
-                    <h4 class="text-uppercase text-center">{{ __('Login') }}</h4>
+                <div class="w-full">
+                    <x-admin.success :message="session('status')" />
+                    <h1 class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
+                        Login
+                    </h1>
 
-                    <form method="POST" action="{{ route('login') }}" class="pt-3 needs-validation" novalidate>
+                    <form x-data="formValidation" id="login" @submit.prevent="validate" action="{{route('login')}}" method="post">
                         @csrf
+                        <x-admin.input-text
+                            type="email"
+                            name="email"
+                            id="email"
+                            validationRules="required|min:3|max:65"
+                            placeholder="Enter your email..."
+                            value="{{ old('email') }}"
+                        >
+                            Email
+                        </x-admin.input-text>
+                        <x-admin.input-text
+                            type="password"
+                            name="password"
+                            id="password"
+                            validationRules="required|min:3|max:65"
+                            placeholder="Enter password..."
 
-                         <div class="form-group input-group has-validation">
-                            <input type="email" class="form-control form-control-sm initialColorValidation @if($errors->first('email')) is-invalid-custom @endif" id="validationCustomEmail" name="email" value="{{ old('email') }}" required placeholder="E-mail" aria-describedby="inputGroupPrepend">
-                            <div class="invalid-feedback">
-                                {{__('Enter your email address.') }}
-                            </div>
+                        >
+                            Password
+                        </x-admin.input-text>
+
+                        <div class="flex mt-6 text-sm">
+                            <label class="flex items-center dark:text-gray-400">
+                                <input
+                                    type="checkbox"
+                                    name="remember"
+                                    class="focus:border-purple-400 focus:outline-none focus:shadow-outline-purple border-gray-300 rounded"
+                                >
+                                <span class="ml-2">
+                                    Remember me
+                                </span>
+                            </label>
                         </div>
 
-                        <div class="form-group input-group has-validation">
-                            <input type="password" class="form-control form-control-sm @if($errors->first('password')) is-invalid-custom @endif" id="validationCustomPassword" name="password" required placeholder="Heslo" aria-describedby="inputGroupPrepend">
-                            <div class="invalid-feedback">
-                                {{__('Enter your password.') }}
-                            </div>
-                        </div>
-
-                        @include('components.error_list')
-
-                        @include('components.success-status')
-
-
-                        <div class="mt-3">
-                            <button type="submit" class="btn btn-primary btn-sm font-weight-medium text-uppercase" >
-                                {{ __('Sign In') }}
-                            </button>
-                        </div>
-
-                        <div class="my-2 d-flex justify-content-between align-items-center">
-                            <div class="form-check">
-                                <label class="form-check-label text-muted">
-                                    <input type="checkbox" name="remember" id="remember_me" class="form-check-input">
-                                    {{ __('Remember me') }}
-                                    <i class="input-helper"></i></label>
-                            </div>
-                            <a href="{{ route('password.request') }}" class="auth-link text-black">{{ __('Forgot your password?') }}</a>
-                        </div>
+                        <button
+                            type="submit"
+                            class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white
+                                   transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg
+                                   active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                        >
+                            Log in
+                        </button>
                     </form>
+                    <hr class="my-8">
+
+
+                    <p class="mt-4">
+                        <a class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline" href="{{ route('password.request') }}">
+                            Forgot your password?
+                        </a>
+                    </p>
+
                 </div>
             </div>
         </div>
-
-@endsection
-
-
-
+    </div>
+</x-layouts.guest-layout>

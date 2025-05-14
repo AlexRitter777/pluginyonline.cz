@@ -34,7 +34,7 @@
     <x-admin.partials.sidebar-background/>
     <x-admin.partials.sidebar-mobile/>
     <div class="flex flex-col flex-1 w-full">
-        <x-admin.partials.header/>
+        <x-admin.partials.header />
         {{ $slot }}
     </div>
 </div>
