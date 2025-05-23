@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Page;
 use App\Rules\DifferentFromOldPassword;
 use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
@@ -32,6 +34,15 @@ class AppServiceProvider extends ServiceProvider
         RedirectIfAuthenticated::redirectUsing(function () {
             return route('admin.dashboard');
         });
+
+        //composer?
+        Cache::rememberForever('pages', function () {
+           return Page::where('is_published', 1)->orderBy('position', 'desc')
+                                                ->get(['title','route_name', 'slug', 'visible_in_footer']);
+
+        });
+
+
 
     }
 }

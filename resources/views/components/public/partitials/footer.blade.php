@@ -1,4 +1,8 @@
-<!-- ====== Footer Section Start  -->
+@php
+    $pages = \Illuminate\Support\Facades\Cache::get('pages');
+    $projects = \Illuminate\Support\Facades\Cache::get('portfolios')
+@endphp
+
 <footer class="bg-black pt-[100px] pb-12 relative z-10">
     <div class="container">
         <div class="flex flex-wrap -mx-4">
@@ -11,50 +15,39 @@
                 </div>
             </div>
             <div class="w-full md:w-1/2 lg:w-3/12 px-4">
-                <!--<div class="mb-10">
-                  <h3 class="font-semibold text-white text-xl mb-9">What I Do?</h3>
-                  <ul>
-                    <li>
-                      <a href="javascript:void(0)" class="inline-block text-base text-body-color mb-3 hover:text-primary"> The Studio </a>
-                    </li>
-                    <li>
-                      <a href="javascript:void(0)" class="inline-block text-base text-body-color mb-3 hover:text-primary"> Sponsoring </a>
-                    </li>
-                    <li>
-                      <a href="javascript:void(0)" class="inline-block text-base text-body-color mb-3 hover:text-primary"> Newsletter </a>
-                    </li>
-                    <li>
-                      <a href="javascript:void(0)" class="inline-block text-base text-body-color mb-3 hover:text-primary"> Contact Us </a>
-                    </li>
-                  </ul>
-                </div>-->
+               {{-- Some content... --}}
             </div>
             <div class="w-full md:w-1/2 lg:w-2/12 px-4">
+                @if($projects)
                 <div class="mb-10">
                     <h3 class="font-semibold text-white text-xl mb-9">Naše pluginy</h3>
                     <ul>
-                        <x-public.footer-link href="/link">Plugin 1</x-public.footer-link>
-                        <x-public.footer-link href="/link">Plugin 2</x-public.footer-link>
-                        <x-public.footer-link href="/link">Plugin 3</x-public.footer-link>
-                        <x-public.footer-link href="/link">Plugin 4</x-public.footer-link>
+                        @foreach($projects as $project)
+                            <x-public.footer-link href="{{route('portfolio.show', ['id' => $project->id])}}">{{ \Illuminate\Support\Str::limit($project->title, 40) }}</x-public.footer-link>
+                        @endforeach
                     </ul>
                 </div>
+                @endif
             </div>
             <div class="w-full md:w-1/2 lg:w-3/12 px-4">
                 <div class="mb-10">
+                    @if($pages)
                     <h3 class="font-semibold text-white text-xl mb-9">Rychlé odkazy</h3>
                     <ul>
-                        <x-public.footer-link href="/link"> Ochrana osobních údajů </x-public.footer-link>
-                        <x-public.footer-link href="/link"> Podmínky služeb </x-public.footer-link>
-                        <x-public.footer-link href="/link"> Údaje o společnosti </x-public.footer-link>
+                    @foreach($pages as $page)
+                        @if($page->visible_in_footer)
+                        <x-public.footer-link :href="$page->route_name ? route($page->route_name) : url($page->slug)"> {{ $page->title }} </x-public.footer-link>
+                        @endif
+                    @endforeach
                     </ul>
+                    @endif
                 </div>
             </div>
         </div>
 
         <div class="mt-10 pt-12 border-t border-white border-opacity-10">
 
-            <p class="font-medium text-base text-body-color text-center">Všechna práva vyhrazena © 2020 - 2024 RAIN WOLF s.r.o.
+            <p class="font-medium text-base text-body-color text-center">Všechna práva vyhrazena © 2020 - {{ \Carbon\Carbon::now()->format('Y') }} RAIN WOLF s.r.o.
             </p>
         </div>
     </div>
@@ -109,4 +102,3 @@
         </svg>
     </div>
 </footer>
-<!-- ====== Footer Section End  -->

@@ -2,28 +2,38 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Public\PageController as PublicPageController;
+use App\Http\Controllers\Admin\PortfolioController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ServiceController;
-use App\Http\Controllers\Admin\PortfolioController;
 use App\Http\Controllers\Public\MainController;
 use App\Http\Controllers\Public\PortfolioController as PublicPortfolioController;
 use App\Http\Controllers\Public\ServiceController as PublicServiceController;
 use App\Models\User;
 use App\Notifications\MailResetPasswordToken;
 use App\Notifications\PasswordHasBeenResetNotification;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
 
 
-
 // Public routes
 Route::get('/', [MainController::class, 'index']) ->name('home');
-Route::get('/portfolio', [PublicPortfolioController::class, 'index']) ->name('portfolio.index');
-Route::get('/portfolio/{id}', [PublicPortfolioController::class, 'show']) ->name('portfolio.show');
-Route::get('/services', [PublicServiceController::class, 'index']) ->name('services.index');
-Route::get('/services/{slug}', [PublicServiceController::class, 'show']) ->name('services.show');
+Route::get('/projekty', [PublicPortfolioController::class, 'index']) ->name('portfolio.index');
+Route::get('/projekty/{id}', [PublicPortfolioController::class, 'show']) ->name('portfolio.show');
+Route::get('/sluzby', [PublicServiceController::class, 'index']) ->name('services.index');
+Route::get('/sluzby/{slug}', [PublicServiceController::class, 'show']) ->name('services.show');
 Route::post('/verify', [MainController::class, 'verify'])->name('recaptcha.verify');
 Route::post('/send-message', [MainController::class, 'processMessage'])->name('send-message');
+
+// Pages routes
+$pages = Cache::get('pages', []);
+foreach ($pages as $page) {
+    Route::get($page['slug'], [PublicPageController::class, 'show'])->name($page['route_name']);
+}
+
+
 
 //Admin routes
 Route::middleware(['auth', 'isAdmin'])->group(function () {
@@ -44,6 +54,9 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
             Route::get('messages', [MessageController::class, 'index']) ->name('admin.messages.index');
             Route::get('messages/{message}', [MessageController::class, 'show']) ->name('admin.messages.show');
             Route::delete('messages/{message}', [MessageController::class, 'destroy']) ->name('admin.messages.destroy');
+
+            Route::resource('pages', PageController::class, ['as' => 'admin'])->except(['show']);
+            Route::get('pages/{slug}', [PageController::class, 'show'])->name('admin.pages.show');
 
         });
 

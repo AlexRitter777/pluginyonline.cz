@@ -15,14 +15,14 @@
 
 {{ $slot }}
 
-<!-- ====== Back To Top Start -->
+{{-- Back To Top Start --}}
 <a
     href="javascript:void(0)"
     class="hidden items-center justify-center bg-primary text-white w-10 h-10 rounded-md fixed bottom-8 right-8 left-auto z-[999] hover:shadow-signUp transition duration-300 back-to-top"
 >
     <span class="w-3 h-3 border-t border-l border-white rotate-45 mt-[6px]"></span>
 </a>
-<!-- ====== Back To Top End -->
+{{-- Back To Top End --}}
 
 @stack('scripts')
 

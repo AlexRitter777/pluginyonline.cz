@@ -31,7 +31,7 @@ export function initSummernote(selector = '#summernote', options = {}) {
 
         // Initialize Summernote with toolbar and options
         $textarea.summernote({
-            height: 300,
+            height: options.height ?? 300,
             toolbar: [
                 ['style', ['bold', 'italic', 'underline', 'clear']],
                 ['font', ['strikethrough', 'superscript', 'subscript']],

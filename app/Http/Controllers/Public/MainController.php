@@ -68,7 +68,7 @@ class MainController extends Controller
         $adminEmails = User::where('is_admin', 1)->pluck('email');
 
 
-        $url = 'www.pronajemonline.cz';// retrieve Admin show message url instead
+        $url = url("rw-admin/messages/{$savedMessage->id}");
         $text = Str::limit($message, 70);
         $telegramMessage = <<<TEXT
                 <b>Nová zpráva z webu.</b>

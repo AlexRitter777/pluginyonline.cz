@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Service;
 use App\Rules\SummernoteContent;
+use App\Services\CacheCleanerService;
 use App\Traits\HasThumbnail;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
@@ -52,7 +52,12 @@ class ServiceController extends Controller
 
         $service = Service::create($data);
 
-        Cache::forget('services');
+        CacheCleanerService::cleanCache([
+            'services',
+            'admin_dashboard_services',
+            'admin_dashboard_services_count'
+        ]);
+
 
         return redirect(route('admin.services.index'))->with('success', 'Service has been created!');
     }
@@ -123,7 +128,11 @@ class ServiceController extends Controller
 
         $service->update($data);
 
-        Cache::forget('services');
+        CacheCleanerService::cleanCache([
+            'services',
+            'admin_dashboard_services',
+            'admin_dashboard_services_count'
+        ]);
 
         return redirect(route('admin.services.index'))
             ->with('success', 'Service has been updated!');
@@ -145,6 +154,13 @@ class ServiceController extends Controller
 
 
         $service->delete();
+
+        CacheCleanerService::cleanCache([
+            'services',
+            'admin_dashboard_services',
+            'admin_dashboard_services_count'
+        ]);
+
 
         return redirect()
             ->route('admin.services.index')

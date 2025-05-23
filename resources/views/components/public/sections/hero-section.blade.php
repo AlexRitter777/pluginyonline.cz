@@ -40,8 +40,12 @@
                                 <img class="w-2/3" src="{{ Vite::asset('resources/images/public/technologies/new-php-logo.png') }}" alt="PHP" />
                             </div>
                             <div class="w-full py-3 mr-4">
-                                <img src="{{ Vite::asset('resources/images/public/technologies/jQuery-Logo.pn') }}g" alt="jQuery" />
+                                <img src="{{ Vite::asset('resources/images/public/technologies/jQuery-Logo.png') }}" alt="jQuery" />
                             </div>
+                            <div class="w-full py-3 mr-4">
+                                <img width="60" src="{{ Vite::asset('resources/images/public/technologies/Alpine.js.png') }}" alt="Alpine" />
+                            </div>
+
                         </div>
                     </div>
                 </div>

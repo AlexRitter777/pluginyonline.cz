@@ -33,7 +33,7 @@
 
             <x-public.pricing-item
                 title="Střední plugin"
-                price="8.000 - 12.000 Kč"
+                price="8.000 - 15.000 Kč"
             >
                 <x-slot:description>
                     Středně velký plugin s větším zásahem do funkcionality webu, využitím API a interaktivity.

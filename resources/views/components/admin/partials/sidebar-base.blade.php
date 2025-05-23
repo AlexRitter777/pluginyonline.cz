@@ -27,6 +27,9 @@
             <rect x="3" y="5" width="18" height="14" rx="2" ry="2" />
             <path d="M3 7l9 6 9-6" />
         </x-admin.sidebar-link>
+        <x-admin.sidebar-link href="{{ route('admin.pages.index') }}" title="Pages">
+            <path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path>
+        </x-admin.sidebar-link>
         {{--<li class="relative px-6 py-3">
             <a
                 class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"

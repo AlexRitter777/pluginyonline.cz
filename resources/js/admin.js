@@ -26,6 +26,7 @@ window.jQuery = $;
 
 initSummernote('#services #content');
 initSummernote('#portfolio #content');
+initSummernote('#pages #content', {height: 600});
 
 
 

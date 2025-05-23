@@ -26,7 +26,6 @@ responsiveNavbar();
 //Scroll to Top
 scrollToTop();
 
-// contactForm();
 
 
 

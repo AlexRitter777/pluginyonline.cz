@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePortfolioRequest;
 use App\Models\Portfolio;
+use App\Services\CacheCleanerService;
 use App\Traits\HasThumbnail;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
@@ -50,7 +51,11 @@ class PortfolioController extends Controller
 
         $portfolio->saveImages($positions, $images);
 
-        Cache::forget('portfolios');
+        CacheCleanerService::cleanCache([
+            'portfolios',
+            'admin_dashboard_portfolios',
+            'admin_dashboard_portfolios_count'
+        ]);
 
         return redirect()->route('admin.portfolio.index');
 
@@ -124,7 +129,12 @@ class PortfolioController extends Controller
         //Project update
         $portfolio->update($validated);
 
-        Cache::forget('portfolios');
+        CacheCleanerService::cleanCache([
+            'portfolios',
+            'admin_dashboard_portfolios',
+            'admin_dashboard_portfolios_count'
+        ]);
+
 
         return redirect(route('admin.portfolio.index'))
             ->with('success', 'Project has been updated!');
@@ -151,6 +161,12 @@ class PortfolioController extends Controller
         $portfolio->deleteImages($existingImages, []);
 
         $portfolio->delete();
+
+        CacheCleanerService::cleanCache([
+            'portfolios',
+            'admin_dashboard_portfolios',
+            'admin_dashboard_portfolios_count'
+        ]);
 
         return redirect()
             ->route('admin.portfolio.index')
