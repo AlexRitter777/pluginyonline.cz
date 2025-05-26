@@ -19,7 +19,7 @@
         <div class="mb-7 lg:h-[530px] md:min-h-[530px]">
             {{ $slot }}
         </div>
-        <a href="#contact" class="menu-scroll w-full block text-base font-semibold text-white bg-primary border border-primary rounded-md text-center p-4 hover:bg-opacity-90 transition">
+        <a href="{{ route('contact') }}" class="w-full block text-base font-semibold text-white bg-primary border border-primary rounded-md text-center p-4 hover:bg-opacity-90 transition">
             Objednat
         </a>
 

@@ -7,7 +7,7 @@
    'preview' => false
 ])
 
-<section id="services" class=" bg-{{ $backgroundColor }} pt-20 lg:pt-[120px] pb-12 lg:pb-[90px]">
+<section id="sluzby" class=" bg-{{ $backgroundColor }} pt-20 lg:pt-[120px] pb-12 lg:pb-[90px]">
     <div class="container">
         <div class="flex flex-wrap items-end -mx-4 mb-10 lg:mb-[60px]">
             <div class="w-full lg:w-8/12 px-4">

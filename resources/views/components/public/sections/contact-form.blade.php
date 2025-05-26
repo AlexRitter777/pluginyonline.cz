@@ -1,4 +1,4 @@
-<section id="contact" class="py-[120px]">
+<section id="kontakt" class="py-[120px]">
     <div class="container">
         <div class="flex flex-wrap mx-[-16px]">
             <div class="w-full px-4">

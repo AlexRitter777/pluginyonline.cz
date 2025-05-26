@@ -1,4 +1,4 @@
-<section id="pricing" class="bg-white pt-20 lg:pt-[120px] relative z-20 overflow-hidden">
+<section id="ceny" class="bg-white pt-20 lg:pt-[120px] relative z-20 overflow-hidden">
     <div class="container">
         <div class="flex flex-wrap -mx-4">
             <div class="w-full px-4">

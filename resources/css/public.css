@@ -2,5 +2,5 @@
 
 @import "public/style.css";
 @import "public/animate.css";
-
+@import "notyf/notyf.min.css";
 @config "../../tailwind.public.config.js";

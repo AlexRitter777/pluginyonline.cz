@@ -45,7 +45,6 @@
         // Document Loaded
         document.addEventListener('DOMContentLoaded', () => {
             const pageLink = document.querySelectorAll(".menu-scroll");
-            //console.log(pageLink);
             pageLink.forEach((elem) => {
                 elem.addEventListener("click", (e) => {
                     e.preventDefault();
@@ -59,7 +58,8 @@
             });
             // section menu active
             function onScroll(event) {
-                const sections = document.querySelectorAll(".menu-scroll");
+                const sections = document.querySelectorAll(".menu-scroll-active");
+                // console.log(sections);
                 const scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
 
                 for (let i = 0; i < sections.length; i++) {
@@ -68,7 +68,7 @@
                     const refElement = document.querySelector(val);
                     const scrollTopMinus = scrollPos + 73;
                     if (refElement.offsetTop <= scrollTopMinus && refElement.offsetTop + refElement.offsetHeight > scrollTopMinus) {
-                        document.querySelector(".menu-scroll").classList.remove("active");
+                        document.querySelector(".menu-scroll-active").classList.remove("active");
                         currLink.classList.add("active");
                     } else {
                         currLink.classList.remove("active");

@@ -18,7 +18,7 @@
                     </p>
                     <ul class="flex flex-wrap items-center justify-between">
                         <li>
-                            <x-public.button-link class="menu-scroll" href="#contact">Poptat plugin</x-public.button-link>
+                            <x-public.button-link class="menu-scroll" href="#kontakt">Poptat plugin</x-public.button-link>
                         </li>
                         <x-public.button-link href="{{ route('portfolio.index') }}">Naše práce</x-public.button-link>
                         <li>

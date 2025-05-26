@@ -1,4 +1,4 @@
-<section id="about" class="pt-[145px] pb-[120px] relative z-10">
+<section id="o-nas" class="pt-[145px] pb-[120px] relative z-10">
     <div class="container">
         <div class="flex flex-wrap mx-[-16px]">
             <div class="w-full lg:w-1/2 xl:w-7/12 px-4 mb-8 lg:mb-0">

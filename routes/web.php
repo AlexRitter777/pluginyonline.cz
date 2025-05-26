@@ -27,6 +27,18 @@ Route::get('/sluzby/{slug}', [PublicServiceController::class, 'show']) ->name('s
 Route::post('/verify', [MainController::class, 'verify'])->name('recaptcha.verify');
 Route::post('/send-message', [MainController::class, 'processMessage'])->name('send-message');
 
+Route::get('/kontakt', function () {
+    return view('public.pages.contact');
+})->name('contact');
+
+Route::get('/o-nas', function () {
+    return view('public.pages.about');
+})->name('about');
+
+Route::get('/ceny', function () {
+    return view('public.pages.prices');
+})->name('prices');
+
 // Pages routes
 $pages = Cache::get('pages', []);
 foreach ($pages as $page) {

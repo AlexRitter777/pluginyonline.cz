@@ -7,7 +7,7 @@
 
 ])
 
-<section id="portfolio" class="pt-[120px] pb-[70px] bg-[#f8f9ff]">
+<section id="projekty" class="pt-[120px] pb-[70px] bg-[#f8f9ff]">
     <div class="container">
         <div class="flex flex-wrap mx-[-16px]">
             <div class="w-full px-4">
