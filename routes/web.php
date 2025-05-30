@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\SlugController;
 use App\Http\Controllers\Public\PageController as PublicPageController;
 use App\Http\Controllers\Admin\PortfolioController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -69,6 +70,9 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 
             Route::resource('pages', PageController::class, ['as' => 'admin'])->except(['show']);
             Route::get('pages/{slug}', [PageController::class, 'show'])->name('admin.pages.show');
+
+            Route::post('slug-generator', [SlugController::class, 'generateSlug']) ->name('admin.slug-generate');
+            Route::get('slug-generator', [SlugController::class, 'generateSlug']);
 
         });
 

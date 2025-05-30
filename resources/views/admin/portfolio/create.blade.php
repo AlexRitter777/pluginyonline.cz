@@ -25,6 +25,19 @@
                         Title
                     </x-admin.input-text>
 
+                    {{--Slug--}}
+
+
+                    <x-admin.input-slug
+                        name="slug"
+                        id="slug"
+{{--                        validationRules="required|min:3|max:65"--}}
+{{--                        placeholder="Enter project name..."--}}
+                        disabled="disabled"
+                        value="{{ old('slug') }}"
+                    />
+
+
                     {{--Project Name--}}
                     <x-admin.input-text
                         type="text"

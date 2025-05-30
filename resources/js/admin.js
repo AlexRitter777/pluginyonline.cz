@@ -7,6 +7,7 @@ import modal from  "./admin/components/modal.js";
 import {sort} from "@alpinejs/sort";
 import $ from 'jquery';
 import InputGallery from "./admin/components/input-gallery.js";
+import slugManager from "./admin/components/slug-manger.js";
 
 
 window.Alpine = Alpine;
@@ -17,6 +18,7 @@ Alpine.data('imageUpload', imageUpload);
 Alpine.data('formValidation', formValidation);
 Alpine.data('modal', modal);
 Alpine.data('inputGallery', InputGallery);
+Alpine.data('slugManager', slugManager);
 
 
 Alpine.start();
