@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 // Public routes
 Route::get('/', [MainController::class, 'index']) ->name('home');
 Route::get('/projekty', [PublicPortfolioController::class, 'index']) ->name('portfolio.index');
-Route::get('/projekty/{id}', [PublicPortfolioController::class, 'show']) ->name('portfolio.show');
+Route::get('/projekty/{slug}', [PublicPortfolioController::class, 'show']) ->name('portfolio.show');
 Route::get('/sluzby', [PublicServiceController::class, 'index']) ->name('services.index');
 Route::get('/sluzby/{slug}', [PublicServiceController::class, 'show']) ->name('services.show');
 Route::post('/verify', [MainController::class, 'verify'])->name('recaptcha.verify');
@@ -72,8 +72,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
             Route::get('pages/{slug}', [PageController::class, 'show'])->name('admin.pages.show');
 
             Route::post('slug-generator', [SlugController::class, 'generateSlug']) ->name('admin.slug-generate');
-            Route::get('slug-generator', [SlugController::class, 'generateSlug']);
-
+            Route::post('check-slug', [SlugController::class, 'checkIfSlugExistsOrNot']) ->name('admin.check-slug');
         });
 
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

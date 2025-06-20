@@ -23,7 +23,7 @@
                     <h3 class="font-semibold text-white text-xl mb-9">Naše pluginy</h3>
                     <ul>
                         @foreach($projects as $project)
-                            <x-public.footer-link href="{{route('portfolio.show', ['id' => $project->id])}}">{{ \Illuminate\Support\Str::limit($project->title, 40) }}</x-public.footer-link>
+                            <x-public.footer-link href="{{route('portfolio.show', ['slug' => $project->slugs->firstWhere('is_current', true)?->slug])}}">{{ \Illuminate\Support\Str::limit($project->title, 40) }}</x-public.footer-link>
                         @endforeach
                     </ul>
                 </div>

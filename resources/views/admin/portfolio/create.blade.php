@@ -9,7 +9,7 @@
                 <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                     Create new project
                 </h2>
-
+                {{-- When toggling formValidation, check parameters in input-gallery.js --}}
                 <form x-data="formValidation" id="portfolio" @submit.prevent="validate" action="{{route('admin.portfolio.store')}}" enctype="multipart/form-data" method="post">
                     @csrf
 
@@ -26,14 +26,10 @@
                     </x-admin.input-text>
 
                     {{--Slug--}}
-
-
                     <x-admin.input-slug
                         name="slug"
                         id="slug"
-{{--                        validationRules="required|min:3|max:65"--}}
-{{--                        placeholder="Enter project name..."--}}
-                        disabled="disabled"
+                        validationRules="required"
                         value="{{ old('slug') }}"
                     />
 

@@ -6,6 +6,7 @@ use App\Services\ImageUploadService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,9 +17,14 @@ class Portfolio extends Model
 
     protected $fillable = ['title', 'name', 'type', 'purpose', 'features', 'requirements', 'description', 'content', 'is_published', 'thumbnail', 'position'];
 
-    public function images()
+    public function images(): HasMany
     {
         return $this->hasMany(Image::class)->orderBy('position');
+    }
+
+    public function slugs(): HasMany
+    {
+        return $this->hasMany(Slug::class);
     }
 
     public function makePositionsArray(Collection $collection) : array {
@@ -35,30 +41,36 @@ class Portfolio extends Model
 
     }
 
-    public function saveImages(array $positions, array $images) : void
+    public function saveImages(array $positions, array $images) : array
     {
+        $savedImagePaths = [];
+
         foreach ($positions as $key => $position) {
 
             if(isset($images[$key]) && $images[$key] instanceof UploadedFile) {
 
                 $image = $images[$key];
 
-                $this->imageUpload($image, $position, $key);
+                $savedImagePaths[] = $this->imageUpload($image, $position, $key);
 
             }
         }
 
+        return $savedImagePaths;
+
     }
 
-    public function updateImages(array $positions, array $images, array $oldImagesIds, Collection $existingImages) : void
+    public function updateImages(array $positions, array $images, array $oldImagesIds, Collection $existingImages) : array
     {
+        $updatedImagePaths = [];
+
         foreach ($positions as $key => $position) {
 
             if (isset($images[$key]) && $images[$key] instanceof UploadedFile) {
 
                 $image = $images[$key];
 
-                $this->imageUpload($image, $position, $key);
+                $updatedImagePaths[] = $this->imageUpload($image, $position, $key);
 
 
             } elseif (in_array($key, $oldImagesIds) && isset($existingImages[$key])) {
@@ -67,6 +79,9 @@ class Portfolio extends Model
 
             }
         }
+
+        return $updatedImagePaths;
+
     }
 
     public function deleteImages(Collection $existingImages, array $oldImagesIds) : void
@@ -80,7 +95,7 @@ class Portfolio extends Model
 
     }
 
-    protected function imageUpload(UploadedFile $image, string $position, string $unique_id) : void
+    protected function imageUpload(UploadedFile $image, string $position, string $unique_id) : string
     {
         $uploadedImage = ImageUploadService::storeGalleryImage($image);
 
@@ -90,6 +105,9 @@ class Portfolio extends Model
             'position' => $position,
             'unique_id' => $unique_id
         ]);
+
+        return $uploadedImage['path'];
+
     }
 
 

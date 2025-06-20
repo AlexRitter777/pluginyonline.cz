@@ -26,7 +26,7 @@
                     @foreach($portfolios as $portfolio)
                         <x-public.portfolio-item
                             :imageUrl="$portfolio->thumbnail"
-                            :showRoute="!$preview ? route('portfolio.show', ['id' => $portfolio->id]) : route('admin.portfolio.single', ['portfolio' => $portfolio])"
+                            :showRoute="!$preview ? route('portfolio.show', ['slug' => $portfolio->slugs->firstWhere('is_current', true)?->slug]) : route('admin.portfolio.single', ['portfolio' => $portfolio])"
                         >
                             <x-slot:title>{{ $portfolio->title }}</x-slot>
                             {{ $portfolio->description }}

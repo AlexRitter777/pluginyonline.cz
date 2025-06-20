@@ -8,6 +8,7 @@ use App\Models\Portfolio;
 use App\Services\CacheCleanerService;
 use App\Traits\HasThumbnail;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -30,11 +31,13 @@ class PortfolioController extends Controller
      */
     public function create()
     {
+
         return view('admin.portfolio.create');
     }
 
     /**
      * Store a newly created resource in storage.
+     * @throws \Throwable
      */
     public function store(StorePortfolioRequest $request)
     {
@@ -43,13 +46,35 @@ class PortfolioController extends Controller
 
         $validated['thumbnail'] = $this->updateThumbnail($request->file('thumbnail'));
 
-        $portfolio = Portfolio::create($validated);
-
         $images = $request->file('images') ?: [];
-
         $positions = (array) json_decode($request->input('positions'), true);
 
-        $portfolio->saveImages($positions, $images);
+        $savedImagePaths = [];
+
+        try {
+
+            DB::transaction(function () use ($validated, $images, $positions, &$savedImagePaths) {
+
+                $portfolio = Portfolio::create($validated);
+
+                $savedImagePaths = $portfolio->saveImages($positions, $images);
+
+                $portfolio->slugs()->create([
+                    'slug' => $validated['slug'],
+                    'is_current' => true
+                ]);
+
+            });
+
+        } catch (\Throwable $e) {
+            Storage::delete($validated['thumbnail']);
+
+            foreach ($savedImagePaths as $path) {
+                Storage::delete($path);
+            }
+
+            throw $e;
+        }
 
         CacheCleanerService::cleanCache([
             'portfolios',
@@ -67,7 +92,7 @@ class PortfolioController extends Controller
     public function showSingle(Portfolio $portfolio)
     {
         return view('admin.portfolio.preview-single', ['portfolio' => $portfolio]);
-
+//        TODO: Change to slug in URL
     }
 
     public function showGrid(Portfolio $portfolio){
@@ -100,34 +125,70 @@ class PortfolioController extends Controller
 
         }
 
-        return view('admin.portfolio.edit', ['portfolio' => $portfolio, 'images' => $images, 'paths' => $paths]);
+        $slug = $portfolio->slugs->where('is_current', true)->first();
+
+        return view('admin.portfolio.edit', ['portfolio' => $portfolio, 'images' => $images, 'paths' => $paths, 'slug' => $slug]);
     }
 
     /**
      * Update the specified resource in storage.
+     * @throws \Throwable
      */
     public function update(StorePortfolioRequest $request, Portfolio $portfolio)
     {
 
+
         $validated = $request->validated();
 
-        // Update thumbnail
-        $validated['thumbnail'] = $this->updateThumbnail($request->file('thumbnail'), $validated['old_thumbnail'], $portfolio->thumnail);
+        $updatedImagePaths = [];
 
-
-        //Images gallery update
+        //Images gallery update prepare data
         $images = $request->file('images') ?: [];
         $positions = json_decode($request->input('positions'),true);
         $oldImagesIds = json_decode($request->input('oldImagesIds'),true);
         $existingImages = $portfolio->images()->get()->keyBy('unique_id');
-
         //dd($positions, $existingImages, $oldImagesIds);
 
-        $portfolio->updateImages($positions, $images, $oldImagesIds, $existingImages);
-        $portfolio->deleteImages($existingImages, $oldImagesIds);
+        try{
+            DB::transaction(function () use ($request, $portfolio, $validated, $images, $positions, $oldImagesIds, $existingImages, &$updatedImagePaths) {
 
-        //Project update
-        $portfolio->update($validated);
+                // Update thumbnail
+                $validated['thumbnail'] = $this->updateThumbnail($request->file('thumbnail'), $validated['old_thumbnail'], $portfolio->thumbnail);
+
+                // Update Images
+                $updatedImagePaths = $portfolio->updateImages($positions, $images, $oldImagesIds, $existingImages);
+
+                //update Slug
+                if($validated['old_slug'] !== $validated['slug']) {
+
+                    $portfolio->slugs()
+                        ->where('is_current', true)
+                        ->first()
+                        ->update(['is_current' => false]);
+
+                    $portfolio->slugs()->updateOrCreate(
+                        ['slug' => $validated['slug']],
+                        ['is_current' => true]
+                    );
+
+                }
+
+                //Update project
+                $portfolio->update($validated);
+
+            });
+        }catch (\Throwable $e){
+            Storage::delete($validated['thumbnail']);
+
+            // remove images
+            foreach ($updatedImagePaths as $path) {
+                Storage::delete($path);
+            }
+
+            throw $e;
+        }
+
+        $portfolio->deleteImages($existingImages, $oldImagesIds);
 
         CacheCleanerService::cleanCache([
             'portfolios',
@@ -138,8 +199,6 @@ class PortfolioController extends Controller
 
         return redirect(route('admin.portfolio.index'))
             ->with('success', 'Project has been updated!');
-
-
 
     }
 

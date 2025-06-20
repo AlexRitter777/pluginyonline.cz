@@ -25,6 +25,16 @@
                         Title
                     </x-admin.input-text>
 
+                    {{--Editable slug--}}
+                    <x-admin.input-slug
+                        name="slug"
+                        id="slug"
+                        validationRules="required"
+                        :value="old('slug', $slug)"
+                        :oldValue="$slug->slug"
+                        :isEditForm="$slug ? 'true' : 'false' "
+                    />
+
                     {{--Project Name--}}
                     <x-admin.input-text
                         type="text"

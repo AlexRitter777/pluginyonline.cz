@@ -31,7 +31,8 @@ class MainController extends Controller
       });
 
       $portfolios = Cache::rememberForever('portfolios', function () {
-          return Portfolio::where('is_published', 1)
+          return Portfolio::with('slugs')
+              ->where('is_published', 1)
               ->orderByRaw('position IS NULL')
               ->orderBy('position')
               ->limit(4)

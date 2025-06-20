@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('slugs', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique();
+            $table->string('slug');
             $table->boolean('is_current')->default(true);
             $table->foreignId('portfolio_id')->constrained('portfolios')->cascadeOnDelete();
             $table->timestamps();
