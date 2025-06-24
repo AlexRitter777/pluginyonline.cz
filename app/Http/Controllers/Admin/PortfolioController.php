@@ -9,7 +9,9 @@ use App\Services\CacheCleanerService;
 use App\Traits\HasThumbnail;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use mysql_xdevapi\Exception;
 
 
 class PortfolioController extends Controller
@@ -52,28 +54,30 @@ class PortfolioController extends Controller
         $savedImagePaths = [];
 
         try {
-
             DB::transaction(function () use ($validated, $images, $positions, &$savedImagePaths) {
 
                 $portfolio = Portfolio::create($validated);
 
                 $savedImagePaths = $portfolio->saveImages($positions, $images);
-
                 $portfolio->slugs()->create([
                     'slug' => $validated['slug'],
                     'is_current' => true
                 ]);
-
             });
 
         } catch (\Throwable $e) {
-            Storage::delete($validated['thumbnail']);
+
+            if($validated['thumbnail']){
+                Storage::delete($validated['thumbnail']);
+            }
 
             foreach ($savedImagePaths as $path) {
                 Storage::delete($path);
             }
 
-            throw $e;
+            Log::error('Portfolio store failed: ' . $e->getMessage());
+            return back()->with('error', 'Portfolio store failed.');
+
         }
 
         CacheCleanerService::cleanCache([
@@ -92,7 +96,6 @@ class PortfolioController extends Controller
     public function showSingle(Portfolio $portfolio)
     {
         return view('admin.portfolio.preview-single', ['portfolio' => $portfolio]);
-//        TODO: Change to slug in URL
     }
 
     public function showGrid(Portfolio $portfolio){
@@ -178,14 +181,14 @@ class PortfolioController extends Controller
 
             });
         }catch (\Throwable $e){
-            Storage::delete($validated['thumbnail']);
 
-            // remove images
+            // remove new images
             foreach ($updatedImagePaths as $path) {
                 Storage::delete($path);
             }
 
-            throw $e;
+            Log::error('Portfolio update failed: ' . $e->getMessage());
+            return back()->with('error', 'Portfolio store failed.');
         }
 
         $portfolio->deleteImages($existingImages, $oldImagesIds);

@@ -2,7 +2,8 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Services\User;
+use App\Models\User;
+use App\Notifications\MailResetPasswordToken;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
@@ -14,7 +15,7 @@ class PasswordResetTest extends TestCase
 
     public function test_reset_password_link_screen_can_be_rendered(): void
     {
-        $response = $this->get('/forgot-password');
+        $response = $this->get('/rw-admin/forgot-password');
 
         $response->assertStatus(200);
     }
@@ -23,23 +24,23 @@ class PasswordResetTest extends TestCase
     {
         Notification::fake();
 
-        $user = User::factory()->create();
+        $user = User::factory()->create(['is_admin' => true]);
 
-        $this->post('/forgot-password', ['email' => $user->email]);
+        $this->post('/rw-admin/forgot-password', ['email' => $user->email]);
 
-        Notification::assertSentTo($user, ResetPassword::class);
+        Notification::assertSentTo($user, MailResetPasswordToken::class);
     }
 
     public function test_reset_password_screen_can_be_rendered(): void
     {
         Notification::fake();
 
-        $user = User::factory()->create();
+        $user = User::factory()->create(['is_admin' => true]);
 
-        $this->post('/forgot-password', ['email' => $user->email]);
+        $this->post('/rw-admin/forgot-password', ['email' => $user->email]);
 
-        Notification::assertSentTo($user, ResetPassword::class, function ($notification) {
-            $response = $this->get('/reset-password/'.$notification->token);
+        Notification::assertSentTo($user, MailResetPasswordToken::class, function ($notification) {
+            $response = $this->get('/rw-admin/reset-password/'.$notification->token);
 
             $response->assertStatus(200);
 
@@ -51,16 +52,16 @@ class PasswordResetTest extends TestCase
     {
         Notification::fake();
 
-        $user = User::factory()->create();
+        $user = User::factory()->create(['is_admin' => true]);
 
-        $this->post('/forgot-password', ['email' => $user->email]);
+        $this->post('/rw-admin/forgot-password', ['email' => $user->email]);
 
-        Notification::assertSentTo($user, ResetPassword::class, function ($notification) use ($user) {
-            $response = $this->post('/reset-password', [
+        Notification::assertSentTo($user, MailResetPasswordToken::class, function ($notification) use ($user) {
+            $response = $this->post('rw-admin/reset-password', [
                 'token' => $notification->token,
                 'email' => $user->email,
-                'password' => 'password',
-                'password_confirmation' => 'password',
+                'password' => 'Password',
+                'password_confirmation' => 'Password',
             ]);
 
             $response

@@ -99,12 +99,18 @@ class Portfolio extends Model
     {
         $uploadedImage = ImageUploadService::storeGalleryImage($image);
 
-        $this->images()->create([
-            'path' => $uploadedImage['path'],
-            'filename' => $uploadedImage['name'],
-            'position' => $position,
-            'unique_id' => $unique_id
-        ]);
+        try {
+            $this->images()->create([
+                'path' => $uploadedImage['path'],
+                'filename' => $uploadedImage['name'],
+                'position' => $position,
+                'unique_id' => $unique_id
+            ]);
+
+        }catch (\Exception $e){
+            Storage::delete($uploadedImage['path']);
+            throw $e;
+        }
 
         return $uploadedImage['path'];
 

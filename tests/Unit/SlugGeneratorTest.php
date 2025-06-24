@@ -19,9 +19,15 @@ class SlugGeneratorTest extends TestCase
     private function mockSlugExists($mock, string $slug, bool $exists): void
     {
         $mock->shouldReceive('where')
-            ->with('slug', $slug)
+            ->withArgs(['slug', $slug])
             ->once()
             ->andReturnSelf();
+
+        $mock->shouldReceive('where')
+            ->withArgs(['is_current', true])
+            ->once()
+            ->andReturnSelf();
+
         $mock->shouldReceive('exists')
             ->once()
             ->andReturn($exists);

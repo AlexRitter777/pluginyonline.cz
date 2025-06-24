@@ -46,8 +46,8 @@ class StorePortfolioRequest extends FormRequest
             'images' => [
                 'array',
                 Rule::requiredIf(function () {
-                    $paths = $this->input('paths');
-                    return $paths === '[]';
+                    $oldImagesIds = $this->input('oldImagesIds');
+                    return $oldImagesIds === '[]';
                 })
             ],
             'images.*' => 'nullable|image|max:6144',

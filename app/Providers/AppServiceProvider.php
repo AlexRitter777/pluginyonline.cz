@@ -8,6 +8,8 @@ use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Schema;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,11 +38,14 @@ class AppServiceProvider extends ServiceProvider
         });
 
         //composer?
-        Cache::rememberForever('pages', function () {
-           return Page::where('is_published', 1)->orderBy('position', 'desc')
-                                                ->get(['title','route_name', 'slug', 'visible_in_footer']);
+        if(Schema::hasTable('pages')) {
+            Cache::rememberForever('pages', function () {
+                return Page::where('is_published', 1)->orderBy('position', 'desc')
+                    ->get(['title','route_name', 'slug', 'visible_in_footer']);
 
-        });
+            });
+        }
+
 
 
 

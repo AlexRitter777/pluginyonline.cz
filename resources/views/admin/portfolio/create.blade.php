@@ -5,6 +5,7 @@
             <div
                 class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 mt-4"
             >
+                <x-admin.error :message="session('error')" />
 
                 <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                     Create new project
@@ -155,7 +156,7 @@
 
 
                     <div class="flex mt-10 mb-5 justify-around lg:w-1/2 mx-auto">
-                        <x-admin.button-link>Preview</x-admin.button-link>
+{{--                        <x-admin.button-link>Preview</x-admin.button-link>--}}
                         <x-admin.button-submit>Save</x-admin.button-submit>
                         <x-admin.button-link href="{{route('admin.portfolio.index')}}">Cancel</x-admin.button-link>
 

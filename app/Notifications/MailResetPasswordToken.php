@@ -11,7 +11,7 @@ class MailResetPasswordToken extends Notification
 {
     use Queueable;
 
-    private $token;
+    public $token;
 
     /**
      * Create a new notification instance.
