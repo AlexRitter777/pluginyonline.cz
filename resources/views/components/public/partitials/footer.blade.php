@@ -15,7 +15,17 @@
                 </div>
             </div>
             <div class="w-full md:w-1/2 lg:w-3/12 px-4">
-               {{-- Some content... --}}
+                <div class="mb-10">
+                    <h3 class="font-semibold text-white text-xl mb-9">Navigace</h3>
+                    <ul>
+                        <x-public.footer-link :href="route('home')"> Home </x-public.footer-link>
+                        <x-public.footer-link :href="route('about')"> O nas </x-public.footer-link>
+                        <x-public.footer-link :href="route('services.index')"> Služby </x-public.footer-link>
+                        <x-public.footer-link :href="route('portfolio.index')"> Naše práce </x-public.footer-link>
+                        <x-public.footer-link :href="route('prices')"> Ceny </x-public.footer-link>
+                        <x-public.footer-link :href="route('contact')"> Kontakt </x-public.footer-link>
+                    </ul>
+                </div>
             </div>
             <div class="w-full md:w-1/2 lg:w-2/12 px-4">
                 @if($projects)
