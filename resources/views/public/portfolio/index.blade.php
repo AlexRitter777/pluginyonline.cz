@@ -1,4 +1,4 @@
-<x-public.layouts.base-layout title="Naše práce">
+<x-public.layouts.base-layout title="Naše práce" canonical="{{$canonical}}">
 
     <x-public.sections.portfolios-section
         :portfolios="$portfolios"

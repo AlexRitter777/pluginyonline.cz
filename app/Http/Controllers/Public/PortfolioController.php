@@ -18,7 +18,12 @@ class PortfolioController extends Controller
             ->orderBy('position')
             ->paginate(6);
 
-        return view('public.portfolio.index', ['portfolios' => $portfolios]);
+        $currentPage = request()->get('page');
+        $canonical = $currentPage == 1 || !$currentPage
+            ? route('portfolio.index')
+            : url()->full();
+
+        return view('public.portfolio.index', ['portfolios' => $portfolios, 'canonical' => $canonical]);
     }
 
 

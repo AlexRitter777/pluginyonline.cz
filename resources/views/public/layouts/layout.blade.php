@@ -1,4 +1,4 @@
-@props(['title' => 'Pluginy Online'])
+@props(['title' => 'Pluginy Online', 'canonical'])
 
 <!DOCTYPE html>
 <html lang="cs">
@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="favicon_public.ico" />
+    <link rel="canonical" href="{{ $canonical }}">
+
     <title>{{ $title }} | Pluginy Wordpress na míru</title>
     @vite(['resources/css/public.css', 'resources/js/public.js'])
 </head>
