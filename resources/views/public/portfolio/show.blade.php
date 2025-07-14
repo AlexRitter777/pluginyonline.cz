@@ -1,4 +1,25 @@
-<x-public.layouts.base-layout title="{{ $portfolio->title }}">
+@push('head')
+
+    <x-public.json-ld
+        type="CreativeWork"
+        :title="$portfolio->title"
+        :description="$portfolio->purpose"
+        :url="request()->fullUrl()"
+        :image="url($portfolio->thumbnail)"
+    />
+
+    <x-public.json-ld
+        type="BreadcrumbList"
+        :breadcrumbs="$breadCrumbs"
+    />
+
+@endpush
+
+
+<x-public.layouts.base-layout
+    :title="$portfolio->title"
+    :description="$portfolio->description"
+>
 
     <x-public.partitials.project-single
         :title="$portfolio->title"

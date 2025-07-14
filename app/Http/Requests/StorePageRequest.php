@@ -23,6 +23,7 @@ class StorePageRequest extends FormRequest
     {
         return [
             'title' => 'required|min:3|max:100',
+            'description' => 'nullable|min:3|max:170',
             'route_name' => 'nullable|min:3|max:100',
             'content' => 'required|min:3',
             'position' => 'nullable|integer',

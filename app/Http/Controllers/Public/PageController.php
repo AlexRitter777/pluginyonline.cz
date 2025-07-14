@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Services\SeoBreadcrumbsGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class PageController extends Controller
 {
-    public function show(Request $request) {
+    public function show(Request $request, SeoBreadcrumbsGenerator $seoBreadcrumbsGenerator) {
 
         $slug = $request->path();
 
@@ -17,7 +18,9 @@ class PageController extends Controller
            return Page::where('slug', $slug)->firstOrFail();
         });
 
-        return view('public.page', ['page' => $page]);
+        $breadCrumbs = $seoBreadcrumbsGenerator->generate($page);
+
+        return view('public.page', ['page' => $page, 'breadCrumbs' => $breadCrumbs]);
 
     }
 }

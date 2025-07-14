@@ -25,6 +25,16 @@
                         Title
                     </x-admin.input-text>
 
+                    <x-admin.textarea
+                        name="description"
+                        id="description"
+                        validationRules="min:3|max:170"
+                        placeholder="Enter meta description..."
+                        value="{{ old('description', $page->description) }}"
+                    >
+                        Description
+                    </x-admin.textarea>
+
                     <x-admin.input-text
                         type="text"
                         name="route_name"

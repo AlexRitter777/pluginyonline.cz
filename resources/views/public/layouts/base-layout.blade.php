@@ -1,6 +1,14 @@
-@props(['title', 'canonical' => request()->fullUrl()])
+@props([
+    'title' => null,
+    'canonical' => null,
+    'description' => null,
+    ])
 
-<x-public.layouts.layout :title="$title" :canonical="$canonical">
+<x-public.layouts.layout
+    :title="$title"
+    :canonical="$canonical"
+    :description="$description"
+>
 
     <x-public.partitials.header/>
 

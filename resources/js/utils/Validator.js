@@ -133,7 +133,7 @@ export class Validator {
      */
     validateMax(fieldValue, title, lang, maxCount ) {
         if(fieldValue && fieldValue.length > maxCount){
-            return Errors.getErrorMessage(lang, 'validateMax', title, minCount)
+            return Errors.getErrorMessage(lang, 'validateMax', title, maxCount)
         }
         return null;
     }

@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Public;
 use App\Http\Controllers\Controller;
 use App\Models\Portfolio;
 use App\Models\Slug;
-use Illuminate\Http\Request;
+use App\Services\SeoBreadcrumbsGenerator;
 use Illuminate\Support\Facades\Log;
 
 class PortfolioController extends Controller
 {
-    public function index(){
+    public function index(SeoBreadcrumbsGenerator $seoBreadcrumbsGenerator){
 
         $portfolios = Portfolio::with('slugs')
             ->where('is_published', 1)
@@ -23,11 +23,13 @@ class PortfolioController extends Controller
             ? route('portfolio.index')
             : url()->full();
 
-        return view('public.portfolio.index', ['portfolios' => $portfolios, 'canonical' => $canonical]);
+        $breadCrumbs = $seoBreadcrumbsGenerator->generate();
+
+        return view('public.portfolio.index', ['portfolios' => $portfolios, 'canonical' => $canonical, 'breadCrumbs' => $breadCrumbs]);
     }
 
 
-    public function show(string $slug) {
+    public function show(string $slug, SeoBreadcrumbsGenerator $seoBreadcrumbsGenerator) {
 
         if ($requiredSlug = Slug::where('slug', $slug)->where('is_current', true)->first()) {
 
@@ -37,7 +39,9 @@ class PortfolioController extends Controller
                 return redirect()->route('portfolio.index');
             }
 
-            return view('public.portfolio.show', ['portfolio' => $portfolio]);
+            $breadCrumbs = $seoBreadcrumbsGenerator->generate($portfolio);
+
+            return view('public.portfolio.show', ['portfolio' => $portfolio, 'breadCrumbs' => $breadCrumbs]);
 
         } elseif ($requiredSlug = Slug::where('slug', $slug)->first()) {
 

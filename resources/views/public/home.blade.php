@@ -1,5 +1,22 @@
+@push('head')
+    <x-public.json-ld
+        type="Organization"
+        title="PluginyOnline.cz"
+        :url="request()->fullUrl()"
+    />
 
-<x-public.layouts.base-layout title="Home Page">
+    <x-public.json-ld
+        type="WebSite"
+        title="PluginyOnline.cz"
+        :url="request()->fullUrl()"
+    />
+@endpush
+
+
+<x-public.layouts.base-layout
+    title="Pluginy na míru pro WordPress a WooCommerce"
+    description="Vyvíjíme pluginy pro WordPress a WooCommerce na zakázku. Spolehlivě, bezpečně a efektivně. Podívejte se na naše služby a realizované projekty."
+>
 
     {{--Hero Section Start--}}
     <x-public.sections.hero-section />

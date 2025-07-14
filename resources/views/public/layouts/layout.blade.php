@@ -1,4 +1,8 @@
-@props(['title' => 'Pluginy Online', 'canonical'])
+@props([
+    'title' => null,
+    'canonical' => null,
+    'description' => null,
+   ])
 
 <!DOCTYPE html>
 <html lang="cs">
@@ -7,10 +11,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="favicon_public.ico" />
-    <link rel="canonical" href="{{ $canonical }}">
+    <link rel="shortcut icon" href="{{asset('favicon_public.ico')}}" />
 
-    <title>{{ $title }} | Pluginy Wordpress na míru</title>
+    <x-public.meta
+        :title="$title"
+        :canonical="$canonical"
+        :description="$description"
+    />
+
+    @stack('head')
+
     @vite(['resources/css/public.css', 'resources/js/public.js'])
 </head>
 <body>

@@ -14,6 +14,7 @@ use App\Http\Controllers\Public\ServiceController as PublicServiceController;
 use App\Models\User;
 use App\Notifications\MailResetPasswordToken;
 use App\Notifications\PasswordHasBeenResetNotification;
+use App\Services\SeoBreadcrumbsGenerator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -28,16 +29,19 @@ Route::get('/sluzby/{slug}', [PublicServiceController::class, 'show']) ->name('s
 Route::post('/verify', [MainController::class, 'verify'])->name('recaptcha.verify');
 Route::post('/send-message', [MainController::class, 'processMessage'])->name('send-message');
 
-Route::get('/kontakt', function () {
-    return view('public.pages.contact');
+Route::get('/kontakt', function (SeoBreadcrumbsGenerator $seoBreadcrumbsGenerator) {
+    return view('public.pages.contact')
+        ->with(['breadCrumbs' => $seoBreadcrumbsGenerator->generate()]);
 })->name('contact');
 
-Route::get('/o-nas', function () {
-    return view('public.pages.about');
+Route::get('/o-nas', function (SeoBreadcrumbsGenerator $seoBreadcrumbsGenerator) {
+    return view('public.pages.about')
+        ->with(['breadCrumbs' => $seoBreadcrumbsGenerator->generate()]);
 })->name('about');
 
-Route::get('/ceny', function () {
-    return view('public.pages.prices');
+Route::get('/ceny', function (SeoBreadcrumbsGenerator $seoBreadcrumbsGenerator) {
+    return view('public.pages.prices')
+        ->with(['breadCrumbs' => $seoBreadcrumbsGenerator->generate()]);
 })->name('prices');
 
 // Pages routes

@@ -40,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
         //composer?
         if(Schema::hasTable('pages')) {
             Cache::rememberForever('pages', function () {
-                return Page::where('is_published', 1)->orderBy('position', 'desc')
+                return Page::where('is_published', 1)->orderBy('position', 'asc')
                     ->get(['title','route_name', 'slug', 'visible_in_footer']);
 
             });

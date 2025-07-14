@@ -13,7 +13,7 @@ class Page extends Model
     use HasSlug;
 
 
-    protected $fillable = ['title', 'route_name', 'position', 'content', 'is_published', 'visible_in_footer'];
+    protected $fillable = ['title', 'description', 'route_name', 'position', 'content', 'is_published', 'visible_in_footer'];
 
 
     public function getSlugOptions() : SlugOptions
