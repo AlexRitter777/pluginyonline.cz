@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Service;
 use App\Rules\SummernoteContent;
 use App\Services\CacheCleanerService;
+use App\Services\PingSitemapService;
+use App\Services\SitemapGeneratorService;
 use App\Traits\HasThumbnail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -34,7 +36,7 @@ class ServiceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, SitemapGeneratorService $sitemapGenerator, PingSitemapService $pingSitemap)
     {
 
         $request->validate([
@@ -58,6 +60,12 @@ class ServiceController extends Controller
             'admin_dashboard_services_count'
         ]);
 
+        if($data['is_published']) {
+            defer(function () use ($sitemapGenerator, $pingSitemap) {
+                $sitemapGenerator->generate();
+                $pingSitemap->ping();
+            });
+        }
 
         return redirect(route('admin.services.index'))->with('success', 'Service has been created!');
     }
@@ -110,7 +118,7 @@ class ServiceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Service $service)
+    public function update(Request $request, Service $service, SitemapGeneratorService $sitemapGenerator, PingSitemapService $pingSitemap)
     {
 
         $request->validate([
@@ -133,6 +141,13 @@ class ServiceController extends Controller
             'admin_dashboard_services',
             'admin_dashboard_services_count'
         ]);
+
+        if($service->wasChanged('is_published') && $data['is_published']) {
+            defer(function () use ($sitemapGenerator, $pingSitemap) {
+                $sitemapGenerator->generate();
+                $pingSitemap->ping();
+            });
+        }
 
         return redirect(route('admin.services.index'))
             ->with('success', 'Service has been updated!');

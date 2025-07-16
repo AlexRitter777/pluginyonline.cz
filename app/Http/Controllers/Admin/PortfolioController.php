@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePortfolioRequest;
 use App\Models\Portfolio;
 use App\Services\CacheCleanerService;
+use App\Services\PingSitemapService;
+use App\Services\SitemapGeneratorService;
 use App\Traits\HasThumbnail;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use mysql_xdevapi\Exception;
+use function Symfony\Component\String\s;
 
 
 class PortfolioController extends Controller
@@ -41,7 +44,7 @@ class PortfolioController extends Controller
      * Store a newly created resource in storage.
      * @throws \Throwable
      */
-    public function store(StorePortfolioRequest $request)
+    public function store(StorePortfolioRequest $request, SitemapGeneratorService $sitemapGenerator, PingSitemapService $pingSitemap)
     {
 
         $validated = $request->validated();
@@ -85,6 +88,14 @@ class PortfolioController extends Controller
             'admin_dashboard_portfolios',
             'admin_dashboard_portfolios_count'
         ]);
+
+        if($validated['is_published']){
+            defer(function () use ($sitemapGenerator, $pingSitemap) {
+                $sitemapGenerator->generate();
+                $pingSitemap->ping();
+            });
+        }
+
 
         return redirect()->route('admin.portfolio.index');
 
@@ -137,7 +148,7 @@ class PortfolioController extends Controller
      * Update the specified resource in storage.
      * @throws \Throwable
      */
-    public function update(StorePortfolioRequest $request, Portfolio $portfolio)
+    public function update(StorePortfolioRequest $request, Portfolio $portfolio, SitemapGeneratorService $sitemapGenerator, PingSitemapService $pingSitemap)
     {
 
 
@@ -199,6 +210,15 @@ class PortfolioController extends Controller
             'admin_dashboard_portfolios_count'
         ]);
 
+        if(($portfolio->wasChanged('is_published')
+            && $portfolio->is_published)
+            || $validated['old_slug'] !== $validated['slug']
+        ){
+            defer(function () use ($sitemapGenerator, $pingSitemap) {
+                $sitemapGenerator->generate();
+                $pingSitemap->ping();
+            });
+        };
 
         return redirect(route('admin.portfolio.index'))
             ->with('success', 'Project has been updated!');

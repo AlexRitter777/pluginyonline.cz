@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePageRequest;
 use App\Models\Page;
 use App\Services\CacheCleanerService;
+use App\Services\PingSitemapService;
+use App\Services\SitemapGeneratorService;
 
 
 class PageController extends Controller
@@ -31,13 +33,20 @@ class PageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePageRequest $request)
+    public function store(StorePageRequest $request, SitemapGeneratorService $sitemapGenerator, PingSitemapService $pingSitemap)
     {
         $validated = $request->validated();
 
         $page = Page::create($validated);
 
         CacheCleanerService::clearAllPages('pages');
+
+        if($validated['is_published']) {
+            defer(function () use ($sitemapGenerator, $pingSitemap) {
+                $sitemapGenerator->generate();
+                $pingSitemap->ping();
+            });
+        }
 
         return redirect()->route('admin.pages.index');
 
@@ -68,13 +77,20 @@ class PageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StorePageRequest $request, Page $page)
+    public function update(StorePageRequest $request, Page $page, SitemapGeneratorService $sitemapGenerator, PingSitemapService $pingSitemap)
     {
         $validated = $request->validated();
 
         $page->update($validated);
 
         CacheCleanerService::clearAllPages('pages');
+
+        if($page->wasChanged('is_published') && $validated['is_published']) {
+            defer(function () use ($sitemapGenerator, $pingSitemap) {
+                $sitemapGenerator->generate();
+                $pingSitemap->ping();
+            });
+        }
 
         return redirect()->route('admin.pages.index')
             ->with('success', 'Page has been updated successfully!');
