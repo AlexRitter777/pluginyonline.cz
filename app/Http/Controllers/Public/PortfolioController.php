@@ -12,11 +12,10 @@ class PortfolioController extends Controller
 {
     public function index(SeoBreadcrumbsGenerator $seoBreadcrumbsGenerator){
 
-        $portfolios = Portfolio::with('slugs')
-            ->where('is_published', 1)
-            ->orderByRaw('position IS NULL')
-            ->orderBy('position')
-            ->paginate(6);
+        $perPage = config('site.pagination.portfolio');
+
+        $portfolios = Portfolio::publishedAndOrderedProjects(['slugs'])
+            ->paginate($perPage);
 
         $currentPage = request()->get('page');
         $canonical = $currentPage == 1 || !$currentPage
@@ -24,6 +23,8 @@ class PortfolioController extends Controller
             : url()->full();
 
         $breadCrumbs = $seoBreadcrumbsGenerator->generate();
+
+//        defer(fn()=> )
 
         return view('public.portfolio.index', ['portfolios' => $portfolios, 'canonical' => $canonical, 'breadCrumbs' => $breadCrumbs]);
     }

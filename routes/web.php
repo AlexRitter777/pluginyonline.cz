@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Notifications\MailResetPasswordToken;
 use App\Notifications\PasswordHasBeenResetNotification;
 use App\Services\SeoBreadcrumbsGenerator;
+use App\Services\SitemapGeneratorService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -100,6 +101,16 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     });
 
 
+
+
+    Route::get('/sitemap', function () {
+
+        app(SitemapGeneratorService::class)->generate();
+
+
+        return 'OK';
+
+    });
 
 
 require __DIR__.'/auth.php';

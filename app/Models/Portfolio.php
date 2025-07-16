@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Services\ImageUploadService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +17,19 @@ class Portfolio extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'name', 'type', 'purpose', 'features', 'requirements', 'description', 'content', 'is_published', 'thumbnail', 'position'];
+
+
+    public static function publishedAndOrderedProjects(array $with = []) : Builder
+    {
+       $query = self::query()
+           ->where('is_published', true)
+           ->orderByRaw('position IS NULL')
+           ->orderBy('position');
+       if(!empty($with)){
+           $query->with($with);
+       }
+       return $query;
+    }
 
     public function images(): HasMany
     {

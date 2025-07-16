@@ -10,9 +10,7 @@ class ServiceController extends Controller
 {
     public function index(SeoBreadcrumbsGenerator $seoBreadcrumbsGenerator) {
 
-        $services = Service::where('is_published', 1)
-                        ->orderByRaw('position IS NULL')
-                        ->orderBy('position')->get();
+        $services = Service::publishedAndOrderedServices()->get();
 
         $breadCrumbs = $seoBreadcrumbsGenerator->generate();
 
