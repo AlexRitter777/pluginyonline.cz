@@ -77,15 +77,20 @@ class MainController extends Controller
                 <b>Zpráva:</b> {$text}
                 TEXT;
 
-        $telegramNotifier->send($telegramMessage, $url);
+        defer(function () use ($telegramNotifier, $telegramMessage, $validated, $email, $mailer, $adminEmails, $url) {
+            $telegramNotifier->send($telegramMessage, $url);
 
-        //send mail to customer
-        $mailer->send($email, new MessageSent($validated));
+            //send mail to customer
+            $mailer->send($email, new MessageSent($validated));
 
-        //send mail to admins
-        foreach ($adminEmails as $email) {
-              $mailer->send($email, new AdminMessageSent($validated));
-        }
+            //send mail to admins
+            foreach ($adminEmails as $email) {
+                $mailer->send($email, new AdminMessageSent($validated));
+            }
+
+        });
+
+
 
         return response()->json('Message sent!', 200);
 
