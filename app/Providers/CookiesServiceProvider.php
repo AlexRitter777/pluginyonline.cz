@@ -15,7 +15,7 @@ class CookiesServiceProvider extends ServiceProvider
      */
     protected function registerCookies(): void
     {
-        if (app()->environment() === 'local') {
+        if (app()->environment() === 'production') {
             // Register Laravel's base cookies under the "required" cookies section:
             Cookies::essentials()
                 ->session()
