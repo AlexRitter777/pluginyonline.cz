@@ -20,7 +20,7 @@
     />
 
     @stack('head')
-
+    @cookieconsentscripts
     @vite(['resources/css/public.css', 'resources/js/public.js'])
 </head>
 <body>
@@ -37,6 +37,6 @@
 {{-- Back To Top End --}}
 
 @stack('scripts')
-
+@cookieconsentview
 </body>
 </html>
