@@ -102,16 +102,5 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 
 
 
-
-    Route::get('/sitemap', function () {
-
-        app(SitemapGeneratorService::class)->generate();
-
-
-        return 'OK';
-
-    });
-
-
 require __DIR__.'/auth.php';
 
