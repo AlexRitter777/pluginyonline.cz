@@ -19,6 +19,7 @@ use App\Services\SitemapGeneratorService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 
 
 // Public routes
@@ -46,9 +47,11 @@ Route::get('/ceny', function (SeoBreadcrumbsGenerator $seoBreadcrumbsGenerator) 
 })->name('prices');
 
 // Pages routes
-$pages = Cache::get('pages', []);
-foreach ($pages as $page) {
-    Route::get($page['slug'], [PublicPageController::class, 'show'])->name($page['route_name']);
+if(Schema::hasTable('pages')){
+    $pages = Cache::get('pages', []);
+    foreach ($pages as $page) {
+        Route::get($page['slug'], [PublicPageController::class, 'show'])->name($page['route_name']);
+    }
 }
 
 
