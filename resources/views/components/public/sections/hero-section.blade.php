@@ -17,11 +17,11 @@
                         Navrhneme a vytvoříme WordPress plugin přesně podle vašich potřeb – bez zbytečných funkcí, ale se vším, co je pro vás důležité. Optimalizovaný kód, bezproblémová integrace a podpora nejnovějších verzí WordPressu a WooCommerce.
                     </p>
                     <ul class="flex flex-wrap items-center justify-between">
-                        <li>
-                            <x-public.button-link class="menu-scroll" href="#kontakt">Poptat plugin</x-public.button-link>
+                        <li class="">
+                            <x-public.button-link class="menu-scroll px-2 xsm:px-6 sm:px-10 lg:px-8 xl:px-10" href="#kontakt">Poptat plugin</x-public.button-link>
                         </li>
-                        <x-public.button-link href="{{ route('portfolio.index') }}">Naše práce</x-public.button-link>
                         <li>
+                            <x-public.button-link class="px-2 xsm:px-6 sm:px-10 lg:px-8 xl:px-10" href="{{ route('portfolio.index') }}">Naše práce</x-public.button-link>
                         </li>
                     </ul>
                     <div class="clients pt-16">

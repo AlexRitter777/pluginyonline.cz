@@ -14,7 +14,7 @@
             <div class="w-full md:w-1/2 xl:w-1/4 px-4">
                 <div class="max-w-[370px] w-full mx-auto mb-10">
                     <div class="relative rounded-lg overflow-hidden">
-                        <img src="{{ Vite::asset('resources/images/public/team/alex.jpg') }}" alt="image" class="w-full" />
+                        <img src="{{ Vite::asset('resources/images/public/team/alex1.jpeg') }}" alt="image" class="w-full" />
                         <div class="absolute w-full bottom-5 left-0 text-center">
                             <div class="bg-white relative rounded-lg overflow-hidden mx-5 py-5 px-3">
                                 <h3 class="text-base font-semibold text-dark">Alex</h3>

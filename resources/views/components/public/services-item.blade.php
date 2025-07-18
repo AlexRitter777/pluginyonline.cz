@@ -5,8 +5,8 @@
     'title' => ''
 ])
 
-<div class="w-full md:w-1/2 lg:w-1/3 px-4">
-    <div class="bg-white mb-10">
+<div class="w-full md:w-1/2 lg:w-1/3 px-4 mb-10">
+    <div class="bg-white h-full">
         <a href="{{ $showRoute }}" class="block w-full">
             <x-db-image :url="$imageUrl"/>
         </a>

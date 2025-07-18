@@ -2,10 +2,10 @@
 <header class="header bg-transparent absolute top-0 left-0 z-40 w-full flex items-center transition">
     <div class="container">
         <div class="flex mx-[-16px] items-center justify-between relative">
-            <div class="px-4 w-60 max-w-full">
+            <div class="px-4 w-[20rem] max-w-full">
                 <a href="/" class="header-logo w-full block py-6 lg:py-8">
-                    {{--<!--<img src="images/logo/logo.svg" alt="logo" class="w-full" />-->--}}
-                    <h1 class="font-bold text-2xl">{{ config('app.name') }}</h1>
+                   <img src="{{Vite::asset('resources/images/public/logo/PluginyOnlineLogo_transparent.png')}}" width="200" alt="logo" class="w-full" />
+{{--                    <h1 class="font-bold text-2xl">{{ config('app.name') }}</h1>--}}
                 </a>
             </div>
             <div class="flex px-4 justify-between items-center w-full">

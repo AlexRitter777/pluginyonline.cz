@@ -49,6 +49,8 @@ export default {
             'body-color': '#959CB1',
         },
         screens: {
+            xsm: '380px',
+
             sm: '540px',
             // => @media (min-width: 576px) { ... }
 
