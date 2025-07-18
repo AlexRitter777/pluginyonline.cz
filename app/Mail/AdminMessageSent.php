@@ -16,7 +16,7 @@ class AdminMessageSent extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(protected $message)
     {
         //
     }
@@ -38,6 +38,9 @@ class AdminMessageSent extends Mailable
     {
         return new Content(
             view: 'admin.mail.admin-message-sent',
+            with: [
+                'data' => $this->message['data']
+            ]
         );
     }
 
