@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
 return [
@@ -55,7 +56,7 @@ return [
 
     'policy' => null,
 
-    'privacy' => fn() => route('privacy'),
+    'privacy' => fn() => Route::has(config('site.privacy_policy_route')) ? route(config('site.privacy_policy_route')) : null,
 
     /* Google Analytics configuration
     |--------------------------------------------------------------------------

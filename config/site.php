@@ -10,5 +10,7 @@ return [
 
     'pagination' => [
         'portfolio' => 6
-    ]
+    ],
+
+    'privacy_policy_route' => 'privacy'
 ];
