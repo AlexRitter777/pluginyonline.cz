@@ -38,7 +38,7 @@ class JsonLd extends Component
                '@type' => 'Organization',
                'name' => 'PluginyOnline.cz',
                'url' => config('app.url'),
-               'logo' => Vite::asset('resources/images/public/og-default.png'),
+               'logo' => asset('img/og-default.png'),
             ],
             'WebSite' => [
                 '@context' => 'https://schema.org',

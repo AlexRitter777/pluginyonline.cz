@@ -4,7 +4,7 @@
         <div class="flex mx-[-16px] items-center justify-between relative">
             <div class="px-4 w-[20rem] max-w-full">
                 <a href="/" class="header-logo w-full block py-6 lg:py-8">
-                   <img src="{{Vite::asset('resources/images/public/logo/PluginyOnlineLogo_transparent.png')}}" width="200" alt="logo" class="w-full" />
+                   <img src="{{asset('img/logo/PluginyOnlineLogo_transparent.png')}}" width="200" alt="logo" class="w-full" />
 {{--                    <h1 class="font-bold text-2xl">{{ config('app.name') }}</h1>--}}
                 </a>
             </div>

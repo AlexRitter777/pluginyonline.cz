@@ -2,7 +2,7 @@
     'title' => 'Pluginy na míru pro WordPress a WooCommerce',
     'description' => 'Vývoj vlastních pluginů, optimalizace a automatizace pro WordPress a WooCommerce.',
     'canonical' => request()->fullUrl(),
-    'image' => Vite::asset('resources/images/public/og-default.png'),
+    'image' => asset('img/og-default.png'),
     'url' => request()->fullUrl(),
 ])
 

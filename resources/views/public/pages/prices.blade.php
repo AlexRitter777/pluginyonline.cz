@@ -4,7 +4,7 @@
         title="Ceník pluginů"
         description="Orientační ceny vývoje pluginů na míru pro WordPress a WooCommerce."
         :url="request()->fullUrl()"
-        :image="url(Vite::asset('resources/images/public/og-default.png'))"
+        :image="url(asset('img/og-default.png'))"
     />
 
     <x-public.json-ld

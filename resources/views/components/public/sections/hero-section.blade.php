@@ -31,19 +31,19 @@
                         </p>
                         <div class="flex items-center">
                             <div class="w-full py-3 mr-4">
-                                <img src="{{ Vite::asset('resources/images/public/technologies/WordPress-logotype-standard.png') }}" alt="WordPress" />
+                                <img src="{{ asset('img/technologies/WordPress-logotype-standard.png') }}" alt="WordPress" />
                             </div>
                             <div class="w-full py-3 mr-4">
-                                <img src="{{ Vite::asset('resources/images/public/technologies/Woo_logo_color.png') }}" alt="WooCommerce" />
+                                <img src="{{ asset('img/technologies/Woo_logo_color.png') }}" alt="WooCommerce" />
                             </div>
                             <div class="w-full py-3 mr-4">
-                                <img class="w-2/3" src="{{ Vite::asset('resources/images/public/technologies/new-php-logo.png') }}" alt="PHP" />
+                                <img class="w-2/3" src="{{ asset('img/technologies/new-php-logo.png') }}" alt="PHP" />
                             </div>
                             <div class="w-full py-3 mr-4">
-                                <img src="{{ Vite::asset('resources/images/public/technologies/jQuery-Logo.png') }}" alt="jQuery" />
+                                <img src="{{ asset('img/technologies/jQuery-Logo.png') }}" alt="jQuery" />
                             </div>
                             <div class="w-full py-3 mr-4">
-                                <img width="60" src="{{ Vite::asset('resources/images/public/technologies/Alpine.js.png') }}" alt="Alpine" />
+                                <img width="60" src="{{ asset('img/technologies/Alpine.js.png') }}" alt="Alpine" />
                             </div>
 
                         </div>
@@ -54,7 +54,7 @@
             <div class="w-full lg:w-6/12 px-4">
                 <div class="lg:text-right lg:ml-auto">
                     <div class="relative inline-block z-10 pt-11 lg:pt-0">
-                        <img src="{{ Vite::asset('resources/images/public/hero/hero-image-01.png') }}" alt="hero" class="max-w-full lg:ml-auto" />
+                        <img src="{{ asset('img/hero/hero-image-01.png') }}" alt="hero" class="max-w-full lg:ml-auto" />
                         <span class="absolute -left-8 -bottom-8 z-[-1]">
                   <svg width="93" height="93" viewBox="0 0 93 93" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="2.5" cy="2.5" r="2.5" fill="#3056D3" />

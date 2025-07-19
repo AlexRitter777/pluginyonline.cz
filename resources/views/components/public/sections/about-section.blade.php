@@ -37,13 +37,13 @@
                 <div class="process pt-12">
                     <div class="flex items-center">
                         <div class="w-full py-3 mr-4">
-                            <img class="mx-auto" src="{{ Vite::asset('resources/images/public/process/req-icon.png') }}" alt="urs" />
+                            <img class="mx-auto" src="{{ asset('img/process/req-icon.png') }}" alt="urs" />
                         </div>
                         <div class="w-full py-3 mr-4">
-                            <img class="mx-auto" src="{{ Vite::asset('resources/images/public/process/dev-icon1.png') }}" alt="development" />
+                            <img class="mx-auto" src="{{ asset('img/process/dev-icon1.png') }}" alt="development" />
                         </div>
                         <div class="w-full py-3 mr-4">
-                            <img class="mx-auto" src="{{ Vite::asset('resources/images/public/process/done-icon.png') }}" alt="work done" />
+                            <img class="mx-auto" src="{{ asset('img/process/done-icon.png') }}" alt="work done" />
                         </div>
                     </div>
                 </div>

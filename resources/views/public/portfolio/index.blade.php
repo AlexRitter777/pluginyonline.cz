@@ -5,7 +5,7 @@
         description="Ukázky pluginů a zakázkových řešení pro WordPress a WooCommerce."
         :breadcrumbs="$breadCrumbs"
         :url="$canonical"
-        :image="url(Vite::asset('resources/images/public/og-default.png'))"
+        :image="url(asset('img/og-default.png'))"
     />
 
     <x-public.json-ld
