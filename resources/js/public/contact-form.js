@@ -54,8 +54,13 @@ export default () => ({
                 return;
             }
         }catch(e){
-            alert('Something were wrong. Please try again later.');
             this.isBusy = false;
+            if(e.response?.status === 419){
+                alert('Vaše relace vypršela. Stránka se nyní znovu načte.');
+                location.reload();
+                return;
+            }
+            alert('Something were wrong. Please try again later.');
             return;
         }
 
