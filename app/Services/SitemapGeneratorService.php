@@ -8,6 +8,7 @@ use App\Models\Service;
 use Carbon\Carbon;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
+use function Termwind\parse;
 
 class SitemapGeneratorService
 {
@@ -66,7 +67,7 @@ class SitemapGeneratorService
         if($portfolioCount === 0){
             $latestUpdatedDate = config('site.pages_modified.projekty');
             $sitemap->add(
-                Url::create('/projekty')->setLastModificationDate($latestUpdatedDate)
+                Url::create('/projekty')->setLastModificationDate(Carbon::parse($latestUpdatedDate))
             );
             return;
         }
@@ -108,7 +109,7 @@ class SitemapGeneratorService
     {
         $allServices = Service::publishedAndOrderedServices()->get();
 
-        $latestUpdatedService = $allServices->max('updated_at') ?? config('site.pages_modified.sluzby');
+        $latestUpdatedService = $allServices->max('updated_at') ?? Carbon::parse(config('site.pages_modified.sluzby'));
 
         $sitemap->add(
             Url::create('/sluzby')
