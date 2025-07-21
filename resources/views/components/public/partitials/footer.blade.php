@@ -11,7 +11,7 @@
                     <h2 class="font-bold text-white text-[44px] leading-tight mb-5">Kontaktujte nás!</h2>
                     <h3 class="font-bold text-white opacity-70 text-2xl mb-2">Kontaktní informace</h3>
                     <p class="font-medium text-base text-body-color mb-1">info@pluginyonline.cz</p>
-                    <p class="font-medium text-base text-body-color mb-1">+420 777 121 310</p>
+                    <p class="font-medium text-base text-body-color mb-1">{{ config('site.phone_number') }}</p>
                 </div>
             </div>
             <div class="w-full md:w-1/2 lg:w-3/12 px-4">
