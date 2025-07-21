@@ -62,6 +62,15 @@ class SitemapGeneratorService
         $portfolioBuilder =  Portfolio::publishedAndOrderedProjects();
 
         $portfolioCount= $portfolioBuilder->count();
+
+        if($portfolioCount === 0){
+            $latestUpdatedDate = config('site.pages_modified.projekty');
+            $sitemap->add(
+                Url::create('/projekty')->setLastModificationDate($latestUpdatedDate)
+            );
+            return;
+        }
+
         $countOfPages = ceil($portfolioCount / $perPage);
 
         for ($page = 1; $page <= $countOfPages; $page++) {
@@ -99,7 +108,7 @@ class SitemapGeneratorService
     {
         $allServices = Service::publishedAndOrderedServices()->get();
 
-        $latestUpdatedService = $allServices->max('updated_at');
+        $latestUpdatedService = $allServices->max('updated_at') ?? config('site.pages_modified.sluzby');
 
         $sitemap->add(
             Url::create('/sluzby')

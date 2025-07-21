@@ -2,10 +2,15 @@
 
 return [
     'pages_modified' =>[
-        '/' => '2024-06-01',
-        '/o-nas' => '2024-06-02',
-        '/ceny' => '2024-06-03',
-        '/kontakt' => '2024-06-04',
+        // Static pages
+        '/' => '2024-07-20',
+        '/o-nas' => '2024-07-20',
+        '/ceny' => '2024-07-20',
+        '/kontakt' => '2024-07-20',
+
+        // Default values for index pages with dynamic content
+        'sluzby' => '2024-07-20',
+        'projekty' => '2024-07-20',
     ],
 
     'pagination' => [

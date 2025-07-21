@@ -15,7 +15,7 @@ class DbImage extends Component
     public function __construct(public string $url)
     {
         if(!$url) {
-            $this->url = (new Vite)->asset("resources/images/public/default-image.jpg");
+            $this->url = asset("img/default-image.jpg");
         }else{
             $this->url = asset($url);
         }
