@@ -45,6 +45,7 @@ export function initSummernote(selector = '#summernote', options = {}) {
                 ['view', ['codeview', 'help']]
 
             ],
+            fontSizes: ['8', '10', '12', '14', '16', '18', '20', '24', '28', '32', '36', '48', '64', '72'],
             callbacks: {
                 onDrop: function(e) {
                     e.preventDefault();
