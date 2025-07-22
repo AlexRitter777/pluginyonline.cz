@@ -37,6 +37,8 @@ export function initSummernote(selector = '#summernote', options = {}) {
                 ['font', ['strikethrough', 'superscript', 'subscript']],
                 ['fontsize', ['fontsize']],
                 ['color', ['color']],
+                ['table', ['table']],
+                ['insert', ['link', 'hr']],
                 ['para', ['ul', 'ol', 'paragraph']],
                 ['height', ['height']]
             ],
