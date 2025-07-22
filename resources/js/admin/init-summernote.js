@@ -33,6 +33,7 @@ export function initSummernote(selector = '#summernote', options = {}) {
         $textarea.summernote({
             height: options.height ?? 300,
             toolbar: [
+                ['misc', ['undo', 'redo']],
                 ['style', ['bold', 'italic', 'underline', 'clear']],
                 ['font', ['strikethrough', 'superscript', 'subscript']],
                 ['fontsize', ['fontsize']],
@@ -40,7 +41,9 @@ export function initSummernote(selector = '#summernote', options = {}) {
                 ['table', ['table']],
                 ['insert', ['link', 'hr']],
                 ['para', ['ul', 'ol', 'paragraph']],
-                ['height', ['height']]
+                ['height', ['height']],
+                ['view', ['codeview', 'help']]
+
             ],
             callbacks: {
                 onDrop: function(e) {
