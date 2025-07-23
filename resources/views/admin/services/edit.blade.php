@@ -3,6 +3,8 @@
     <main class="h-full pb-16 overflow-y-auto">
         <div x-data="modal" class="container px-6 mx-auto grid">
 
+            <x-admin.success :message="session('success')" />
+
             <div
                 class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 mt-4"
             >

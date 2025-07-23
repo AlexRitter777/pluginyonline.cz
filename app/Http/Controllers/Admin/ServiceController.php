@@ -67,7 +67,7 @@ class ServiceController extends Controller
             });
         }
 
-        return redirect(route('admin.services.index'))->with('success', 'Service has been created!');
+        return redirect(route('admin.services.edit', $service))->with('success', 'Service has been created!');
     }
 
     /**
@@ -149,7 +149,7 @@ class ServiceController extends Controller
             });
         }
 
-        return redirect(route('admin.services.index'))
+        return redirect(route('admin.services.edit', $service))
             ->with('success', 'Service has been updated!');
 
 
