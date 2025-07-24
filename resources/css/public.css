@@ -4,3 +4,7 @@
 @import "public/animate.css";
 @import "notyf/notyf.min.css";
 @config "../../tailwind.public.config.js";
+
+.summernote-public-content ol, ul{
+    list-style: unset!important;
+}
