@@ -1,3 +1,11 @@
+@push('head')
+    <link rel="preload"
+          href="{{ asset('img/hero/hero-image-01.webp') }}"
+          as="image"
+          type="image/webp"
+          fetchpriority="high"
+    >
+@endpush
 <div id="home" class="relative pt-[120px] lg:pt-[150px] pb-[110px] bg-white">
     <div class="container">
         <div class="flex flex-wrap -mx-4">
@@ -54,7 +62,16 @@
             <div class="w-full lg:w-6/12 px-4">
                 <div class="lg:text-right lg:ml-auto">
                     <div class="relative inline-block z-10 pt-11 lg:pt-0">
-                        <img src="{{ asset('img/hero/hero-image-01.png') }}" alt="hero" class="max-w-full lg:ml-auto" />
+                        <picture>
+                            <source srcset="{{ asset('img/hero/hero-image-01.webp') }}" type="image/webp">
+                            <img src="{{ asset('img/hero/hero-image-01.png') }}"
+                                 width="515"
+                                 height="491"
+                                 decoding="async"
+                                 fetchpriority="high"
+                                 alt="Vývojář pracující na počítači"
+                            />
+                        </picture>
                         <span class="absolute -left-8 -bottom-8 z-[-1]">
                   <svg width="93" height="93" viewBox="0 0 93 93" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="2.5" cy="2.5" r="2.5" fill="#3056D3" />
