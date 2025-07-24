@@ -5,6 +5,8 @@
 @import "notyf/notyf.min.css";
 @config "../../tailwind.public.config.js";
 
-.summernote-public-content ol, ul{
+.summernote-public-content ol,
+.summernote-public-content ul
+{
     list-style: unset!important;
 }
