@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 class ImageUploadService
 {
@@ -38,7 +39,13 @@ class ImageUploadService
         $newFileName = self::generateUniqueFileName($file);
         $folder = date('Y-m-d');
 
-        return $file->storeAs("images/{$folder}", $newFileName);
+        $path = $file->storeAs("images/{$folder}", $newFileName);
+
+        $fullPath = storage_path('app/' . $path);
+
+        ImageOptimizer::optimize($fullPath);
+
+        return $path;
 
     }
 
