@@ -11,7 +11,6 @@
                              decoding="async"
                              loading="lazy">
                     </picture>
-{{--                    <img src="{{asset('img/logo/PluginyOnlineLogo_transparent.png')}}" width="200" alt="logo" class="w-full" />--}}
 {{--                    <h1 class="font-bold text-2xl">{{ config('app.name') }}</h1>--}}
                 </a>
             </div>

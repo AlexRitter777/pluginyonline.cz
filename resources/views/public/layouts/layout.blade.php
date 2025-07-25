@@ -19,6 +19,20 @@
         :description="$description"
     />
 
+{{--    <link--}}
+{{--        rel="preload"--}}
+{{--        as="style"--}}
+{{--        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"--}}
+{{--        onload="this.onload=null;this.rel='stylesheet'"--}}
+{{--    />--}}
+{{--    <noscript>--}}
+{{--        <link--}}
+{{--            rel="stylesheet"--}}
+{{--            href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"--}}
+{{--        />--}}
+{{--    </noscript>--}}
+
+
     @stack('head')
     @cookieconsentscripts
     @vite(['resources/css/public.css', 'resources/js/public.js'])
