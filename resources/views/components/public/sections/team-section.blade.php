@@ -14,7 +14,15 @@
             <div class="w-full md:w-1/2 xl:w-1/4 px-4">
                 <div class="max-w-[370px] w-full mx-auto mb-10">
                     <div class="relative rounded-lg overflow-hidden">
-                        <img src="{{ asset('img/team/alex1.jpeg') }}" alt="image" class="w-full" />
+                        <picture>
+                            <source srcset="{{ asset('img/team/alex1.webp') }}" type="image/webp">
+                            <img src="{{ asset('img/team/alex1.jpeg') }}"
+                                 alt="Alex - web app developer"
+                                 class="w-full"
+                                 decoding="async"
+                                 loading="lazy"
+                            >
+                        </picture>
                         <div class="absolute w-full bottom-5 left-0 text-center">
                             <div class="bg-white relative rounded-lg overflow-hidden mx-5 py-5 px-3">
                                 <h3 class="text-base font-semibold text-dark">Alex</h3>
@@ -58,7 +66,16 @@
             <div class="w-full md:w-1/2 xl:w-1/4 px-4">
                 <div class="max-w-[370px] w-full mx-auto mb-10">
                     <div class="relative rounded-lg overflow-hidden">
-                        <img src="{{ asset('img/team/avatar.jpg') }}" alt="image" class="w-full" />
+{{--                        <img src="{{ asset('img/team/avatar.jpg') }}" alt="image" class="w-full" />--}}
+                        <picture>
+                            <source srcset="{{ asset('img/team/avatar.webp') }}" type="image/webp">
+                            <img src="{{ asset('img/team/avatar.jpg') }}"
+                                 alt="Pavel - frontend developer"
+                                 class="w-full"
+                                 decoding="async"
+                                 loading="lazy"
+                            >
+                        </picture>
                         <div class="absolute w-full bottom-5 left-0 text-center">
                             <div class="bg-white relative rounded-lg overflow-hidden mx-5 py-5 px-3">
                                 <h3 class="text-base font-semibold text-dark">Pavel</h3>

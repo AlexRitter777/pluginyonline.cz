@@ -39,19 +39,50 @@
                         </p>
                         <div class="flex items-center">
                             <div class="w-full py-3 mr-4">
-                                <img src="{{ asset('img/technologies/WordPress-logotype-standard.png') }}" alt="WordPress" />
+                                <picture>
+                                    <source srcset="{{ asset('img/technologies/WordPress-logotype-standard-244x82.webp') }}" type="image/webp">
+                                    <img src="{{ asset('img/technologies/WordPress-logotype-standard-244x82.png') }}"
+                                         alt="Logo Wordpress"
+                                         decoding="async"
+                                         loading="lazy">
+                                </picture>
                             </div>
                             <div class="w-full py-3 mr-4">
-                                <img src="{{ asset('img/technologies/Woo_logo_color.png') }}" alt="WooCommerce" />
+                                <picture>
+                                    <source srcset="{{ asset('img/technologies/Woo_logo_color_366x187.webp') }}" type="image/webp">
+                                    <img src="{{ asset('img/technologies/Woo_logo_color_366x187.png') }}"
+                                         alt="Logo WooCommerce"
+                                         decoding="async"
+                                         loading="lazy">
+                                </picture>
                             </div>
                             <div class="w-full py-3 mr-4">
-                                <img class="w-2/3" src="{{ asset('img/technologies/new-php-logo.png') }}" alt="PHP" />
+                                <picture>
+                                    <img src="{{ asset('img/technologies/new-php-logo.png') }}"
+                                         alt="Logo PHP"
+                                         class="w-2/3"
+                                         decoding="async"
+                                         loading="lazy">
+                                </picture>
                             </div>
                             <div class="w-full py-3 mr-4">
-                                <img src="{{ asset('img/technologies/jQuery-Logo.png') }}" alt="jQuery" />
+                                <picture>
+                                    <source srcset="{{ asset('img/technologies/jQuery-Logo-366x93.webp') }}" type="image/webp">
+                                    <img src="{{ asset('img/technologies/jQuery-Logo-366x93.png') }}"
+                                         alt="Logo JQuery"
+                                         decoding="async"
+                                         loading="lazy">
+                                </picture>
                             </div>
                             <div class="w-full py-3 mr-4">
-                                <img width="60" src="{{ asset('img/technologies/Alpine.js.png') }}" alt="Alpine" />
+                                <picture>
+                                    <source srcset="{{ asset('img/technologies/Alpine.js-180x180.webp') }}" type="image/webp">
+                                    <img src="{{ asset('img/technologies/Alpine.js-180x180.png') }}"
+                                         alt="Logo Alpine.js"
+                                         width="60"
+                                         decoding="async"
+                                         loading="lazy">
+                                </picture>
                             </div>
 
                         </div>
@@ -65,8 +96,6 @@
                         <picture>
                             <source srcset="{{ asset('img/hero/hero-image-01.webp') }}" type="image/webp">
                             <img src="{{ asset('img/hero/hero-image-01.png') }}"
-                                 width="515"
-                                 height="491"
                                  decoding="async"
                                  fetchpriority="high"
                                  alt="Vývojář pracující na počítači"

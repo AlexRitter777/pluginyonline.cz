@@ -4,7 +4,14 @@
         <div class="flex mx-[-16px] items-center justify-between relative">
             <div class="px-4 w-[20rem] max-w-full">
                 <a href="/" class="header-logo w-full block py-6 lg:py-8">
-                   <img src="{{asset('img/logo/PluginyOnlineLogo_transparent.png')}}" width="200" alt="logo" class="w-full" />
+                    <picture>
+                        <source srcset="{{ asset('img/logo/PluginyOnlineLogo_transparent.webp') }}" type="image/webp">
+                        <img src="{{ asset('`img/logo/PluginyOnlineLogo_transparent.png') }}"
+                             alt="Logo Wordpress"
+                             decoding="async"
+                             loading="lazy">
+                    </picture>
+{{--                    <img src="{{asset('img/logo/PluginyOnlineLogo_transparent.png')}}" width="200" alt="logo" class="w-full" />--}}
 {{--                    <h1 class="font-bold text-2xl">{{ config('app.name') }}</h1>--}}
                 </a>
             </div>
