@@ -55,8 +55,20 @@
     {{-- Contact Section End --}}
 
 @push('scripts')
-    <script src="https://www.google.com/recaptcha/api.js?render=6LeuuSIrAAAAAI9UFNZRdYTK2oZ8iqSKlvcS9xoQ" async defer></script>
-@endpush
+{{--    <script src="https://www.google.com/recaptcha/api.js?render=6LeuuSIrAAAAAI9UFNZRdYTK2oZ8iqSKlvcS9xoQ" async defer></script>--}}
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                setTimeout(() => {
+                    const script = document.createElement('script');
+                    script.src = "https://www.google.com/recaptcha/api.js?render=6LeuuSIrAAAAAI9UFNZRdYTK2oZ8iqSKlvcS9xoQ";
+                    script.async = true;
+                    script.defer = true;
+                    document.head.appendChild(script);
+                }, 1000);
+            });
+        </script>
+
+    @endpush
 @push('scripts')
     <script>
         // Document Loaded
