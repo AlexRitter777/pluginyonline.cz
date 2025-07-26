@@ -4,7 +4,6 @@ namespace App\View\Components\Public;
 
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Vite;
 use Illuminate\View\Component;
 
 class JsonLd extends Component
@@ -64,6 +63,17 @@ class JsonLd extends Component
                 '@type' => $this->type,
                 'name' => $this->title,
                 'description' => $this->description,
+                'url' => $this->url,
+                'image' => $this->image,
+            ],
+
+            'SoftwareApplication' =>  [
+                '@context' => 'https://schema.org',
+                '@type' => $this->type,
+                'name' => $this->title,
+                'description' => $this->description,
+                'operatingSystem' => 'All',
+                'applicationCategory' => 'DeveloperApplication',
                 'url' => $this->url,
                 'image' => $this->image,
             ],

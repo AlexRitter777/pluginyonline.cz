@@ -1,8 +1,8 @@
 @push('head')
 
     <x-public.json-ld
-        type="CreativeWork"
-        :title="$portfolio->title"
+        type="SoftwareApplication"
+        :title="$portfolio->name"
         :description="$portfolio->purpose"
         :url="request()->fullUrl()"
         :image="url($portfolio->thumbnail)"
