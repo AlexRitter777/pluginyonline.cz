@@ -86,26 +86,35 @@
                 });
             });
             // section menu active
-            function onScroll(event) {
-                const sections = document.querySelectorAll(".menu-scroll-active");
-                // console.log(sections);
-                const scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
 
-                for (let i = 0; i < sections.length; i++) {
-                    const currLink = sections[i];
-                    const val = currLink.getAttribute("href");
-                    const refElement = document.querySelector(val);
-                    const scrollTopMinus = scrollPos + 73;
-                    if (refElement.offsetTop <= scrollTopMinus && refElement.offsetTop + refElement.offsetHeight > scrollTopMinus) {
-                        document.querySelector(".menu-scroll-active").classList.remove("active");
-                        currLink.classList.add("active");
-                    } else {
-                        currLink.classList.remove("active");
+            const sections = document.querySelectorAll('section[id]');
+
+            const menuLinks = document.querySelectorAll(".menu-scroll-active");
+
+            const observer = new IntersectionObserver(
+                ([entry]) => {
+                    console.log(entry.isIntersecting);
+                    if(entry.isIntersecting){
+                        const id = entry.target.getAttribute('id');
+                        menuLinks.forEach(link => {
+                            link.classList.remove('active');
+                            let href = link.getAttribute('href');
+                            if(href === `#${id}`) {
+                                link.classList.add('active');
+                                window.history.pushState({}, '', href);
+                            }
+                        })
                     }
-                }
+            },
+            {
+                threshold: 0.3
             }
+            );
 
-            window.document.addEventListener("scroll", onScroll);
+            sections.forEach(section => {
+                observer.observe(section);
+            })
+
         });
     </script>
 @endpush

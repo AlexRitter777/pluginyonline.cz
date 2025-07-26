@@ -6,7 +6,7 @@
           fetchpriority="high"
     >
 @endpush
-<div id="home" class="relative pt-[120px] lg:pt-[150px] pb-[110px] bg-white">
+<section id="home" class="relative pt-[120px] lg:pt-[150px] pb-[110px] bg-white">
     <div class="container">
         <div class="flex flex-wrap -mx-4">
             <div class="w-full lg:w-5/12 px-4">
@@ -58,6 +58,7 @@
                             </div>
                             <div class="w-full py-3 mr-4">
                                 <picture>
+                                    <source srcset="{{ asset('img/technologies/new-php-logo.webp') }}" type="image/webp">
                                     <img src="{{ asset('img/technologies/new-php-logo.png') }}"
                                          alt="Logo PHP"
                                          class="w-2/3"
@@ -135,5 +136,5 @@
             </div>
         </div>
     </div>
-</div>
+</section>
 

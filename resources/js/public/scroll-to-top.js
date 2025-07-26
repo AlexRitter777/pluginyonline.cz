@@ -1,14 +1,19 @@
 export default () => {
 
-    const backToTop = document.querySelector('.back-to-top');// move to scroll to TOP
+    const backToTop = document.querySelector('.back-to-top');
 
-    window.addEventListener('scroll', () => {
+    const scrollWatcher = document.createElement('div');
 
-        if (backToTop) { // move to scroll to TOP
-            backToTop.style.display = (window.scrollY > 50) ? 'flex' : 'none';
-        }
+    document.body.prepend(scrollWatcher);
 
-    })
+    const observer = new IntersectionObserver(
+        ([entry]) => {
+            backToTop.style.display = (entry.isIntersecting) ? 'flex' : 'none';
+        },
+        { rootMargin: "50px 0px 0px 0px" }
+    )
+
+    observer.observe(scrollWatcher);
 
 
     function scrollTo(element, to = 0, duration = 500) {
