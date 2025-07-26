@@ -93,7 +93,6 @@
 
             const observer = new IntersectionObserver(
                 ([entry]) => {
-                    console.log(entry.isIntersecting);
                     if(entry.isIntersecting){
                         const id = entry.target.getAttribute('id');
                         menuLinks.forEach(link => {
