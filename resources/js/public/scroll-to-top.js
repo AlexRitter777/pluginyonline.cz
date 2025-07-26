@@ -8,7 +8,7 @@ export default () => {
 
     const observer = new IntersectionObserver(
         ([entry]) => {
-            backToTop.style.display = (entry.isIntersecting) ? 'flex' : 'none';
+            backToTop.style.display = (!entry.isIntersecting) ? 'flex' : 'none';
         },
         { rootMargin: "50px 0px 0px 0px" }
     )

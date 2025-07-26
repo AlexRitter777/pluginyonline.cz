@@ -30,6 +30,7 @@
 {{-- Back To Top Start --}}
 <button
     class="hidden items-center justify-center bg-primary text-white w-10 h-10 rounded-md fixed bottom-8 right-8 left-auto z-[999] hover:shadow-signUp transition duration-300 back-to-top"
+    aria-label="Scroll to top"
 >
     <span class="w-3 h-3 border-t border-l border-white rotate-45 mt-[6px]"></span>
 </button>
