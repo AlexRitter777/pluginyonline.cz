@@ -79,7 +79,7 @@
                     </x-admin.input-file>
 
                     <div class="flex mt-10 mb-5 justify-around lg:w-1/2 mx-auto">
-                        <x-admin.button-link>Preview</x-admin.button-link>
+{{--                        <x-admin.button-link>Preview</x-admin.button-link>--}}
                         <x-admin.button-submit>Save</x-admin.button-submit>
                         <x-admin.button-link href="{{route('admin.services.index')}}">Cancel</x-admin.button-link>
 

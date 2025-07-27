@@ -29,7 +29,7 @@
                         </div>
 
                         <h2 class="font-bold text-black text-3xl sm:text-4xl leading-tight sm:leading-tight mb-8">{{ $title }}</h2>
-                        <div>
+                        <div class="summernote-public-content">
                             {{ $slot }}
                         </div>
                     </div>

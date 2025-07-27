@@ -129,7 +129,7 @@
                         </div>
                     @endif
                     {{--Project Images Carousel End--}}
-                    <div id="portfolio-content" class="w-full px-5 lg:px-0">
+                    <div id="portfolio-content" class="w-full px-5 lg:px-0 summernote-public-content">
                         {{ $slot }}
                     </div>
 

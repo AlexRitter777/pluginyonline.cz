@@ -9,12 +9,9 @@ use App\Services\CacheCleanerService;
 use App\Services\PingSitemapService;
 use App\Services\SitemapGeneratorService;
 use App\Traits\HasThumbnail;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use mysql_xdevapi\Exception;
-use function Symfony\Component\String\s;
 
 
 class PortfolioController extends Controller
@@ -56,16 +53,19 @@ class PortfolioController extends Controller
 
         $savedImagePaths = [];
 
+        $portfolio = null;
+
         try {
-            DB::transaction(function () use ($validated, $images, $positions, &$savedImagePaths) {
+            $portfolio = DB::transaction(function () use ($validated, $images, $positions, &$savedImagePaths) {
 
                 $portfolio = Portfolio::create($validated);
-
                 $savedImagePaths = $portfolio->saveImages($positions, $images);
                 $portfolio->slugs()->create([
                     'slug' => $validated['slug'],
                     'is_current' => true
                 ]);
+
+                return $portfolio;
             });
 
         } catch (\Throwable $e) {
@@ -95,9 +95,7 @@ class PortfolioController extends Controller
                 $pingSitemap->ping();
             });
         }
-
-
-        return redirect()->route('admin.portfolio.index');
+        return redirect(route('admin.portfolio.edit', $portfolio))->with('success', 'Project has been created!');
 
     }
 
@@ -220,8 +218,8 @@ class PortfolioController extends Controller
             });
         };
 
-        return redirect(route('admin.portfolio.index'))
-            ->with('success', 'Project has been updated!');
+        return redirect(route('admin.portfolio.edit', $portfolio))->with('success', 'Project has been updated!');
+
 
     }
 
