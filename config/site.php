@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'phone_number' => '+420 723 886 177',
+    'phone_number' => '+420 777 121 310',
     'pages_modified' =>[
         // Static pages
         '/' => '2024-07-20',
